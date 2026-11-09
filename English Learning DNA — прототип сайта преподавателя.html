@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>English Learning DNA — преподаватель английского</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#ECEEE8;--surface:#FFFFFF;--surface2:#F4F5F1;--ink:#151613;--muted:#686B64;--line:#E1E3DC;
+  --dark:#171816;--on-dark:#F3F4EF;--on-dark-muted:#B8BBB2;
+  --lime:#E2F36A;--lav:#BCB1EA;--orange:#EE6B32;--sage:#CEDCC9;--yellow:#F4EF6C;--peach:#F7CEA8;--on-acc:#151613;
+  --ok:#3B8B4F;--warn:#C9761A;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E0F0D;--surface:#191A18;--surface2:#222420;--ink:#EEF0EA;--muted:#A3A69E;--line:#2E302B;
+  --dark:#050605;--on-dark:#F3F4EF;--ok:#79C48B;--warn:#E8A65A;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E0F0D;--surface:#191A18;--surface2:#222420;--ink:#EEF0EA;--muted:#A3A69E;--line:#2E302B;--dark:#050605;--on-dark:#F3F4EF;--ok:#79C48B;--warn:#E8A65A;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Onest',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+img{max-width:100%}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:8px}
+.shell{max-width:1240px;margin:0 auto;padding:14px}
+h1,h2,h3{line-height:1.08;letter-spacing:-.02em;margin:0;font-weight:600}
+h1{font-size:clamp(36px,5.4vw,64px)}
+h2{font-size:clamp(28px,3.6vw,44px)}
+h3{font-size:clamp(20px,2vw,24px)}
+p{margin:0}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.tiny{font-size:12.5px}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--dark);color:var(--on-dark);border-radius:24px;padding:10px 10px 10px 14px;display:flex;align-items:center;gap:10px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;color:inherit;text-decoration:none;white-space:nowrap;font-size:15px}
+.logo-mark{width:36px;height:36px;border-radius:50%;background:var(--lime);color:var(--on-acc);display:grid;place-items:center}
+.nav-links{display:flex;gap:2px;margin-left:12px;flex:1}
+.nav-links a{color:var(--on-dark-muted);text-decoration:none;font-size:14px;padding:8px 12px;border-radius:999px;position:relative;white-space:nowrap}
+.nav-links a:hover{color:#fff}
+.nav-links a.on{color:var(--lime)}
+.nav-links a.on::after{content:"";position:absolute;left:12px;right:12px;bottom:-10px;height:2px;background:var(--lime)}
+.nav-right{display:flex;gap:8px;align-items:center;margin-left:auto}
+.burger{display:none;width:40px;height:40px;border-radius:50%;border:1px solid #3a3c37;background:transparent;color:var(--on-dark);cursor:pointer;place-items:center}
+@media(max-width:960px){
+  .nav-links{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;background:var(--dark);border-radius:22px;padding:10px;margin:0}
+  .nav-links.open{display:flex}.nav-links a{padding:12px 14px;font-size:16px}
+  .nav-links a.on::after{display:none}.burger{display:grid}
+}
+@media(max-width:520px){.nav .btn-lime{display:none}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:12px 20px;font-weight:600;font-size:15px;border:1px solid transparent;cursor:pointer;text-decoration:none;line-height:1.2;transition:transform .15s ease,background .15s ease}
+.btn:active{transform:scale(.98)}
+.btn-dark{background:var(--dark);color:var(--on-dark)}
+.btn-lime{background:var(--lime);color:var(--on-acc)}
+.btn-white{background:#fff;color:#151613}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn-ghost:hover{background:var(--surface2)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn .ic{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;margin-right:-10px}
+.btn-dark .ic{background:var(--lime);color:var(--on-acc)}
+.btn-lime .ic,.btn-white .ic{background:var(--dark);color:var(--on-dark)}
+.arrow{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;flex:none;border:0;cursor:pointer;background:var(--dark);color:var(--on-dark)}
+.arrow.light{background:#fff;color:#151613}
+.arrow.lime{background:var(--lime);color:var(--on-acc)}
+.arrow svg,.btn svg{width:20px;height:20px}
+.tag{display:inline-flex;align-items:center;gap:6px;border:1px solid currentColor;border-radius:8px;padding:2px 9px;font-size:12.5px;font-weight:500;white-space:nowrap}
+.chip{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:7px 14px;font-size:13.5px;background:var(--surface2);border:1px solid var(--line);cursor:pointer;color:var(--ink)}
+.chip.on{background:var(--dark);color:var(--on-dark);border-color:var(--dark)}
+.dot{width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block}
+
+/* surfaces */
+.sec{margin-top:14px;background:var(--surface);border-radius:34px;padding:clamp(22px,4vw,52px)}
+.card{border-radius:28px;padding:clamp(20px,2.6vw,30px);position:relative}
+.bg-lime{background:var(--lime);color:var(--on-acc)}
+.bg-lav{background:var(--lav);color:var(--on-acc)}
+.bg-orange{background:var(--orange);color:#fff}
+.bg-sage{background:var(--sage);color:var(--on-acc)}
+.bg-yellow{background:var(--yellow);color:var(--on-acc)}
+.bg-peach{background:var(--peach);color:var(--on-acc)}
+.bg-dark{background:var(--dark);color:var(--on-dark)}
+.bg-soft{background:var(--surface2);color:var(--ink)}
+.bg-lime .muted,.bg-lav .muted,.bg-sage .muted,.bg-yellow .muted,.bg-peach .muted{color:#4b4e47}
+.bg-dark .muted{color:var(--on-dark-muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.grid3,.grid4{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:26px;flex-wrap:wrap}
+.head p{max-width:380px}
+.stack>*+*{margin-top:12px}
+.row-flex{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.ph{display:inline-block;border:1.5px dashed currentColor;border-radius:10px;padding:1px 8px;opacity:.75;font-size:.92em}
+.demo-badge{display:inline-flex;align-items:center;gap:6px;background:var(--yellow);color:var(--on-acc);border-radius:8px;padding:2px 9px;font-size:12.5px;font-weight:600}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:14px;margin-top:14px}
+.hero-l{border-radius:34px;padding:clamp(26px,4vw,54px);display:flex;flex-direction:column;justify-content:space-between;gap:30px;min-height:520px}
+.hero-l h1 .inl{display:inline-grid;place-items:center;width:.9em;height:.62em;border:2px solid currentColor;border-radius:999px;vertical-align:.08em;margin:0 .06em}
+.hero-l h1 .inl svg{width:.38em;height:.38em}
+.photo{border-radius:34px;min-height:520px;position:relative;overflow:hidden;background:radial-gradient(120% 90% at 70% 10%,#FBE3C9 0%,#F2B88E 45%,#D88762 100%);color:#151613}
+.photo .who{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.photo .face{width:190px;height:190px;border-radius:50%;background:rgba(255,255,255,.35);display:grid;place-items:center;font-size:56px;font-weight:700;border:2px dashed rgba(21,22,19,.35)}
+.float{position:absolute;background:#fff;color:#151613;border-radius:18px;padding:10px 14px;font-size:13.5px;display:flex;gap:10px;align-items:center;box-shadow:0 10px 30px rgba(60,30,10,.12)}
+.float .mini{width:38px;height:38px;border-radius:12px;background:var(--dark);color:var(--lime);display:grid;place-items:center}
+.pin{position:absolute;border:1px solid #151613;border-radius:999px;padding:3px 10px 3px 6px;font-size:12.5px;display:flex;gap:6px;align-items:center;background:rgba(255,255,255,.45);backdrop-filter:blur(4px)}
+.pin i{width:12px;height:12px;border-radius:50%;background:var(--lime);border:1px solid #151613}
+@media(max-width:860px){.hero{grid-template-columns:1fr}.hero-l,.photo{min-height:auto}.photo{height:420px}}
+
+/* path cards */
+.path{min-height:260px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;cursor:pointer;text-decoration:none;transition:transform .2s ease}
+.path:hover{transform:translateY(-3px)}
+.path h3{font-size:clamp(26px,3vw,38px)}
+
+/* strip */
+.strip{display:grid;grid-template-columns:1fr 1fr auto 1fr;gap:10px;margin-top:14px}
+.strip>div{height:clamp(84px,11vw,130px);border-radius:999px;display:grid;place-items:center;font-size:clamp(22px,3.4vw,44px);font-weight:500;letter-spacing:-.02em;padding:0 24px}
+.strip .ar{aspect-ratio:1.5/1;padding:0}
+.strip .ar svg{width:46%;height:46%}
+@media(max-width:640px){.strip{grid-template-columns:1fr 1fr}.strip .ar{display:none}}
+
+/* mosaic */
+.mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.vcard{border-radius:28px;overflow:hidden;display:flex;flex-direction:column;min-height:330px;cursor:pointer;border:0;text-align:left;padding:0}
+.vcard .top{padding:22px 22px 18px;display:flex;flex-direction:column;gap:14px}
+.vcard .top h3{font-size:21px;line-height:1.18}
+.vcard .thumb{flex:1;min-height:150px;position:relative;display:flex;align-items:flex-end;justify-content:space-between;padding:16px 16px 16px 22px;color:#fff;background:linear-gradient(135deg,#2a2b28,#4b4c47)}
+.vcard .thumb .play{position:absolute;inset:0;display:grid;place-items:center;opacity:.9}
+.vcard .thumb .play span{width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;backdrop-filter:blur(4px)}
+@media(max-width:900px){.mosaic{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.mosaic{grid-template-columns:1fr}}
+
+/* rows table */
+.rows .row{display:grid;grid-template-columns:1.3fr 1.3fr .9fr 52px;align-items:center;gap:14px;padding:18px 0;border-bottom:1px solid var(--line);text-decoration:none;cursor:pointer}
+.rows .row:first-child{border-top:1px solid var(--line)}
+.rows .row .t{font-size:clamp(18px,2vw,24px);font-weight:500}
+.rows .row .arrow{width:42px;height:42px;background:transparent;border:1px solid var(--line);color:var(--ink)}
+.rows .row:hover .arrow{background:var(--lime);color:var(--on-acc);border-color:var(--lime)}
+@media(max-width:700px){.rows .row{grid-template-columns:1fr 42px}.rows .row .hide-m{display:none}}
+
+/* forms */
+label.f{display:block}
+label.f>span{display:block;font-size:13.5px;font-weight:500;margin-bottom:6px}
+.inp,select.inp,textarea.inp{width:100%;border:1px solid var(--line);background:var(--surface2);color:var(--ink);border-radius:16px;padding:13px 15px;font:inherit;font-size:15px}
+textarea.inp{min-height:90px;resize:vertical}
+.inp:focus{outline:2px solid var(--lime);outline-offset:0;border-color:transparent}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer}
+.check input{width:18px;height:18px;margin-top:2px;accent-color:#151613;flex:none}
+.err{color:var(--orange);font-size:13.5px;margin-top:6px}
+
+/* test */
+.test-wrap{max-width:780px;margin:0 auto}
+.prog{height:8px;border-radius:999px;background:var(--surface2);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--dark);border-radius:999px;transition:width .4s ease}
+.qprompt{font-size:clamp(21px,2.6vw,28px);line-height:1.3;font-weight:500;letter-spacing:-.01em}
+.opts{display:grid;gap:10px;margin-top:22px}
+.opt{display:flex;align-items:center;gap:14px;text-align:left;width:100%;border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:14px 16px;font-size:17px;cursor:pointer;transition:background .15s ease,border-color .15s ease}
+.opt:hover{border-color:var(--ink)}
+.opt b{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--surface2);font-size:14px;flex:none}
+.opt.sel{background:var(--lime);border-color:var(--lime);color:var(--on-acc)}
+.opt.sel b{background:var(--dark);color:var(--lime)}
+.opt.locked{cursor:default}
+.stages{display:flex;gap:6px;flex-wrap:wrap}
+.stages span{font-size:12.5px;padding:4px 10px;border-radius:999px;background:var(--surface2);color:var(--muted)}
+.stages span.on{background:var(--dark);color:var(--on-dark)}
+.stages span.done{background:var(--sage);color:var(--on-acc)}
+
+/* dna */
+.dna-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
+@media(max-width:860px){.dna-wrap{grid-template-columns:1fr}}
+.dna svg{width:100%;height:auto;display:block}
+.dna .ring{fill:none;stroke:var(--line);stroke-width:1}
+.dna .spoke{stroke:var(--line);stroke-width:1}
+.dna .poly{fill:rgba(226,243,106,.55);stroke:#151613;stroke-width:2;transform-box:view-box;transform-origin:180px 168px;animation:grow 1.1s cubic-bezier(.2,.9,.25,1) both}
+:root[data-theme="dark"] .dna .poly{stroke:var(--lime);fill:rgba(226,243,106,.28)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dna .poly{stroke:var(--lime);fill:rgba(226,243,106,.28)}}
+.dna .prev{fill:none;stroke:var(--lav);stroke-width:2;stroke-dasharray:5 5}
+.dna .pt{fill:var(--dark);stroke:var(--lime);stroke-width:2}
+.dna .lbl{cursor:pointer}
+.dna .lbl text{fill:var(--ink);font-size:12px;font-family:inherit}
+.dna .lbl .sc{font-weight:700;font-size:13px}
+.dna .lbl.on rect{fill:var(--lime)}
+.dna .lbl.on text{fill:#151613}
+.dna .lbl rect{fill:transparent}
+@keyframes grow{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.dna .poly{animation:none}*{transition:none!important}}
+.meter{height:8px;border-radius:999px;background:rgba(0,0,0,.08);overflow:hidden}
+.meter i{display:block;height:100%;background:#151613;border-radius:999px}
+.bg-dark .meter{background:rgba(255,255,255,.12)}.bg-dark .meter i{background:var(--lime)}
+.bar-row{display:grid;grid-template-columns:150px 1fr 70px;gap:12px;align-items:center;font-size:14px;padding:6px 0}
+@media(max-width:600px){.bar-row{grid-template-columns:100px 1fr 54px}}
+.bar{height:26px;border-radius:8px;background:var(--surface2);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:8px}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.bg-dark .kv{border-color:#33352f}
+
+/* admin */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.t{width:100%;border-collapse:collapse;font-size:14px;min-width:760px}
+table.t th{text-align:left;font-weight:600;color:var(--muted);font-size:12.5px;padding:10px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.t td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+table.t tr.clk{cursor:pointer}
+table.t tr.clk:hover td{background:var(--surface2)}
+.metric{border-radius:22px;padding:18px;background:var(--surface2)}
+.metric .v{font-size:32px;font-weight:600;letter-spacing:-.02em;line-height:1.1;margin:6px 0}
+.formula{font-size:12.5px;color:var(--muted)}
+.seg{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;font-weight:700;font-size:13px}
+.seg-A{background:var(--orange);color:#fff}.seg-B{background:var(--lav);color:var(--on-acc)}.seg-C{background:var(--sage);color:var(--on-acc)}.seg-D{background:var(--yellow);color:var(--on-acc)}.seg-E{background:var(--dark);color:var(--lime)}
+
+/* modal / toast */
+#modal{position:fixed;inset:0;z-index:100;display:none;background:rgba(10,11,9,.55);padding:16px;overflow:auto}
+#modal.open{display:grid;place-items:center}
+#modal .box{background:var(--surface);color:var(--ink);border-radius:30px;padding:clamp(20px,3vw,34px);max-width:680px;width:100%;position:relative;margin:auto}
+#modal .x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:18px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(120px);background:var(--dark);color:var(--on-dark);padding:12px 20px;border-radius:999px;z-index:110;transition:transform .3s ease;font-size:14.5px;max-width:92vw}
+#toast.show{transform:translateX(-50%) translateY(0)}
+footer.foot{margin-top:14px;background:var(--surface);border-radius:34px;padding:clamp(22px,4vw,44px)}
+.foot-bottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);padding-top:20px;margin-top:30px}
+.note{border-left:3px solid var(--lime);padding:6px 0 6px 14px;font-size:14px;color:var(--muted)}
+details summary{cursor:pointer;font-weight:600}
+.timeline>div{border-left:2px solid var(--line);padding:0 0 14px 16px;position:relative;font-size:14px}
+.timeline>div::before{content:"";position:absolute;left:-6px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--lime);border:1px solid #151613}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="nav">
+    <a class="logo" href="#home" aria-label="На главную">
+      <span class="logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 3c0 6 10 6 10 12s-10 3-10 6M17 3c0 6-10 6-10 12s10 3 10 6"/><path d="M8.5 7h7M8.5 17h7"/></svg></span>
+      <span id="brandName">English DNA</span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home" data-r="home">Главная</a>
+      <a href="#about" data-r="about">Обо мне</a>
+      <a href="#lessons" data-r="lessons">Как проходят занятия</a>
+      <a href="#videos" data-r="videos">Видео</a>
+      <a href="#dna" data-r="dna">English Learning DNA</a>
+      <a href="#cabinet" data-r="cabinet">Мой кабинет</a>
+    </nav>
+    <div class="nav-right">
+      <a class="btn btn-lime" href="#individual">Записаться</a>
+      <button class="burger" data-act="burger" aria-label="Меню"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </header>
+  <main id="app"></main>
+  <footer class="foot" id="foot"></footer>
+</div>
+<div id="modal" role="dialog" aria-modal="true"></div>
+<div id="toast" role="status"></div>
+
+<script>
+'use strict';
+/* ================= utils & storage ================= */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const S=(k,d)=>{try{const v=localStorage.getItem('eldna_'+k);return v==null?d:JSON.parse(v)}catch(e){return d}};
+const W=(k,v)=>{try{localStorage.setItem('eldna_'+k,JSON.stringify(v))}catch(e){}};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const fmtDate=t=>new Date(t).toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'});
+const fmtDT=t=>new Date(t).toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+const ARW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+const ARW_UP='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>';
+const PLAY='<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+let cur='';
+const LV=['','A1','A2','B1','B2','C1'];
+const SPEAK={'A1.1':'Starter','A1.2':'Starter / Elementary','A2.1':'Elementary','A2.2':'Pre-Intermediate','B1.1':'Pre-Intermediate / Intermediate','B1.2':'Intermediate','B2.1':'Upper-Intermediate','B2.2':'Upper-Intermediate','C1':'Advanced'};
+const VISIT='v'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const SID=S('sid',null)||(()=>{const id='anon-'+Math.random().toString(36).slice(2,10);W('sid',id);return id})();
+
+/* ================= settings (editable in teacher cabinet) ================= */
+const DEF={name:'',heroTitle:'Английский, который становится понятнее',heroText:'Помогаю разбираться в языке, замечать закономерности и применять знания в реальном общении. Без бессмысленного заучивания и страха сделать ошибку.',about:'',approach:'',requests:'',threads:'',instagram:'',youtube:'',indPrice:'',indDuration:'',indFormat:'',indPolicy:'',indSeats:'',groupPrice:'',bookingUrl:'',paidDiag:true,paidDiagPrice:'',intro:true};
+const SET=()=>Object.assign({},DEF,S('settings',{}));
+const ph=(v,label)=>v?esc(v):`<span class="ph">${esc(label)}</span>`;
+
+/* ================= attribution & events ================= */
+(function(){
+  try{
+    let a=S('attr',null);const ref=(typeof document!=='undefined'&&document.referrer)||'';
+    let src='Источник неизвестен';
+    if(/threads\.(net|com)/i.test(ref))src='Threads';else if(/instagram/i.test(ref))src='Instagram';
+    else if(/youtube|youtu\.be/i.test(ref))src='YouTube';
+    else if(ref&&!/claude\.ai|claudeusercontent|anthropic/i.test(ref)){try{src=new URL(ref).hostname}catch(e){}}
+    const now={source:src,referrer:ref.slice(0,120),at:Date.now(),visit:VISIT};
+    if(!a)a={first:now,last:now};else if(src!=='Источник неизвестен'||!a.last)a.last=now;
+    W('attr',a);
+  }catch(e){}
+})();
+function track(name,p){
+  const ev=S('events',[]);const at=S('attr',{});
+  ev.push(Object.assign({name,t:Date.now(),sid:SID,visit:VISIT,source:(at.last||{}).source||'Источник неизвестен',page:cur||'',version:'demo-0.1'},p||{}));
+  W('events',ev.slice(-500));
+}
+
+/* ================= competencies & topics ================= */
+const AX=[
+ {k:'vk',comp:'V',en:'Vocabulary Knowledge',ru:'Понимание значений слов',l1:'Vocabulary',l2:'Knowledge'},
+ {k:'lu',comp:'V',en:'Lexical Usage',ru:'Выбор слов и сочетаний в контексте',l1:'Lexical',l2:'Usage'},
+ {k:'ga',comp:'G',en:'Grammar Accuracy',ru:'Грамматическая точность',l1:'Grammar',l2:'Accuracy'},
+ {k:'gr',comp:'G',en:'Grammar Range',ru:'Владение конструкциями разной сложности',l1:'Grammar',l2:'Range'},
+ {k:'cc',comp:'C',en:'Context Comprehension',ru:'Понимание письменного контекста',l1:'Context',l2:'Comprehension'}];
+const AXK=Object.fromEntries(AX.map(a=>[a.k,a]));
+const COMPN={V:'Лексика',G:'Грамматика',C:'Контекст'};
+const STR={vk:'Уверенно узнаёшь значения слов на своём уровне.',lu:'Хорошо подбираешь слова и сочетания под ситуацию.',ga:'Точно применяешь грамматические формы.',gr:'Справляешься с разнообразными, в том числе более сложными, конструкциями.',cc:'Хорошо понимаешь смысл и намерение в коротких текстах.'};
+const IMP={vk:'Значения слов следующего уровня: расширять словарный запас.',lu:'Сочетаемость слов и устойчивые выражения в контексте.',ga:'Точность грамматических форм, которые уже знакомы.',gr:'Более сложные конструкции: условные предложения, пассив, инверсия.',cc:'Косвенный смысл и логические связи в письменном тексте.'};
+
+const TOP={
+ meaning:{n:'Значение слов',e:'Слово легче запомнить в типичной ситуации и с парой примеров, чем через один перевод.',x:'reliable — a reliable car, a reliable friend',s:'Выписывай новые слова сразу с примером предложения, а не только с переводом.',q:{p:'‘Exhausted’ means…',o:['very tired','very hungry','very angry','very bored'],w:'Exhausted — «измотанный», сильнее, чем tired.'}},
+ colloc:{n:'Сочетаемость и устойчивые выражения',e:'В английском слова «дружат» парами: make a mistake, но do homework. Перевод с русского часто подсказывает не тот глагол.',x:'make a decision, do your best, have a good time',s:'Собирай не отдельные слова, а сочетания целиком — по 3–5 в день.',q:{p:'She ___ a lot of progress this year.',o:['has made','has done','has taken','has had'],w:'Progress сочетается с make: make progress.'}},
+ phrasal:{n:'Фразовые глаголы',e:'Частица меняет смысл глагола: look after — заботиться, look for — искать. Их удобнее учить группами по теме.',x:'take off your coat, come up with an idea',s:'Заведи список фразовых глаголов по темам и придумывай к каждому свой пример.',q:{p:'I can’t ___ this noise any more!',o:['put up with','put off','put on','put away'],w:'Put up with — терпеть, мириться с чем-то.'}},
+ prep:{n:'Предлоги и управление',e:'Многие прилагательные и глаголы требуют конкретного предлога: good at, interested in, depend on.',x:'good at maths, afraid of spiders',s:'Учи прилагательные и глаголы сразу с предлогом, как одно целое.',q:{p:'He’s interested ___ history.',o:['in','on','at','about'],w:'Interested in — устойчивое управление.'}},
+ basics:{n:'Базовые конструкции',e:'To be, do/does в вопросах, there is/are — основа, на которой держатся остальные темы.',x:'Is she a teacher? Do you like tea? There are two cats.',s:'Потренируй короткие вопросы и ответы о себе: Do you…? Are you…? Is there…?',q:{p:'___ your brother live in Moscow?',o:['Does','Do','Is','Are'],w:'He/she/it в Present Simple → вопрос с does.'}},
+ tenses:{n:'Видовременные формы',e:'Время в английском показывает не только «когда», но и «как»: процесс, факт или результат.',x:'I was cooking when she called. I had already left.',s:'Пересказывай свой день в прошедшем времени, отмечая, что было процессом, а что — завершённым действием.',q:{p:'While I ___, the phone rang.',o:['was cooking','cooked','have cooked','cook'],w:'Длительное действие в прошлом, прерванное другим, — Past Continuous.'}},
+ pp:{n:'Present Perfect',e:'Present Perfect связывает прошлое с настоящим: важен результат или опыт «на сейчас», а не точное время. Поэтому по-русски он часто переводится прошедшим временем, но работает иначе.',x:'I’ve lost my keys (и сейчас их нет). I’ve lived here since 2019.',s:'Сравнивай пары: I lost my keys yesterday / I’ve lost my keys — и проговаривай, что меняется.',q:{p:'I ___ this film three times.',o:['have seen','saw','see','am seeing'],w:'Опыт к настоящему моменту без указания времени — Present Perfect.'}},
+ cond:{n:'Условные предложения и нереальность',e:'Чем дальше ситуация от реальности, тем «дальше в прошлое» уходит глагол: if I knew… / if I had known…',x:'If it rains, we’ll stay. If I had known, I would have helped.',s:'Составь по три предложения о реальных планах, мечтах и сожалениях о прошлом.',q:{p:'If I ___ you, I’d take the job.',o:['were','am','will be','have been'],w:'Нереальное условие в настоящем: If I were you…'}},
+ passive:{n:'Пассивный залог',e:'Пассив выбирают, когда важнее действие или результат, а не тот, кто его совершил.',x:'The bridge was built in 1890. The report must be finished by Friday.',s:'Найди пять новостных заголовков и перескажи их полными предложениями в пассиве.',q:{p:'English ___ in many countries.',o:['is spoken','speaks','is speaking','spoke'],w:'Действие над подлежащим → be + третья форма глагола.'}},
+ relative:{n:'Относительные придаточные',e:'Who — для людей, which — для предметов, whose — «чей», that — универсально в определяющих придаточных.',x:'The man who called you… The book which I bought…',s:'Описывай людей и предметы вокруг одним предложением с who / which / whose.',q:{p:'That’s the girl ___ bike was stolen.',o:['whose','who','which','whom'],w:'Принадлежность → whose.'}},
+ modals:{n:'Модальные глаголы',e:'Модальные глаголы передают отношение: запрет, необходимость, совет. Mustn’t — нельзя, don’t have to — не обязательно.',x:'You mustn’t smoke here. You don’t have to come.',s:'Сформулируй правила своего дома или работы через must, mustn’t и don’t have to.',q:{p:'You ___ bring food — lunch is included.',o:['don’t have to','mustn’t','can’t','shouldn’t to'],w:'Нет необходимости → don’t have to.'}},
+ advgram:{n:'Сложные грамматические формы',e:'Инверсия, причастные обороты, косвенные вопросы, герундий и инфинитив делают речь точнее. Чаще всего они встречаются в письменных текстах.',x:'Not only was he late… She suggested taking a taxi. He asked where I lived.',s:'Читай короткие статьи и выписывай конструкции, которые не построил бы сам, — потом создавай по ним свои примеры.',q:{p:'Never ___ such a beautiful place.',o:['have I seen','I have seen','I saw','did I saw'],w:'После never в начале предложения — инверсия.'}},
+ detail:{n:'Понимание деталей',e:'В коротких текстах ключевая информация часто прячется в одном слове: but, instead, only, closed.',x:'Closed on Sundays → в воскресенье прийти нельзя.',s:'Читай объявления, письма и заметки и формулируй главный факт одним предложением.',q:{p:'«Open daily except Mondays.» When is it closed?',o:['on Mondays','every day','on weekends','never'],w:'Except — «кроме».'}},
+ intent:{n:'Намерение и косвенный смысл',e:'В английском часто говорят мягко или с иронией: I’m afraid… — вежливый отказ, Well, that went well — сарказм. Важно понять, что человек хочет сказать, а не только что он сказал.',x:'Could you possibly…? — вежливая просьба',s:'Отмечай смягчающие фразы в сериалах и письмах: I’m afraid, I was wondering, would you mind.',q:{p:'«I was wondering if you could help me with this.» The speaker is…',o:['politely asking for help','talking about the past','refusing to help','thinking aloud'],w:'I was wondering if… — вежливая форма просьбы.'}},
+ connect:{n:'Логические связи',e:'Связки показывают направление мысли: however — противопоставление, therefore — вывод, despite — уступка.',x:'Despite the rain, the match went ahead.',s:'Подчёркивай связки в коротком тексте и пересказывай логику абзаца по ним.',q:{p:'It was very late. ___, we decided to keep working.',o:['Nevertheless','Therefore','For example','Because'],w:'Противопоставление ожиданию → nevertheless.'}},
+ infer:{n:'Выводы из текста',e:'Вывод опирается на детали текста, а не на догадки «вообще». Полезный вопрос себе: какие слова в тексте это подтверждают?',x:'He hasn’t said a word all evening → он, вероятно, чем-то занят или отвлечён.',s:'После чтения формулируй один вывод и находи в тексте два подтверждения.',q:{p:'«She checked her watch again and sighed.» She is probably…',o:['impatient','delighted','asleep','lost'],w:'Повторный взгляд на часы и вздох указывают на нетерпение.'}}
+};
+
+/* ================= original demo bank (first option = correct) ================= */
+const BANK=[];
+function q(id,comp,sub,lvl,topic,prompt,opts,expl){BANK.push({id,comp,sub,lvl,topic,prompt,opts,ans:opts[0],expl})}
+// A1
+q('a1v1','V','vk',1,'meaning','Which word is a colour?',['green','table','quickly','Monday'],'Green — цвет; остальные слова обозначают предмет, способ действия и день недели.');
+q('a1v2','V','vk',1,'meaning','What is the opposite of ‘cheap’?',['expensive','small','old','slow'],'Cheap — дешёвый, expensive — дорогой.');
+q('a1v3','V','vk',1,'meaning','Where do you usually buy bread?',['at a bakery','at a library','at a bank','at a garage'],'Bakery — пекарня.');
+q('a1v4','V','lu',1,'colloc','I ___ breakfast at 8 o’clock.',['have','make','do','take'],'Have breakfast — устойчивое сочетание.');
+q('a1v5','V','lu',1,'colloc','Can you ___ the window, please? It’s cold.',['close','stop','end','finish'],'Close the window — закрыть окно.');
+q('a1g1','G','ga',1,'basics','She ___ a teacher.',['is','am','are','be'],'He / she / it → is.');
+q('a1g2','G','ga',1,'basics','___ you like coffee?',['Do','Does','Are','Is'],'Вопрос с you в Present Simple → do.');
+q('a1g3','G','ga',1,'tenses','He ___ to work every day.',['goes','go','going','gone'],'He / she / it в Present Simple → окончание -s / -es.');
+q('a1g4','G','gr',1,'basics','There ___ two cats in the garden.',['are','is','be','am'],'Множественное число → there are.');
+q('a1g5','G','gr',1,'basics','I can’t find ___ keys.',['my','me','I','mine'],'Перед существительным — притяжательное my.');
+q('a1c1','C','cc',1,'detail','Sign on a shop door: «Closed on Sundays.» When can you NOT go to the shop?',['on Sunday','on Monday','on Saturday','on Friday'],'Closed on Sundays — закрыто по воскресеньям.');
+q('a1c2','C','cc',1,'intent','Anna: «I’m hungry.» What is the best reply from Tom?',['Let’s get something to eat.','I’m fine, thanks.','It’s five o’clock.','Nice to meet you.'],'Реплика должна отвечать на ситуацию: Анна голодна.');
+q('a1c3','C','cc',1,'detail','«Hi! I’m Leo. I’m from Spain, but I live in London now.» Where does Leo live?',['in London','in Spain','in Paris','We don’t know.'],'But I live in London now — сейчас он живёт в Лондоне.');
+q('a1c4','C','cc',1,'detail','Sign: «Please do not use your phone in the cinema.» What does it mean?',['Don’t use your phone during the film.','You can buy a phone here.','Phones are free in the cinema.','Call the cinema for tickets.'],'Do not use — не пользоваться.');
+q('a1c5','C','cc',1,'infer','In a shop, someone asks you: «Can I help you?» Who is probably speaking?',['a shop assistant','another customer','a doctor','a bus driver'],'В магазине так обычно обращается продавец.');
+// A2
+q('a2v1','V','vk',2,'meaning','A person who flies a plane is a ___.',['pilot','driver','waiter','farmer'],'Pilot — пилот.');
+q('a2v2','V','vk',2,'meaning','‘Usually’ means…',['most of the time','never','only once','yesterday'],'Usually — обычно, в большинстве случаев.');
+q('a2v3','V','vk',2,'meaning','You feel ‘hungry’ when you need…',['food','sleep','money','help'],'Hungry — голодный.');
+q('a2v4','V','lu',2,'colloc','Don’t forget to ___ your homework.',['do','make','take','have'],'Do homework — устойчивое сочетание.');
+q('a2v5','V','lu',2,'phrasal','Please ___ your coat — it’s warm in here.',['take off','take up','put off','get off'],'Take off — снимать (одежду).');
+q('a2v6','V','lu',2,'colloc','We ___ a great time at the party.',['had','made','did','took'],'Have a great time — хорошо провести время.');
+q('a2g1','G','ga',2,'tenses','I ___ to the cinema yesterday.',['went','go','have gone','going'],'Yesterday → Past Simple.');
+q('a2g2','G','ga',2,'advgram','My sister is ___ than me.',['taller','more tall','tallest','the taller'],'Короткие прилагательные: -er + than.');
+q('a2g3','G','ga',2,'advgram','How ___ money do you have?',['much','many','lot','few'],'Money — неисчисляемое существительное → much.');
+q('a2g4','G','gr',2,'tenses','Look! It ___ outside.',['is raining','rains','rained','rain'],'Look! — действие происходит сейчас → Present Continuous.');
+q('a2g5','G','gr',2,'tenses','We ___ visit our grandparents next weekend — we’ve already bought the tickets.',['are going to','going','will to','goes to'],'Запланированное намерение → be going to.');
+q('a2c1','C','cc',2,'intent','Email: «Sorry, I can’t come on Friday. Is Saturday OK for you?» What does the writer want?',['to change the day','to cancel the meeting completely','to meet on Friday','to invite more people'],'Автор предлагает перенести встречу на субботу.');
+q('a2c2','C','cc',2,'intent','Mia: «Do you want to come with us tonight?» Ben: «I’d love to, but I have to work.» Is Ben going with them?',['No','Yes','Yes, but later','He doesn’t say.'],'I’d love to, but… — вежливый отказ.');
+q('a2c3','C','cc',2,'detail','Notice: «Lift out of order. Please use the stairs.» What does it mean?',['The lift isn’t working.','The lift is new.','The stairs are closed.','You must order a lift.'],'Out of order — не работает.');
+q('a2c4','C','cc',2,'infer','«The film was so boring that I fell asleep.» How did the writer feel about the film?',['not interested','excited','scared','angry'],'Boring и fell asleep — фильм был неинтересным.');
+q('a2c5','C','cc',2,'connect','«Tom left home at 8. The bus was late, so he got to work at 9:30 instead of 9.» Why was Tom late?',['The bus was late.','He woke up late.','He walked to work.','Work started at 9:30.'],'So показывает следствие: автобус опоздал → Том опоздал.');
+// B1
+q('b1v1','V','vk',3,'meaning','‘Reliable’ describes someone or something that…',['you can trust','is very old','is expensive','breaks easily'],'Reliable — надёжный.');
+q('b1v2','V','vk',3,'meaning','A ‘colleague’ is someone…',['you work with','in your family','who lives next door','who teaches you'],'Colleague — коллега.');
+q('b1v3','V','lu',3,'colloc','I’ve ___ a mistake in this email. Can you check it?',['made','done','taken','had'],'Make a mistake — устойчивое сочетание.');
+q('b1v4','V','lu',3,'phrasal','Could you ___ my cat while I’m on holiday?',['look after','look for','look up','look into'],'Look after — присматривать, заботиться.');
+q('b1v5','V','lu',3,'prep','She’s really good ___ maths.',['at','in','on','for'],'Good at — устойчивое управление.');
+q('b1v6','V','lu',3,'colloc','Our flight was ___ because of the storm.',['cancelled','deleted','removed','finished'],'Cancel a flight — отменить рейс.');
+q('b1g1','G','ga',3,'pp','I ___ in this city since 2019.',['have lived','live','am living','lived'],'Since + момент в прошлом, действие продолжается → Present Perfect.');
+q('b1g2','G','ga',3,'cond','If it ___ tomorrow, we’ll stay at home.',['rains','will rain','rained','would rain'],'В условной части первого типа — Present Simple.');
+q('b1g3','G','ga',3,'modals','You ___ smoke here. It’s against the rules.',['mustn’t','don’t have to','needn’t','can'],'Запрет → mustn’t.');
+q('b1g4','G','gr',3,'passive','This bridge ___ in 1890.',['was built','built','has built','is building'],'Мост построили → пассив в прошедшем времени.');
+q('b1g5','G','gr',3,'relative','The woman ___ lives next door is a doctor.',['who','which','whose','what'],'Для людей → who.');
+q('b1g6','G','gr',3,'tenses','When I arrived, they ___ dinner, so I joined them.',['were having','have had','are having','has'],'Процесс в момент прошлого → Past Continuous.');
+q('b1c1','C','cc',3,'intent','«I wouldn’t eat that if I were you.» What does the speaker mean?',['They advise you not to eat it.','They want to eat it themselves.','They are very hungry.','They are inviting you to eat.'],'If I were you — формула совета.');
+q('b1c2','C','cc',3,'intent','Your neighbour says: «Could you possibly turn the music down a little?» What is the neighbour doing?',['politely asking for less noise','complimenting your music','asking you to play another song','inviting you to a party'],'Could you possibly… — вежливая просьба.');
+q('b1c3','C','cc',3,'connect','«Most people expected the team to lose. ___, they won 3–0.» Which word fits best?',['However','Therefore','Moreover','For example'],'Противопоставление ожиданию → however.');
+q('b1c4','C','cc',3,'infer','Hotel review: «The room was lovely, but the walls were so thin that we could hear every conversation next door.» What was the main problem?',['noise','the food','the price','the location'],'Тонкие стены и слышимость — проблема с шумом.');
+q('b1c5','C','cc',3,'infer','«Jake has been staring at his phone all evening and hasn’t said a word to anyone.» What can we infer?',['Something on his phone has his attention.','Jake is asleep.','Jake has lost his phone.','Jake is talking a lot.'],'Весь вечер смотрит в телефон и молчит — его внимание занято телефоном.');
+// B2
+q('b2v1','V','vk',4,'meaning','To ‘postpone’ a meeting means to…',['move it to a later time','cancel it forever','announce it','prepare for it'],'Postpone — отложить, перенести на более позднее время.');
+q('b2v2','V','vk',4,'meaning','If someone is ‘reluctant’ to help, they are…',['unwilling','eager','unable','proud'],'Reluctant — неохотно согласный, не желающий.');
+q('b2v3','V','vk',4,'meaning','A ‘thorough’ check is…',['careful and complete','quick and simple','unnecessary','done by a machine'],'Thorough — тщательный.');
+q('b2v4','V','lu',4,'colloc','The new policy has ___ a lot of criticism.',['attracted','caught','made','held'],'Attract criticism — вызвать критику.');
+q('b2v5','V','lu',4,'phrasal','We need to ___ a better solution before Monday.',['come up with','come down with','get away with','put up with'],'Come up with — придумать.');
+q('b2v6','V','lu',4,'colloc','There’s only a ___ chance that we’ll finish on time.',['slim','thin','light','low-down'],'Slim chance — небольшой шанс.');
+q('b2g1','G','ga',4,'cond','If I ___ about the traffic, I would have left earlier.',['had known','knew','have known','would know'],'Третий тип: if + Past Perfect.');
+q('b2g2','G','ga',4,'advgram','He asked me where ___.',['I lived','did I live','do I live','I do live'],'В косвенном вопросе — прямой порядок слов.');
+q('b2g3','G','gr',4,'tenses','By the time we got to the cinema, the film ___.',['had already started','has already started','was already starting','is already starting'],'Действие завершилось раньше другого в прошлом → Past Perfect.');
+q('b2g4','G','gr',4,'advgram','She suggested ___ a taxi.',['taking','to take','take','to taking'],'После suggest — герундий.');
+q('b2g5','G','gr',4,'cond','I wish I ___ more time to travel.',['had','have','will have','am having'],'Wish о настоящем → Past Simple.');
+q('b2g6','G','gr',4,'passive','The report ___ by Friday.',['must be finished','must finish','must finished','must be finishing'],'Модальный глагол + be + третья форма.');
+q('b2c1','C','cc',4,'intent','«Well, that went well,» said Kate, looking at the broken vase on the floor. Kate is…',['being sarcastic','sincerely pleased','asking a question','apologising'],'Слова противоречат ситуации — это сарказм.');
+q('b2c2','C','cc',4,'intent','Email: «I’m afraid we are unable to offer you the position at this time, but we will keep your CV on file.» What does this mean?',['You didn’t get the job, but they may contact you later.','You got the job.','You need to send your CV again.','You are invited to an interview.'],'I’m afraid… unable — вежливый отказ, но резюме сохранят.');
+q('b2c3','C','cc',4,'connect','«Despite the heavy rain, the match went ahead as planned.» What happened to the match?',['It took place.','It was cancelled.','It was delayed.','It moved indoors.'],'Despite — «несмотря на»; went ahead — состоялся.');
+q('b2c4','C','cc',4,'intent','«He’s not exactly the most punctual person in the world.» What does the speaker mean?',['He is often late.','He is always on time.','He travels a lot.','He is very organised.'],'Not exactly… — мягкое, ироничное отрицание.');
+q('b2c5','C','cc',4,'connect','«Remote work saves commuting time. On the other hand, some employees feel isolated.» What is the writer doing?',['presenting an advantage and a disadvantage','arguing that remote work is bad','describing a daily commute','giving instructions to employees'],'On the other hand вводит противоположную сторону.');
+// C1
+q('c1v1','V','vk',5,'meaning','‘Ubiquitous’ means…',['found everywhere','extremely rare','old-fashioned','hard to understand'],'Ubiquitous — вездесущий, повсеместный.');
+q('c1v2','V','vk',5,'meaning','A ‘meticulous’ plan is…',['very careful and detailed','rushed','secret','unrealistic'],'Meticulous — скрупулёзный, тщательный.');
+q('c1v3','V','vk',5,'meaning','To ‘undermine’ someone’s authority means to…',['gradually weaken it','strongly support it','officially confirm it','openly share it'],'Undermine — подрывать, ослаблять.');
+q('c1v4','V','lu',5,'colloc','I’m afraid your argument doesn’t ___ water.',['hold','carry','keep','take'],'Not hold water — «не выдерживать критики».');
+q('c1v5','V','lu',5,'phrasal','We need to ___ the pros and cons before we decide.',['weigh up','look out','set off','put up'],'Weigh up — взвесить.');
+q('c1v6','V','lu',5,'colloc','It was a ___ decision — there was no time to think.',['split-second','half-minute','quick-time','fast-moment'],'Split-second decision — мгновенное решение.');
+q('c1g1','G','ga',5,'advgram','Hardly ___ the room when the phone rang.',['had she entered','she had entered','did she entered','she entered'],'Hardly в начале → инверсия + Past Perfect.');
+q('c1g2','G','ga',5,'cond','It’s high time we ___ home.',['went','go','will go','are going'],'It’s high time + Past Simple.');
+q('c1g3','G','gr',5,'advgram','Not only ___ late, but he also forgot the tickets.',['was he','he was','he is','did he was'],'Not only в начале → инверсия.');
+q('c1g4','G','gr',5,'cond','___ about the problem, I would have told you.',['Had I known','If I knew','Would I know','I had known'],'Инверсия в условии третьего типа: Had I known…');
+q('c1g5','G','gr',5,'advgram','___ the circumstances, the team performed remarkably well.',['Given','Giving','Having given','To give'],'Given — «учитывая».');
+q('c1c1','C','cc',5,'intent','«I’m not saying your proposal is wrong — merely that it might benefit from further thought.» The speaker is…',['politely suggesting the proposal needs more work','fully supporting the proposal','rejecting it aggressively','asking for help'],'Смягчённая критика: предложение стоит доработать.');
+q('c1c2','C','cc',5,'infer','«The minister’s statement was carefully worded so as to commit to nothing.» This suggests the statement was…',['deliberately vague','a clear promise','badly translated','unusually long'],'Commit to nothing — намеренно уклончиво.');
+q('c1c3','C','cc',5,'connect','«Far from solving the problem, the new software only made it worse.» What did the software do?',['It made things worse.','It helped a little.','It solved the problem.','It was never installed.'],'Far from — «вовсе не»; made it worse — ухудшило.');
+q('c1c4','C','cc',5,'intent','«She’s certainly no stranger to controversy.» What does this mean?',['She has often been involved in controversy.','She avoids controversy.','She has just moved to the area.','She doesn’t like strangers.'],'No stranger to — хорошо знаком с чем-то.');
+q('c1c5','C','cc',5,'infer','«While the study’s findings are intriguing, the sample was small and the results have yet to be replicated.» The writer’s attitude is…',['cautious','completely convinced','dismissive','angry'],'Интерес + оговорки о выборке → осторожная позиция.');
+const QB=Object.fromEntries(BANK.map(x=>[x.id,x]));
+
+/* ================= Adaptive Testing Engine (rule-based MVP) ================= */
+const PLAN=[];
+[['V','vk'],['G','ga'],['C','cc'],['V','lu'],['G','gr'],['C','cc'],['G','ga'],['V','vk']].forEach(([c,s])=>PLAN.push({stage:'calib',comp:c,sub:s}));
+for(let i=0;i<10;i++)PLAN.push({stage:'vocab',comp:'V',sub:i%2?'lu':'vk'});
+for(let i=0;i<10;i++)PLAN.push({stage:'gram',comp:'G',sub:i%2?'gr':'ga'});
+for(let i=0;i<10;i++)PLAN.push({stage:'ctx',comp:'C',sub:'cc'});
+for(let i=0;i<4;i++)PLAN.push({stage:'control',comp:null,sub:null});
+const STAGEN={calib:'Разминка',vocab:'Лексика',gram:'Грамматика',ctx:'Контекст',control:'Финальные вопросы'};
+const TOTAL=PLAN.length; // 42
+
+function newSession(){return {id:'s'+Date.now().toString(36),started:Date.now(),idx:0,answers:[],cal:{lvl:1,st:0,er:0},lv:{},current:null,log:[],version:'demo-0.1',qStart:Date.now()}}
+function rand(a){return a[Math.floor(Math.random()*a.length)]}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function targetFor(s){
+  const slot=PLAN[s.idx];
+  if(slot.stage==='calib')return {lvl:s.cal.lvl,sub:slot.sub,comp:slot.comp,why:'калибровка'};
+  if(slot.stage==='control'){
+    const e=estimate(s.answers);const lo=clamp(Math.floor(e.a),1,4);const k=s.idx-(TOTAL-4);
+    const lvl=k%2===0?lo+1:lo;
+    const counts=AX.map(x=>({k:x.k,n:s.answers.filter(a=>a.sub===x.k).length,r:Math.random()})).sort((a,b)=>a.n-b.n||a.r-b.r);
+    const sub=counts[0].k;
+    return {lvl,sub,comp:AXK[sub].comp,why:`граница ${LV[lo]}/${LV[lo+1]}, ось с наименьшим числом ответов`};
+  }
+  if(s.lv[slot.comp]==null)s.lv[slot.comp]={lvl:s.cal.lvl,st:0,er:0};
+  return {lvl:s.lv[slot.comp].lvl,sub:slot.sub,comp:slot.comp,why:'адаптивный этап'};
+}
+function pickItem(s,t){
+  const used=new Set(s.answers.map(a=>a.qid));const seen=new Set(S('seen',[]));
+  let pool=BANK.filter(x=>!used.has(x.id)&&x.sub===t.sub);
+  if(!pool.length)pool=BANK.filter(x=>!used.has(x.id)&&x.comp===t.comp);
+  if(!pool.length)pool=BANK.filter(x=>!used.has(x.id));
+  const lastTopic=s.answers.length?s.answers[s.answers.length-1].topic:null;
+  const scored=pool.map(x=>({x,d:Math.abs(x.lvl-t.lvl)*10+(seen.has(x.id)?3:0)+(x.topic===lastTopic?1:0)+Math.random()}));
+  scored.sort((a,b)=>a.d-b.d);
+  return scored[0].x;
+}
+function nextQuestion(s){
+  if(s.current)return s.current;
+  const t=targetFor(s);const it=pickItem(s,t);
+  s.current={qid:it.id,order:shuffle(it.opts),target:t.lvl,why:t.why,fallback:it.lvl!==t.lvl};
+  s.qStart=Date.now();
+  return s.current;
+}
+function adapt(o,correct,isCal){
+  if(correct){
+    if(isCal&&o.lvl<=2){const up=o.lvl<5;if(up)o.lvl++;o.st=0;o.er=0;return 'верно на базовом уровне → сложность выше'}
+    o.st++;
+    if(o.st>=2){const r=o.lvl<5?'2 верных подряд → сложность выше':'2 верных подряд на максимальном уровне';if(o.lvl<5)o.lvl++;o.st=0;o.er=0;return r}
+    return 'верно, накапливаем подтверждение';
+  }
+  o.st=0;o.er++;
+  if(o.er>=2){const r=o.lvl>1?'2 ошибки на уровне → уточняющие вопросы уровнем ниже':'2 ошибки на минимальном уровне';if(o.lvl>1)o.lvl--;o.er=0;return r}
+  return 'ошибка: уровень сохраняется, нужно ещё подтверждение';
+}
+function submitAnswer(s,chosen){
+  const c=s.current;const it=QB[c.qid];const slot=PLAN[s.idx];const correct=chosen===it.ans;
+  let before=null,after=null,reason='';
+  if(slot.stage==='calib'){before=s.cal.lvl;reason=adapt(s.cal,correct,true);after=s.cal.lvl}
+  else if(slot.stage!=='control'){const o=s.lv[it.comp]||(s.lv[it.comp]={lvl:s.cal.lvl,st:0,er:0});before=o.lvl;reason=adapt(o,correct,false);after=o.lvl}
+  else reason='контрольный вопрос: уровень не меняется, уточняется оценка';
+  s.answers.push({qid:it.id,comp:it.comp,sub:it.sub,lvl:it.lvl,topic:it.topic,correct,chosen,order:c.order,stage:slot.stage,ms:Date.now()-(s.qStart||Date.now())});
+  s.log.push({i:s.idx+1,stage:slot.stage,qid:it.id,sub:it.sub,target:c.target,lvl:it.lvl,fallback:c.fallback,correct,before,after,reason:(c.fallback?'нужного уровня не осталось → ближайший; ':'')+reason});
+  s.idx++;s.current=null;
+  return s.idx>=TOTAL;
+}
+
+/* ================= Estimation ================= */
+function estimate(list){
+  if(!list.length)return {a:1,ps:{},by:{},n:0};
+  const by={};list.forEach(a=>{const b=by[a.lvl]||(by[a.lvl]={n:0,c:0});b.n++;if(a.correct)b.c++});
+  const t=Object.keys(by).map(Number).sort((x,y)=>x-y);const lo=t[0],hi=t[t.length-1];
+  const raw={};t.forEach(L=>{const r=(by[L].c+0.5)/(by[L].n+1);raw[L]=Math.max(0,(r-0.25)/0.75)}); // поправка на угадывание (4 варианта)
+  const ps={};
+  for(let L=1;L<=5;L++){
+    if(raw[L]!=null)ps[L]=raw[L];else if(L<lo)ps[L]=1;else if(L>hi)ps[L]=0;
+    else{let b=L-1;while(raw[b]==null)b--;let u=L+1;while(raw[u]==null)u++;ps[L]=raw[b]+(raw[u]-raw[b])*(L-b)/(u-b)}
+  }
+  for(let L=4;L>=1;L--){if(by[L+1]&&by[L+1].n>=3)ps[L]=Math.max(ps[L],ps[L+1])}
+  let sum=0;for(let L=1;L<=5;L++)sum+=ps[L];
+  return {a:clamp(0.5+sum,0.5,5.49),ps,by,n:list.length};
+}
+const scoreOf=a=>Math.round((a-0.5)/5*100);
+function axConf(n){return n<3?'none':n<4?'low':n<6?'mid':'high'}
+const CONFN={none:'Недостаточно данных',low:'Низкая уверенность',mid:'Средняя уверенность',high:'Высокая уверенность'};
+
+function buildReport(r){
+  const all=estimate(r.answers);
+  const lvl=clamp(Math.round(all.a),1,5);const f=all.a-lvl;
+  const sub=lvl===5?'C1':LV[lvl]+(f<0?'.1':'.2');
+  let range=null;
+  if(f>=0.3&&lvl<5)range=[lvl,lvl+1];else if(f<=-0.3&&lvl>1)range=[lvl-1,lvl];
+  const label=range?LV[range[0]]+'–'+LV[range[1]]:LV[lvl];
+  // overall confidence
+  let incons=false;const by=all.by;
+  for(let L=1;L<=5;L++)for(let M=L+1;M<=5;M++){if(by[L]&&by[M]&&by[L].n>=3&&by[M].n>=3&&(by[L].c/by[L].n)+0.25<(by[M].c/by[M].n))incons=true}
+  const near=r.answers.filter(a=>Math.abs(a.lvl-lvl)<=1).length;
+  const conf=incons?'low':(near>=15&&Math.abs(f)<0.3?'high':'mid');
+  const axes=AX.map(x=>{const l=r.answers.filter(a=>a.sub===x.k);const e=l.length>=3?estimate(l):null;return Object.assign({},x,{n:l.length,c:l.filter(a=>a.correct).length,score:e?scoreOf(e.a):null,a:e?e.a:null,conf:axConf(l.length),lvls:[...new Set(l.map(a=>a.lvl))].sort().map(v=>LV[v]).join(', ')})});
+  const overall=scoreOf(all.a);
+  const known=axes.filter(x=>x.score!=null);
+  let strengths=known.filter(x=>x.score>=overall-3).sort((a,b)=>b.score-a.score).slice(0,3);
+  if(!strengths.length&&known.length)strengths=[known.slice().sort((a,b)=>b.score-a.score)[0]];
+  const weakAx=known.filter(x=>x.score<overall-4).sort((a,b)=>a.score-b.score).slice(0,2);
+  // error topics: priority to errors on items at/below estimated level
+  const errs={};r.answers.filter(a=>!a.correct).forEach(a=>{const e=errs[a.topic]||(errs[a.topic]={n:0,below:0});e.n++;if(a.lvl<=lvl)e.below++});
+  const errTopics=Object.keys(errs).sort((a,b)=>(errs[b].below-errs[a].below)||(errs[b].n-errs[a].n)).filter(t=>errs[t].below>0||errs[t].n>=2).slice(0,3);
+  const confident=[],partial=[];for(let L=1;L<=5;L++){if(all.by[L]){const p=all.by[L].c/all.by[L].n;if(p>=0.6&&all.by[L].n>=2)confident.push(L);else if(p>=0.3)partial.push(L)}}
+  // commentary strictly from data
+  let comment='';
+  if(known.length>=2){
+    const s=known.slice().sort((a,b)=>b.score-a.score);
+    if(s[0].score-s[s.length-1].score<8)comment='Результаты по направлениям довольно ровные: заметного перекоса между лексикой, грамматикой и пониманием контекста не видно.';
+    else comment=`Увереннее всего ты справился(-ась) с заданиями на ${s[0].ru.toLowerCase()}. Сложнее оказались задания на ${s[s.length-1].ru.toLowerCase()}.`;
+  }
+  if(errTopics.length)comment+=` Ошибки встречались в темах: ${errTopics.map(t=>TOP[t].n.toLowerCase()).join(', ')}. Возможно, полезно уделить им больше внимания.`;
+  const gA=axes.find(x=>x.k==='ga'),vA=axes.find(x=>x.k==='lu');
+  if(gA.score!=null&&vA.score!=null&&gA.score-vA.score>=15)comment+=' Грамматика у тебя заметно сильнее, чем употребление лексики в контексте, — это частый и хорошо поправимый перекос.';
+  const lvlText=confident.length?`Результаты указывают на уверенное выполнение большинства заданий ${confident.map(l=>LV[l]).join(', ')}`+(partial.filter(l=>l>Math.max(...confident)).length?` и отдельных заданий ${partial.filter(l=>l>Math.max(...confident)).map(l=>LV[l]).join(', ')}.`:'.'):'Заданий, выполненных уверенно, пока немного — оценка особенно предварительная.';
+  return {all,lvl,sub,range,label,conf,axes,overall,strengths,weakAx,errTopics,errs,lvlText,comment,speakout:SPEAK[sub]};
+}
+
+/* ================= simulation (to preview mechanics fast) ================= */
+const SIMS=[
+ {id:'a2',n:'Профиль A2',ab:{vk:1.7,lu:1.6,ga:1.8,gr:1.6,cc:1.8}},
+ {id:'b1',n:'Профиль B1',ab:{vk:2.9,lu:2.8,ga:2.9,gr:2.8,cc:2.8}},
+ {id:'mix',n:'B1–B2: грамматика сильнее лексики',ab:{vk:3.1,lu:2.5,ga:4.2,gr:3.9,cc:3.4}},
+ {id:'c1',n:'Профиль C1',ab:{vk:5,lu:4.9,ga:5,gr:4.9,cc:5}}];
+function runSim(id){
+  const p=SIMS.find(x=>x.id===id);const s=newSession();
+  while(s.idx<TOTAL){const c=nextQuestion(s);const it=QB[c.qid];const ab=p.ab[it.sub];
+    const pr=0.25+0.75/(1+Math.exp(-2.2*(ab-it.lvl+0.6)));
+    const chosen=Math.random()<pr?it.ans:rand(it.opts.filter(o=>o!==it.ans));
+    s.qStart=Date.now()-(9000+Math.random()*16000);submitAnswer(s,chosen)}
+  return finishSession(s,true);
+}
+function finishSession(s,sim){
+  const res={id:s.id,date:Date.now(),started:s.started,answers:s.answers.map(a=>({qid:a.qid,comp:a.comp,sub:a.sub,lvl:a.lvl,topic:a.topic,correct:a.correct,stage:a.stage,ms:a.ms})),log:s.log,version:s.version,sim:!!sim};
+  const list=S('results',[]);list.push(res);W('results',list.slice(-12));
+  W('seen',[...new Set(S('seen',[]).concat(res.answers.map(a=>a.qid)))].slice(-120));
+  W('session',null);
+  const rep=buildReport(res);
+  track('diagnostic_completed',{level:rep.label,sim:!!sim,minutes:Math.round(res.answers.reduce((m,a)=>m+a.ms,0)/60000)});
+  return res;
+}
+
+/* ================= demo content: videos, groups ================= */
+const VIDEOS=[
+ {id:'v1',t:'Почему Present Perfect не всегда переводится прошедшим временем',d:'Как время связывает прошлое с настоящим — на живых примерах.',tags:['pp','tenses'],c:'bg-lav'},
+ {id:'v2',t:'Почему знание слов не означает умение их использовать',d:'Про сочетаемость: почему make a mistake, но do homework.',tags:['colloc','meaning'],c:'bg-orange'},
+ {id:'v3',t:'Как перестать переводить каждое предложение дословно',d:'Учимся замечать смысл и намерение, а не отдельные слова.',tags:['intent','colloc'],c:'bg-sage'},
+ {id:'v4',t:'Почему правила грамматики легче понять через примеры',d:'Условные предложения и «нереальность» без таблиц.',tags:['cond','tenses','advgram'],c:'bg-yellow'},
+ {id:'v5',t:'Фразовые глаголы без зубрёжки',d:'Как группировать их по смыслу, чтобы запоминались.',tags:['phrasal','prep'],c:'bg-peach'},
+ {id:'v6',t:'Как читать между строк',d:'Связки, ирония и выводы из короткого текста.',tags:['infer','connect','intent','detail'],c:'bg-lime'}];
+const GROUPS=[
+ {id:'g1',name:'Разговорный английский',lv:[3,4],goal:'speaking',slots:['evening'],int:2,size:6,taken:3,closed:false,budget:'mid'},
+ {id:'g2',name:'Уверенная база',lv:[2,3],goal:'base',slots:['weekend'],int:2,size:6,taken:5,closed:false,budget:'low'},
+ {id:'g3',name:'Английский для работы',lv:[4,5],goal:'work',slots:['morning','day'],int:1,size:5,taken:5,closed:false,budget:'high'},
+ {id:'g4',name:'Старт с нуля',lv:[1,2],goal:'base',slots:['evening'],int:2,size:6,taken:6,closed:true,budget:'low'}];
+const GOALS={speaking:'Разговорный английский',work:'Английский для работы',travel:'Путешествия',exam:'Подготовка к экзамену',base:'Укрепить базу'};
+const SLOTS={morning:'Утро',day:'День',evening:'Вечер',weekend:'Выходные'};
+function gStatus(g){const free=g.size-g.taken;if(g.closed)return {k:'closed',n:'Набор закрыт',free};if(free<=0)return {k:'wait',n:'Лист ожидания',free:0};if(free<=2)return {k:'few',n:'Осталось мало мест',free};return {k:'open',n:'Набор открыт',free}}
+
+/* ================= segmentation (rules over explicit actions) ================= */
+function computeSegment(events,leads){
+  const ev=events||S('events',[]);const ld=leads||S('leads',[]);
+  const ind=ld.find(l=>l.type==='individual');const grp=ld.find(l=>l.type==='group'||l.type==='waitlist');
+  const firstEngage=ev.find(e=>e.name==='diagnostic_completed'||e.name==='video_opened');
+  const firstLead=ld.slice().sort((a,b)=>a.created-b.created)[0];
+  if(firstLead&&firstEngage&&firstEngage.visit!==firstLead.visit&&firstEngage.t<firstLead.created)return {k:'E',why:'Раньше проходил(а) тест или смотрел(а) материалы, а затем сам(а) вернулся(-ась) и оставил(а) заявку.'};
+  if(ind)return {k:'A',why:'Выбрал(а) индивидуальные занятия, видел(а) условия и оставил(а) заявку.'};
+  if(grp)return {k:'B',why:'Выбрал(а) групповой формат и указал(а) цель и расписание.'};
+  const sel=ev.filter(e=>e.name==='learning_option_selected').pop();
+  if(S('consent',null)&&S('consent',{}).marketing)return {k:'D',why:'Подписался(-ась) на материалы, платный формат не выбран.'};
+  if(sel&&(sel.option==='self'||sel.option==='browse'))return {k:'C',why:'Прошёл(а) диагностику и выбрал(а) самостоятельное обучение.'};
+  if(ev.some(e=>e.name==='diagnostic_completed'))return {k:'C',why:'Прошёл(а) диагностику, намерения покупать занятия не выражено.'};
+  return {k:'—',why:'Пока нет действий для сегментации.'};
+}
+const SEGN={A:'Горячий лид',B:'Потенциальный групповой ученик',C:'Самостоятельное обучение',D:'Контентная аудитория',E:'Повторно заинтересованный','—':'Без сегмента'};
+
+/* ================= rendering helpers ================= */
+function socials(st,dark){
+  const items=[['Threads',st.threads],['Instagram',st.instagram],['YouTube',st.youtube]];
+  return items.map(([n,u])=>u?`<a class="chip" href="${esc(u)}" target="_blank" rel="noopener">${n}</a>`:`<span class="chip" title="Ссылка добавляется в кабинете преподавателя" style="opacity:.75">${n} · ссылка не указана</span>`).join('');
+}
+function nameOr(st){return st.name?esc(st.name):'<span class="ph">Имя преподавателя</span>'}
+function vcard(v,i){
+  return `<button class="vcard ${v.c}" data-act="video" data-id="${v.id}">
+    <div class="top"><div class="row-flex" style="justify-content:space-between"><span class="tag">${esc(TOP[v.tags[0]].n)}</span><span class="demo-badge">Демо</span></div><h3>${esc(v.t)}</h3><p class="small muted">${esc(v.d)}</p></div>
+    <div class="thumb"><div class="play"><span>${PLAY}</span></div><span class="small" style="position:relative">Видео добавит преподаватель</span><span class="arrow light" style="position:relative;width:44px;height:44px">${ARW}</span></div></button>`;
+}
+function pentagon(rep,prevRep,active){
+  const cx=180,cy=168,R=112;const pts=[];
+  const ang=i=>(-90+i*72)*Math.PI/180;
+  const P=(i,v)=>[cx+R*v/100*Math.cos(ang(i)),cy+R*v/100*Math.sin(ang(i))];
+  let rings='';[20,40,60,80,100].forEach(v=>{rings+=`<polygon class="ring" points="${AX.map((_,i)=>P(i,v).join(',')).join(' ')}"/>`});
+  let spokes=AX.map((_,i)=>{const p=P(i,100);return `<line class="spoke" x1="${cx}" y1="${cy}" x2="${p[0]}" y2="${p[1]}"/>`}).join('');
+  const poly=rep.axes.map((x,i)=>P(i,x.score==null?0:x.score).join(',')).join(' ');
+  let prev='';if(prevRep)prev=`<polygon class="prev" points="${prevRep.axes.map((x,i)=>P(i,x.score==null?0:x.score).join(',')).join(' ')}"/>`;
+  const dots=rep.axes.map((x,i)=>{if(x.score==null){const p=P(i,6);return `<text x="${p[0]}" y="${p[1]+4}" text-anchor="middle" style="fill:var(--orange);font-weight:700">?</text>`}const p=P(i,x.score);return `<circle class="pt" cx="${p[0]}" cy="${p[1]}" r="5"/>`}).join('');
+  const lbls=rep.axes.map((x,i)=>{const p=P(i,128);const anchor=Math.abs(p[0]-cx)<10?'middle':(p[0]>cx?'start':'end');
+    const dy=i===0?-26:(i===2||i===3?6:-8);const w=118;const rx=anchor==='middle'?p[0]-w/2:(anchor==='start'?p[0]-6:p[0]-w+6);
+    return `<g class="lbl${active===x.k?' on':''}" data-act="axis" data-k="${x.k}" tabindex="0" role="button" aria-label="${x.en}">
+      <rect x="${rx}" y="${p[1]+dy-14}" width="${w}" height="50" rx="12"/>
+      <text x="${p[0]}" y="${p[1]+dy}" text-anchor="${anchor}">${x.l1}</text>
+      <text x="${p[0]}" y="${p[1]+dy+14}" text-anchor="${anchor}">${x.l2}</text>
+      <text class="sc" x="${p[0]}" y="${p[1]+dy+30}" text-anchor="${anchor}">${x.score==null?'нет данных':x.score+' / 100'}</text></g>`}).join('');
+  return `<svg viewBox="-30 -20 420 380" role="img" aria-label="Пентагон English Learning DNA">${rings}${spokes}${prev}<polygon class="poly" points="${poly}"/>${dots}${lbls}</svg>`;
+}
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),2600)}
+function modal(html){const m=$('#modal');m.innerHTML=`<div class="box"><button class="x" data-act="close" aria-label="Закрыть">×</button>${html}</div>`;m.classList.add('open')}
+function closeModal(){const m=$('#modal');m.classList.remove('open');m.innerHTML=''}
+
+/* ================= pages ================= */
+const R={};
+R.home=()=>{const st=SET();return `
+<section class="hero">
+  <div class="hero-l bg-lime">
+    <div class="row-flex small"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/></svg><span>Преподаватель английского · ${nameOr(st)}</span></div>
+    <div>
+      <h1>${esc(st.heroTitle).replace(/,\s*/,', <span class="inl" aria-hidden="true">'+ARW_UP+'</span> ')}</h1>
+      <p style="margin-top:20px;max-width:520px;font-size:18px">${esc(st.heroText)}</p>
+    </div>
+    <div class="stack">
+      <div class="row-flex">
+        <a class="btn btn-dark" href="#lessons">Посмотреть форматы занятий <span class="ic">${ARW}</span></a>
+        <a class="btn btn-white" href="#dna">Узнать свой English Learning DNA</a>
+      </div>
+      <div class="row-flex">${socials(st)}</div>
+    </div>
+  </div>
+  <div class="photo">
+    <div class="who"><div><div class="face">${st.name?esc(st.name.trim()[0]):'Фото'}</div><p class="small" style="margin-top:12px">Здесь будет ваше фото — загружается в кабинете</p></div></div>
+    <button class="float" style="top:18px;left:18px;border:0;cursor:pointer" data-act="go" data-to="about"><span class="mini">${PLAY}</span><span><b>Видео-знакомство</b><br><span class="muted tiny">Ролик добавит преподаватель</span></span></button>
+    <span class="pin" style="top:42%;left:10%"><i></i>Грамматика</span>
+    <span class="pin" style="top:30%;right:12%"><i></i>Лексика</span>
+    <span class="pin" style="top:62%;right:18%"><i></i>Контекст</span>
+    <div class="float" style="bottom:18px;right:18px;max-width:270px"><span>Сначала посмотрите, как я объясняю, — потом решайте, подходит ли вам формат.</span></div>
+  </div>
+</section>
+
+<section class="grid2" style="margin-top:14px">
+  <a class="card path bg-dark" href="#individual" data-act="track" data-ev="cta_classes">
+    <div class="row-flex" style="justify-content:space-between"><span class="tag" style="color:var(--lime)">Если уже знаете меня по Threads</span><span class="arrow lime">${ARW_UP}</span></div>
+    <div><h3>Хочу заниматься с вами</h3><p class="muted" style="margin-top:10px;max-width:440px">Форматы, стоимость, свободные места и заявка — без обязательного теста.</p></div>
+  </a>
+  <a class="card path bg-lav" href="#dna">
+    <div class="row-flex" style="justify-content:space-between"><span class="tag">Бесплатно, без регистрации</span><span class="arrow">${ARW_UP}</span></div>
+    <div><h3>Узнать свой уровень английского</h3><p class="muted" style="margin-top:10px;max-width:440px">42 адаптивных вопроса: лексика, грамматика и понимание контекста. Результат — сразу.</p></div>
+  </a>
+</section>
+
+<div class="strip" aria-hidden="true">
+  <div class="bg-soft" style="background:var(--surface)">Понять</div>
+  <div class="bg-sage">Заметить</div>
+  <div class="ar bg-lime">${ARW}</div>
+  <div class="bg-dark">Применить</div>
+</div>
+
+<section class="sec">
+  <div class="head"><h2>Как я объясняю</h2><p class="muted">Короткие разборы тем, с которыми чаще всего возникают сложности. Посмотрите пару — так проще понять, подходит ли вам мой стиль.</p></div>
+  <div class="mosaic">${VIDEOS.slice(0,3).map(vcard).join('')}</div>
+  <div style="margin-top:20px"><a class="btn btn-ghost" href="#videos">Все видео и объяснения</a></div>
+</section>
+
+<section class="sec">
+  <div class="head"><h2>Форматы занятий</h2><p class="muted">Стоимость и условия видны до заявки. Бесплатная оценка уровня — в English Learning DNA.</p></div>
+  <div class="rows">
+    <a class="row" href="#individual"><span class="t">Индивидуальные занятия</span><span class="hide-m"><span class="tag">персональная программа</span></span><span class="small muted hide-m">${ph(st.indPrice,'цена не указана')}</span><span class="arrow">${ARW}</span></a>
+    <a class="row" href="#groups"><span class="t">Мини-группы</span><span class="hide-m"><span class="tag">подбор по уровню и цели</span></span><span class="small muted hide-m">${ph(st.groupPrice,'цена не указана')}</span><span class="arrow">${ARW}</span></a>
+    ${st.paidDiag?`<a class="row" href="#individual"><span class="t">Подробная диагностика</span><span class="hide-m"><span class="tag">speaking, listening, writing</span></span><span class="small muted hide-m">${ph(st.paidDiagPrice,'цена не указана')}</span><span class="arrow">${ARW}</span></a>`:''}
+    <a class="row" href="#dna"><span class="t">English Learning DNA</span><span class="hide-m"><span class="tag" style="background:var(--lime);color:var(--on-acc);border-color:var(--lime)">бесплатно</span></span><span class="small muted hide-m">около 15–20 минут</span><span class="arrow">${ARW}</span></a>
+  </div>
+</section>
+${subscribeBlock('home')}`};
+
+function subscribeBlock(where){const c=S('consent',null);return `
+<section class="sec bg-soft" style="background:var(--surface2)">
+  <div class="grid2" style="align-items:end">
+    <div><span class="tag">Рассылка</span><h3 style="margin-top:16px;font-size:clamp(22px,2.6vw,30px)">Полезные объяснения, новые видео и новости о наборе в группы</h3></div>
+    <div class="stack">${c&&c.marketing?`<p class="note">Вы подписаны (${esc(c.email)}). Отписаться можно в «Моём кабинете» — результаты диагностики останутся.</p>`:`
+      <div class="row-flex" style="flex-wrap:nowrap"><input class="inp" id="subEmail-${where}" type="email" placeholder="Email" autocomplete="email"><button class="btn btn-dark" data-act="subscribe" data-w="${where}">Подписаться</button></div>
+      <label class="check"><input type="checkbox" id="subOk-${where}"><span>Согласен(на) получать образовательные и рекламные материалы. Это отдельное согласие — его можно отозвать в любой момент.</span></label>
+      <div class="err" id="subErr-${where}"></div>`}
+    </div>
+  </div>
+</section>`}
+
+R.about=()=>{const st=SET();return `
+<section class="sec">
+  <div class="head"><h2>Давайте знакомиться</h2><p class="muted">Все тексты на этой странице — редактируемые заглушки. Биографию, опыт и образование добавляет сам преподаватель.</p></div>
+  <div class="grid2">
+    <div class="photo" style="min-height:380px"><div class="who"><div><div class="face">Фото</div><p class="small" style="margin-top:12px">Фото преподавателя</p></div></div></div>
+    <button class="card bg-dark" style="border:0;cursor:pointer;text-align:left;min-height:380px;display:flex;flex-direction:column;justify-content:space-between" data-act="video" data-id="intro">
+      <span class="tag" style="color:var(--lime)">Видео-знакомство</span>
+      <span style="display:grid;place-items:center"><span class="arrow lime" style="width:84px;height:84px">${PLAY}</span></span>
+      <span><b style="font-size:22px">Пара минут о том, как проходят занятия</b><br><span class="muted small">Ссылку на YouTube или ролик из соцсетей добавит преподаватель</span></span>
+    </button>
+  </div>
+  <div class="grid3" style="margin-top:14px">
+    <div class="card bg-soft"><h3>Обо мне</h3><p style="margin-top:10px">${ph(st.about,'Короткий рассказ о себе: заполняется в кабинете')}</p></div>
+    <div class="card bg-sage"><h3>Мой подход</h3><p style="margin-top:10px">${ph(st.approach,'Как вы объясняете язык и почему так')}</p></div>
+    <div class="card bg-peach"><h3>С какими запросами помогаю</h3><p style="margin-top:10px">${ph(st.requests,'Например: заговорить свободнее, английский для работы…')}</p></div>
+  </div>
+  <div class="row-flex" style="margin-top:24px">${socials(st)}<a class="btn btn-dark" href="#individual" style="margin-left:auto">Записаться на занятия <span class="ic">${ARW}</span></a></div>
+</section>
+<section class="sec"><div class="head"><h2>Примеры объяснений</h2></div><div class="mosaic">${VIDEOS.map(vcard).join('')}</div></section>`};
+
+R.lessons=()=>{const st=SET();return `
+<section class="sec">
+  <div class="head"><h2>Как проходят занятия</h2><p class="muted">Методика описывается преподавателем. Ниже — структура блока, которую можно заполнить в кабинете.</p></div>
+  <div class="grid4">
+    ${[['bg-lime','Разбираемся','Объясняю тему через примеры и закономерности, а не через таблицы.'],['bg-lav','Пробуем','Сразу применяем в коротких ситуациях из жизни.'],['bg-sage','Ошибаемся спокойно','Ошибка — это подсказка, что разобрать дальше.'],['bg-peach','Закрепляем','Небольшие задания между занятиями, без перегруза.']].map(([c,t,d],i)=>`<div class="card ${c}" style="min-height:220px;display:flex;flex-direction:column;justify-content:space-between"><span class="tag">Шаг ${i+1}</span><div><h3>${t}</h3><p class="small muted" style="margin-top:8px">${d} <span class="ph">текст-заглушка</span></p></div></div>`).join('')}
+  </div>
+</section>
+<section class="grid2" style="margin-top:14px">
+  <a class="card path bg-dark" href="#individual"><div class="row-flex" style="justify-content:space-between"><span class="tag" style="color:var(--lime)">Индивидуально</span><span class="arrow lime">${ARW_UP}</span></div><div><h3>Персональная программа и регулярная обратная связь</h3><p class="muted" style="margin-top:8px">Стоимость: ${ph(st.indPrice,'указывает преподаватель')}</p></div></a>
+  <a class="card path bg-yellow" href="#groups"><div class="row-flex" style="justify-content:space-between"><span class="tag">Мини-группы</span><span class="arrow">${ARW_UP}</span></div><div><h3>Регулярно и доступнее — с учениками близкого уровня</h3><p class="muted" style="margin-top:8px">Стоимость: ${ph(st.groupPrice,'указывает преподаватель')}</p></div></a>
+</section>`};
+
+let videoFilter='all';
+R.videos=()=>{const tags=[...new Set(VIDEOS.flatMap(v=>v.tags))];const list=videoFilter==='all'?VIDEOS:VIDEOS.filter(v=>v.tags.includes(videoFilter));return `
+<section class="sec">
+  <div class="head"><h2>Видео и объяснения</h2><p class="muted">Каждое видео размечено темами — по этим же тегам система подбирает материалы после диагностики.</p></div>
+  <div class="row-flex" style="margin-bottom:20px"><button class="chip ${videoFilter==='all'?'on':''}" data-act="vfilter" data-t="all">Все</button>${tags.map(t=>`<button class="chip ${videoFilter===t?'on':''}" data-act="vfilter" data-t="${t}">${esc(TOP[t].n)}</button>`).join('')}</div>
+  <div class="mosaic">${list.map(vcard).join('')}</div>
+  <div id="afterVideo"></div>
+</section>`};
+
+R.dna=()=>{const s=S('session',null);const res=S('results',[]);return `
+<section class="hero" style="grid-template-columns:1.2fr .8fr">
+  <div class="hero-l bg-lav" style="min-height:460px">
+    <span class="tag">English Learning DNA</span>
+    <div><h1 style="font-size:clamp(34px,4.6vw,58px)">Узнай свой English Learning DNA</h1>
+    <p style="margin-top:18px;max-width:560px;font-size:18px">42 адаптивных вопроса помогут предварительно оценить твою лексику, грамматику и понимание английского в контексте.</p></div>
+    <div class="row-flex">
+      ${s&&s.idx>0?`<button class="btn btn-dark" data-act="resume">Продолжить с вопроса ${s.idx+1} <span class="ic">${ARW}</span></button><button class="btn btn-white" data-act="start">Начать заново</button>`:`<button class="btn btn-dark" data-act="start">Начать диагностику <span class="ic">${ARW}</span></button>`}
+      ${res.length?`<a class="btn btn-white" href="#results">Мой последний результат</a>`:''}
+    </div>
+  </div>
+  <div class="card bg-dark" style="display:flex;flex-direction:column;gap:6px">
+    <div class="kv"><span>Вопросов</span><b>42</b></div>
+    <div class="kv"><span>Время</span><b>около 15–20 минут</b></div>
+    <div class="kv"><span>Регистрация</span><b>не нужна</b></div>
+    <div class="kv"><span>Проверяется</span><b>лексика, грамматика, контекст</b></div>
+    <div class="kv"><span>Не проверяется</span><b>speaking, listening, writing</b></div>
+    <p class="muted small" style="margin-top:10px">Ответ фиксируется после подтверждения: следующий вопрос подбирается по предыдущим. Вернуться назад можно только для просмотра.</p>
+  </div>
+</section>
+<section class="sec">
+  <div class="grid2">
+    <div><h3>Как устроен тест</h3><p class="muted small" style="margin-top:8px">Сложность меняется постепенно и отдельно для каждого навыка: сильная грамматика не повышает оценку лексики.</p>
+      <div class="stack" style="margin-top:18px">${[['Разминка',8,'определяем примерный диапазон'],['Лексика',10,'значения слов, сочетаемость, фразовые глаголы'],['Грамматика',10,'времена, модальные, условные, пассив и др.'],['Контекст',10,'смысл, намерение, связи и выводы в тексте'],['Финальные вопросы',4,'уточняем границу соседних уровней']].map(([n,k,d])=>`<div class="kv"><span><b>${n}</b> <span class="muted">— ${d}</span></span><b>${k}</b></div>`).join('')}</div>
+    </div>
+    <div class="card bg-soft">
+      <span class="demo-badge">Для просмотра механик</span>
+      <h3 style="margin-top:14px">Смоделировать прохождение</h3>
+      <p class="small muted" style="margin-top:8px">Движок пройдёт все 42 вопроса за «ученика» с заданным профилем — по-настоящему, с адаптивным выбором заданий. Удобно, чтобы сразу увидеть страницу результатов.</p>
+      <div class="row-flex" style="margin-top:16px">${SIMS.map(x=>`<button class="chip" data-act="sim" data-id="${x.id}">${x.n}</button>`).join('')}</div>
+      <p class="tiny muted" style="margin-top:14px">Демо-банк: ${BANK.length} оригинальных заданий, статус «черновик, не проверено преподавателем». Вопросы Pearson Speakout не используются.</p>
+    </div>
+  </div>
+</section>`};
+
+let picked=null,reviewIdx=null;
+R.test=()=>{
+  const s=S('session',null);
+  if(!s)return `<section class="sec test-wrap" style="margin-top:14px"><h2>Диагностика не начата</h2><p class="muted" style="margin:12px 0 20px">Начни тест на странице English Learning DNA.</p><a class="btn btn-dark" href="#dna">К описанию теста</a></section>`;
+  const stageKeys=['calib','vocab','gram','ctx','control'];
+  const viewing=reviewIdx!=null;
+  let qn,it,order,chosen,stage;
+  if(viewing){const a=s.answers[reviewIdx];it=QB[a.qid];order=a.order;chosen=a.chosen;qn=reviewIdx+1;stage=a.stage}
+  else{const c=nextQuestion(s);W('session',s);it=QB[c.qid];order=c.order;chosen=picked;qn=s.idx+1;stage=PLAN[s.idx].stage}
+  const curStageIdx=stageKeys.indexOf(PLAN[Math.min(s.idx,TOTAL-1)].stage);
+  return `
+<section class="sec test-wrap" style="margin-top:14px">
+  <div class="row-flex" style="justify-content:space-between;margin-bottom:14px">
+    <div class="stages">${stageKeys.map((k,i)=>`<span class="${i<curStageIdx?'done':i===curStageIdx?'on':''}">${STAGEN[k]}</span>`).join('')}</div>
+    <b>${qn} / ${TOTAL}</b>
+  </div>
+  <div class="prog"><i style="width:${(s.idx/TOTAL*100).toFixed(1)}%"></i></div>
+  <div style="margin-top:34px">
+    <p class="small muted" style="margin-bottom:10px">${STAGEN[stage]} · ${COMPN[it.comp]}${viewing?' · <b style="color:var(--ink)">Просмотр: ответ зафиксирован</b>':''}</p>
+    <p class="qprompt">${esc(it.prompt)}</p>
+    <div class="opts" role="radiogroup">${order.map((o,i)=>`<button class="opt ${chosen===o?'sel':''} ${viewing?'locked':''}" role="radio" aria-checked="${chosen===o}" ${viewing?'disabled':''} data-act="pick" data-v="${esc(o)}"><b>${'ABCD'[i]}</b><span>${esc(o)}</span></button>`).join('')}</div>
+  </div>
+  <div class="row-flex" style="justify-content:space-between;margin-top:26px">
+    <div class="row-flex">
+      <button class="btn btn-ghost" data-act="back" ${(viewing?reviewIdx===0:s.idx===0)?'disabled':''}>Назад</button>
+      ${viewing?`<button class="btn btn-ghost" data-act="tocur">К текущему вопросу</button>`:''}
+    </div>
+    ${viewing?'':`<button class="btn btn-dark" data-act="confirm" ${picked?'':'disabled'}>Подтвердить ответ <span class="ic">${ARW}</span></button>`}
+  </div>
+  <p class="tiny muted" style="margin-top:22px">Правильные ответы и уровень не показываются во время теста — так ты сосредоточен(а) на заданиях, а не на логике алгоритма. Прогресс сохраняется автоматически: можно закрыть страницу и продолжить позже.</p>
+</section>`};
+
+let viewRes=null,activeAxis='vk',chosenPath=null,practiceAns={};
+R.results=()=>{
+  const list=S('results',[]);
+  if(!list.length)return `<section class="sec" style="margin-top:14px"><h2>Результатов пока нет</h2><p class="muted" style="margin:12px 0 20px">Пройди диагностику — или смоделируй прохождение, чтобы посмотреть, как выглядит отчёт.</p><a class="btn btn-dark" href="#dna">К диагностике</a></section>`;
+  const idx=viewRes==null?list.length-1:viewRes;const r=list[idx];const rep=buildReport(r);
+  const prev=idx>0?buildReport(list[idx-1]):null;
+  const ax=rep.axes.find(x=>x.k===activeAxis)||rep.axes[0];
+  const st=SET();
+  const recVideos=VIDEOS.filter(v=>v.tags.some(t=>rep.errTopics.includes(t)));
+  const mins=Math.max(1,Math.round(r.answers.reduce((m,a)=>m+a.ms,0)/60000));
+  return `
+<section class="hero" style="grid-template-columns:1fr 1fr">
+  <div class="hero-l bg-lime" style="min-height:380px">
+    <div class="row-flex" style="justify-content:space-between"><span class="tag">${fmtDate(r.date)} · ${mins} мин</span>${r.sim?'<span class="demo-badge" style="background:#fff">Смоделированное прохождение</span>':''}</div>
+    <div><h1 style="font-size:clamp(32px,4.2vw,52px)">Твой языковой профиль готов!</h1>
+      <p style="margin-top:18px;font-size:20px">Предварительный уровень английского: <b style="font-size:1.3em">${rep.label}</b></p>
+      <p class="muted" style="margin-top:8px">Внутренняя ступень: ${rep.sub} · ориентир по программе Speakout: ${rep.speakout}</p>
+    </div>
+    <div class="row-flex"><span class="tag">${CONFN[rep.conf]} в оценке</span><span class="tag">${r.answers.filter(a=>a.correct).length} из ${TOTAL} верно</span></div>
+  </div>
+  <div class="card bg-dark" style="display:flex;flex-direction:column;justify-content:space-between;gap:16px">
+    <p style="font-size:17px">${rep.lvlText}${rep.range?' Ты находишься на границе двух уровней — поэтому показан диапазон.':''}</p>
+    <p class="muted small">Для более точного определения уровня нужно проверить письменную и устную речь, а также понимание английского на слух. Это предварительный профиль, а не сертифицированная оценка.</p>
+    <p class="muted tiny">В каждом задании четыре варианта ответа, поэтому случайное угадывание возможно примерно в 25% случаев — расчёт это учитывает.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="head"><h2>English Learning DNA</h2><p class="muted">Пять показателей по внутренней шкале диагностики (0–100) — это не «процент знания английского». Нажми на ось, чтобы увидеть подробности.${prev?' Пунктир — предыдущее прохождение.':''}</p></div>
+  <div class="dna-wrap">
+    <div class="dna card bg-soft" id="dnaBox">${pentagon(rep,prev,ax.k)}</div>
+    <div class="card bg-dark">
+      <span class="tag" style="color:var(--lime)">${ax.comp==='V'?'Подкомпетенция лексики':ax.comp==='G'?'Подкомпетенция грамматики':'Отдельная компетенция'}</span>
+      <h3 style="margin-top:16px">${ax.en}</h3><p class="muted">${ax.ru}</p>
+      <div style="margin:22px 0 8px;font-size:44px;font-weight:600;letter-spacing:-.02em">${ax.score==null?'—':ax.score}<span class="muted" style="font-size:18px"> / 100</span></div>
+      ${ax.score!=null?`<div class="meter"><i style="width:${ax.score}%"></i></div>`:''}
+      <div style="margin-top:16px">
+        <div class="kv"><span>Заданий по оси</span><b>${ax.n}</b></div>
+        <div class="kv"><span>Верных ответов</span><b>${ax.c}</b></div>
+        <div class="kv"><span>Уровни заданий</span><b>${ax.lvls||'—'}</b></div>
+        <div class="kv"><span>Уверенность</span><b>${CONFN[ax.conf]}</b></div>
+        ${prev?`<div class="kv"><span>Прошлое прохождение</span><b>${(prev.axes.find(x=>x.k===ax.k).score??'—')}</b></div>`:''}
+      </div>
+      <p class="muted tiny" style="margin-top:12px">Vocabulary Knowledge и Lexical Usage — две стороны лексики, Grammar Accuracy и Grammar Range — две стороны грамматики. Это не пять независимых навыков.</p>
+    </div>
+  </div>
+  ${prev?`<p class="note" style="margin-top:16px">Сравнение с прошлым прохождением предварительное: наборы заданий отличались и банк пока не откалиброван статистически, поэтому разница не равна реальному прогрессу.</p>`:''}
+</section>
+
+<section class="sec">
+  <h2>Что показывает твой профиль</h2>
+  <p style="margin-top:16px;font-size:18px;max-width:820px">${esc(rep.comment)}</p>
+  <div class="grid2" style="margin-top:24px">
+    <div class="card bg-sage"><h3>Сильные стороны</h3><div class="stack" style="margin-top:14px">${rep.strengths.map(x=>`<p>• ${STR[x.k]} <span class="muted small">(${x.en}: ${x.score})</span></p>`).join('')||'<p class="muted">Недостаточно данных для уверенного вывода.</p>'}</div></div>
+    <div class="card bg-peach"><h3>Что можно улучшить</h3><div class="stack" style="margin-top:14px">${[...rep.weakAx.map(x=>`<p>• ${IMP[x.k]}</p>`),...rep.errTopics.slice(0,Math.max(0,3-rep.weakAx.length)).map(t=>`<p>• ${esc(TOP[t].n)}</p>`)].join('')||'<p>Явных провалов нет — следующий шаг: задания уровня выше.</p>'}</div></div>
+  </div>
+  <div class="card bg-soft" style="margin-top:14px"><h3>Твой следующий шаг</h3>
+    <div class="stack" style="margin-top:14px">${rep.errTopics.map(t=>`<div class="kv" style="display:block"><b>${esc(TOP[t].n)}.</b> <span>${esc(TOP[t].s)}</span></div>`).join('')}
+    <div class="kv" style="display:block"><b>Чтение на своём уровне.</b> Короткие тексты уровня ${LV[rep.lvl]} 3–4 раза в неделю: замечай связки и устойчивые сочетания.</div></div>
+  </div>
+</section>
+
+${rep.errTopics.length?`<section class="sec">
+  <div class="head"><h2>Разберём твои сложные темы</h2><p class="muted">Короткие объяснения по темам, где были ошибки. Мини-задания необязательные и не влияют на результат.</p></div>
+  <div class="grid3">${rep.errTopics.map((t,i)=>{const T=TOP[t];const v=VIDEOS.find(v=>v.tags.includes(t));const pa=practiceAns[t];const ord=T.q.o.slice().sort();return `<div class="card ${['bg-lav','bg-yellow','bg-sage'][i%3]}" style="display:flex;flex-direction:column;gap:12px">
+    <span class="tag">${esc(T.n)}</span><p>${esc(T.e)}</p><p class="small"><b>Пример:</b> ${esc(T.x)}</p>
+    ${v?`<button class="btn btn-white" data-act="video" data-id="${v.id}" style="align-self:flex-start">${PLAY} Видео по теме</button>`:''}
+    <div style="border-top:1px solid rgba(0,0,0,.15);padding-top:12px"><p class="small"><b>Попробуй:</b> ${esc(T.q.p)}</p>
+      <div class="row-flex" style="margin-top:8px">${ord.map(o=>`<button class="chip ${pa===o?'on':''}" data-act="practice" data-t="${t}" data-v="${esc(o)}">${esc(o)}</button>`).join('')}</div>
+      ${pa?`<p class="small" style="margin-top:10px"><b>${pa===T.q.o[0]?'Верно.':'Правильный вариант: '+esc(T.q.o[0])+'.'}</b> ${esc(T.q.w)}</p>`:''}</div>
+  </div>`}).join('')}</div>
+  ${recVideos.length?`<p class="small muted" style="margin-top:16px">Подобрано по тегам тем: ${recVideos.map(v=>esc(v.t)).join(' · ')}</p>`:''}
+</section>`:''}
+
+<section class="sec bg-dark" style="background:var(--dark);color:var(--on-dark)">
+  <div class="grid2">
+    <div><h2>Что ещё предстоит проверить</h2><p class="muted" style="margin-top:14px;max-width:460px;color:var(--on-dark-muted)">Онлайн-диагностика помогает предварительно оценить знание языка. Для полноценного учебного маршрута важно дополнительно проверить, как ты воспринимаешь английскую речь на слух, говоришь и самостоятельно строишь связные высказывания.</p>
+    ${st.paidDiag?`<a class="btn btn-lime" href="#individual" style="margin-top:20px">Подробная диагностика с преподавателем</a>`:''}</div>
+    <div>${['Speaking','Listening','Writing'].map(n=>`<div class="kv" style="font-size:20px;padding:18px 0"><span>${n}</span><span class="tag" style="color:var(--on-dark-muted)">не проверено</span></div>`).join('')}</div>
+  </div>
+</section>
+
+<section class="sec" id="nextStep">
+  <div class="head"><h2>Что ты хочешь делать дальше?</h2><p class="muted">Любой вариант — нормальный выбор. Отчёт уже твой, запись никуда не обязательна.</p></div>
+  <div class="grid4">
+    ${[['self','bg-sage','Учиться самостоятельно','Рекомендации, объяснения и упражнения для самостоятельного развития английского.'],['group','bg-lav','Заниматься в группе','Регулярно, но в более доступном формате. Посмотрим, какие группы подходят по уровню и цели.'],['individual','bg-dark','Заниматься индивидуально','Персональный подход и регулярная обратная связь: условия, стоимость и свободные места.'],['browse','bg-yellow','Пока просто изучаю','Не планируешь занятия? Можно получать полезные материалы и вернуться позже.']].map(([k,c,t,d])=>`<button class="card path ${c}" style="border:0;text-align:left;${chosenPath===k?'outline:3px solid var(--orange);outline-offset:3px':''}" data-act="path" data-p="${k}"><span class="arrow ${c==='bg-dark'?'lime':''}" style="align-self:flex-end">${ARW}</span><div><h3 style="font-size:24px">${t}</h3><p class="small muted" style="margin-top:8px">${d}</p></div></button>`).join('')}
+  </div>
+  <div id="pathPanel" style="margin-top:14px">${pathPanel(rep)}</div>
+</section>
+
+<section class="sec">
+  <div class="row-flex" style="justify-content:space-between">
+    <div><h3>Сохранить результат</h3><p class="muted small" style="margin-top:6px">Сейчас отчёт хранится в этом браузере. С аккаунтом (Google или email) он будет доступен на любом устройстве и привяжется к тебе безопасно.</p></div>
+    <div class="row-flex"><button class="btn btn-ghost" data-act="saveacc">Создать аккаунт</button><a class="btn btn-ghost" href="#cabinet">История прохождений</a></div>
+  </div>
+  <details style="margin-top:22px"><summary>Журнал адаптивности: как подбирались вопросы</summary>
+    <div class="scroll-x" style="margin-top:12px"><table class="t"><thead><tr><th>#</th><th>Этап</th><th>Ось</th><th>Целевой уровень</th><th>Уровень задания</th><th>Ответ</th><th>Решение алгоритма</th></tr></thead><tbody>
+    ${r.log.map(l=>`<tr><td>${l.i}</td><td>${STAGEN[l.stage]}</td><td>${AXK[l.sub].en}</td><td>${LV[l.target]}</td><td>${LV[l.lvl]}</td><td>${l.correct?'<span style="color:var(--ok)">верно</span>':'<span style="color:var(--orange)">ошибка</span>'}</td><td class="small">${esc(l.reason)}${l.before!=null&&l.after!==l.before?` <b>(${LV[l.before]} → ${LV[l.after]})</b>`:''}</td></tr>`).join('')}
+    </tbody></table></div>
+    <p class="tiny muted" style="margin-top:10px">Эта таблица — для проверки логики MVP. В рабочей версии она видна только преподавателю.</p>
+  </details>
+</section>`};
+
+function pathPanel(rep){
+  if(!chosenPath)return '';
+  if(chosenPath==='self')return `<div class="card bg-soft"><h3>Твой план самостоятельной практики</h3>
+    <div class="stack" style="margin-top:14px">${(rep.errTopics.length?rep.errTopics:['colloc','connect']).map(t=>`<div class="kv" style="display:block"><b>${esc(TOP[t].n)}</b> — ${esc(TOP[t].s)}</div>`).join('')}</div>
+    <div class="row-flex" style="margin-top:16px"><button class="btn btn-dark" data-act="savereport">Сохранить отчёт</button><a class="btn btn-ghost" href="#videos">Видео по темам</a></div></div>${subscribeBlock('self')}`;
+  if(chosenPath==='browse')return `<div class="card bg-soft"><p>Хорошо! Результат сохранён в этом браузере — вернуться к нему можно в любой момент. Если хочешь, подпишись на материалы: это отдельное согласие и ни к чему не обязывает.</p></div>${subscribeBlock('browse')}`;
+  return '';
+}
+
+R.individual=()=>{const st=SET();const res=S('results',[]);const last=res.length?buildReport(res[res.length-1]):null;const sent=S('leads',[]).filter(l=>l.type==='individual').pop();return `
+<section class="sec" style="margin-top:14px">
+  <div class="head"><h2>Индивидуальные занятия</h2><p class="muted">Все условия видны до заявки. Поля ниже заполняет преподаватель — пока это заглушки.</p></div>
+  <div class="grid3">
+    <div class="card bg-sage"><h3>Для каких запросов</h3><p style="margin-top:10px">${ph(st.requests,'Список запросов')}</p></div>
+    <div class="card bg-lav"><h3>Как устроено обучение</h3><p style="margin-top:10px">${ph(st.approach,'Описание учебного процесса')}</p></div>
+    <div class="card bg-dark">
+      <div class="kv"><span>Стоимость</span><b>${ph(st.indPrice,'не указана')}</b></div>
+      <div class="kv"><span>Продолжительность</span><b>${ph(st.indDuration,'не указана')}</b></div>
+      <div class="kv"><span>Формат</span><b>${ph(st.indFormat,'онлайн / офлайн')}</b></div>
+      <div class="kv"><span>Свободные места</span><b>${st.indSeats!==''?esc(st.indSeats):'<span class="ph">уточняются</span>'}</b></div>
+      <p class="muted small" style="margin-top:10px">Оплата и отмена: ${ph(st.indPolicy,'правила указывает преподаватель')}</p>
+    </div>
+  </div>
+</section>
+<section class="sec">
+  ${sent?`<div class="card bg-lime"><h3>Заявка отправлена</h3><p style="margin-top:10px">Спасибо, ${esc(sent.name)}! Преподаватель свяжется с тобой по контакту ${esc(sent.contact)}.</p>
+    ${!last?`<p class="small" style="margin-top:12px">Необязательно: если хочешь подготовиться, пройди English Learning DNA — результат автоматически приложится к заявке.</p><a class="btn btn-dark" href="#dna" style="margin-top:12px">Пройти диагностику</a>`:''}
+    <button class="btn btn-ghost" style="margin-top:12px;margin-left:6px" data-act="newlead">Отправить ещё одну заявку</button></div>`:`
+  <div class="grid2">
+    <div><h2>Оставить заявку</h2><p class="muted" style="margin-top:10px">Только то, что нужно, чтобы связаться и предложить время.</p>
+      ${last?`<div class="note" style="margin-top:18px">К заявке будет приложен твой результат диагностики: <b style="color:var(--ink)">${last.label}</b> (предварительно). Проходить тест повторно не нужно.</div>`:`<p class="note" style="margin-top:18px">Тест не обязателен — можно записаться и без него.</p>`}
+      <div class="stack" style="margin-top:18px">
+        ${st.paidDiag?`<div class="card bg-soft" style="padding:18px"><b>Подробная диагностика</b><p class="small muted">Speaking, listening и writing с преподавателем. Платная услуга: ${ph(st.paidDiagPrice,'цена не указана')}</p></div>`:''}
+        ${st.intro?`<div class="card bg-soft" style="padding:18px"><b>Короткое знакомство</b><p class="small muted">Обсудить формат и цели сотрудничества. Это не бесплатная диагностика уровня — она уже доступна в English Learning DNA.</p></div>`:''}
+      </div>
+    </div>
+    <div class="stack">
+      <label class="f"><span>Имя</span><input class="inp" id="lName" autocomplete="name"></label>
+      <label class="f"><span>Контакт для связи (email, Telegram или телефон)</span><input class="inp" id="lContact"></label>
+      <label class="f"><span>Что интересует</span><select class="inp" id="lFormat"><option>Индивидуальные занятия</option>${st.paidDiag?'<option>Подробная диагностика</option>':''}${st.intro?'<option>Короткое знакомство</option>':''}</select></label>
+      <label class="f"><span>Основная цель</span><select class="inp" id="lGoal">${Object.values(GOALS).map(g=>`<option>${g}</option>`).join('')}</select></label>
+      <label class="f"><span>Удобное время</span><input class="inp" id="lTime" placeholder="Например: будни после 19:00 по Москве"></label>
+      <div class="err" id="lErr"></div>
+      <div class="row-flex"><button class="btn btn-dark" data-act="lead">Отправить заявку <span class="ic">${ARW}</span></button>
+      ${st.bookingUrl?`<a class="btn btn-ghost" href="${esc(st.bookingUrl)}" target="_blank" rel="noopener" data-act="booklink">Выбрать время в календаре</a>`:`<span class="small muted">Онлайн-календарь подключается в кабинете</span>`}</div>
+    </div>
+  </div>`}
+</section>`};
+
+let gForm=null,gMatches=null;
+R.groups=()=>{const st=SET();const res=S('results',[]);const last=res.length?buildReport(res[res.length-1]):null;const defL=last?last.lvl:3;return `
+<section class="sec" style="margin-top:14px">
+  <div class="head"><h2>Групповые занятия</h2><p class="muted">Статус набора считается из реального числа мест. <span class="demo-badge">Группы ниже — демонстрационные</span></p></div>
+  <div class="grid4">${GROUPS.map(g=>{const s=gStatus(g);const col={open:'bg-sage',few:'bg-yellow',wait:'bg-lav',closed:'bg-soft'}[s.k];return `<div class="card ${col}" style="display:flex;flex-direction:column;gap:10px;min-height:260px">
+    <span class="tag" style="align-self:flex-start">${s.n}</span><h3>${g.name}</h3>
+    <p class="small">${LV[g.lv[0]]}–${LV[g.lv[1]]} · ${GOALS[g.goal]}<br>${g.slots.map(x=>SLOTS[x]).join(', ')} · ${g.int} раз(а) в неделю<br>Группа до ${g.size} человек · свободно мест: ${s.free}</p>
+    <p class="small" style="margin-top:auto">Стоимость: ${ph(st.groupPrice,'указывает преподаватель')}</p></div>`}).join('')}</div>
+</section>
+<section class="sec">
+  <div class="grid2">
+    <div><h2>Подобрать группу</h2><p class="muted" style="margin-top:10px">Уровень подставлен из диагностики — его можно уточнить. Мы предложим подходящие группы, а финальное решение о составе принимает преподаватель.</p>
+      <div class="stack" style="margin-top:20px">
+        <label class="f"><span>Уровень ${last?'(из диагностики: '+last.label+')':'(диагностика не пройдена — укажи примерно)'}</span><select class="inp" id="gLvl">${[1,2,3,4,5].map(l=>`<option value="${l}" ${l===defL?'selected':''}>${LV[l]}</option>`).join('')}</select></label>
+        <label class="f"><span>Цель</span><select class="inp" id="gGoal">${Object.entries(GOALS).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></label>
+        <div><span class="small" style="font-weight:500">Удобное время</span><div class="row-flex" style="margin-top:8px">${Object.entries(SLOTS).map(([k,v])=>`<label class="chip"><input type="checkbox" class="gSlot" value="${k}" ${k==='evening'?'checked':''}> ${v}</label>`).join('')}</div></div>
+        <div class="grid2"><label class="f"><span>Часовой пояс</span><select class="inp" id="gTz">${['UTC+2','UTC+3 (Москва)','UTC+4','UTC+5','UTC+7','Другой'].map(x=>`<option ${x.startsWith('UTC+3')?'selected':''}>${x}</option>`).join('')}</select></label>
+        <label class="f"><span>Интенсивность</span><select class="inp" id="gInt"><option value="1">1 раз в неделю</option><option value="2" selected>2 раза в неделю</option><option value="3">3 раза в неделю</option></select></label></div>
+        <div class="grid2"><label class="f"><span>Когда готов(а) начать</span><select class="inp" id="gStart"><option value="now">Сразу</option><option value="month">В течение месяца</option><option value="later">Позже</option></select></label>
+        <label class="f"><span>Комфортный бюджет (необязательно)</span><select class="inp" id="gBudget"><option value="">Не указывать</option><option value="low">Экономный</option><option value="mid">Средний</option><option value="high">Не ограничен</option></select></label></div>
+        <button class="btn btn-dark" data-act="gmatch">Показать подходящие группы <span class="ic">${ARW}</span></button>
+      </div>
+    </div>
+    <div id="gResults">${gResultsHtml()}</div>
+  </div>
+</section>`};
+function gResultsHtml(){
+  if(!gMatches)return `<div class="card bg-soft" style="height:100%;display:grid;place-items:center;text-align:center"><p class="muted">Заполни параметры — здесь появятся группы с объяснением, почему они подходят.</p></div>`;
+  const done=S('leads',[]).filter(l=>l.type==='group'||l.type==='waitlist').map(l=>l.groupId);
+  return `<div class="stack">${gMatches.map(m=>{const s=gStatus(m.g);const did=done.includes(m.g.id);return `<div class="card bg-soft">
+    <div class="row-flex" style="justify-content:space-between"><h3>${m.g.name}</h3><b style="font-size:22px">${m.score}%</b></div>
+    <div class="meter" style="margin:10px 0 12px;background:var(--line)"><i style="width:${m.score}%;background:var(--ink)"></i></div>
+    <div class="row-flex">${m.why.map(w=>`<span class="chip" style="cursor:default">${w}</span>`).join('')}</div>
+    <div class="row-flex" style="margin-top:14px;justify-content:space-between"><span class="small">${s.n}${s.free?' · свободно: '+s.free:''}</span>
+    ${did?'<span class="tag">Заявка отправлена</span>':s.k==='closed'?`<button class="btn btn-ghost" data-act="gnotify" data-id="${m.g.id}">Сообщить об открытии</button>`:s.k==='wait'?`<button class="btn btn-dark" data-act="gjoin" data-id="${m.g.id}" data-w="1">В лист ожидания</button>`:`<button class="btn btn-dark" data-act="gjoin" data-id="${m.g.id}">Записаться в группу</button>`}</div></div>`}).join('')}
+    <div class="card bg-lav"><b>Не нашлось подходящей?</b><p class="small" style="margin-top:6px">Оставь интерес — преподаватель увидит, когда наберётся группа с похожими целями и временем.</p><button class="btn btn-dark" style="margin-top:12px" data-act="gjoin" data-id="pool" data-w="1">Добавить в пул интереса</button></div></div>`;
+}
+function matchGroups(f){
+  return GROUPS.map(g=>{let sc=0;const why=[];
+    if(f.lvl>=g.lv[0]&&f.lvl<=g.lv[1]){sc+=35;why.push('уровень совпадает')}else if(f.lvl===g.lv[0]-1||f.lvl===g.lv[1]+1){sc+=15;why.push('соседний уровень')}
+    if(g.goal===f.goal){sc+=25;why.push('та же цель')}
+    const ov=g.slots.filter(x=>f.slots.includes(x));if(ov.length){sc+=20;why.push('время: '+ov.map(x=>SLOTS[x].toLowerCase()).join(', '))}
+    if(Math.abs(g.int-f.int)===0){sc+=10;why.push('интенсивность')}else if(Math.abs(g.int-f.int)===1)sc+=5;
+    if(!f.budget)sc+=5;else if(f.budget===g.budget||f.budget==='high'){sc+=10;why.push('бюджет')}
+    return {g,score:sc,why}}).sort((a,b)=>b.score-a.score);
+}
+
+let cabTab='dna';
+R.cabinet=()=>{const res=S('results',[]);const leads=S('leads',[]);const c=S('consent',null);const last=res.length?buildReport(res[res.length-1]):null;return `
+<section class="sec" style="margin-top:14px">
+  <div class="head"><h2>Мой кабинет</h2><p class="muted">Демо: данные хранятся только в этом браузере. В рабочей версии — аккаунт через Google или email.</p></div>
+  <div class="tabs">${[['dna','Мой English Learning DNA'],['hist','История'],['apps','Мои заявки'],['notif','Уведомления'],['data','Мои данные']].map(([k,n])=>`<button class="chip ${cabTab===k?'on':''}" data-act="cabtab" data-t="${k}">${n}</button>`).join('')}</div>
+  ${cabTab==='dna'?(last?`<div class="dna-wrap"><div class="dna card bg-soft">${pentagon(last,null,'')}</div><div class="card bg-lime"><h3>Последний результат</h3><p style="font-size:34px;font-weight:600;margin-top:10px">${last.label}</p><p class="small">${fmtDate(res[res.length-1].date)} · ${CONFN[last.conf].toLowerCase()}</p><a class="btn btn-dark" href="#results" data-act="viewres" data-i="${res.length-1}" style="margin-top:20px">Открыть отчёт</a></div></div>`:`<p class="muted">Пока нет прохождений.</p><a class="btn btn-dark" href="#dna" style="margin-top:12px">Пройти диагностику</a>`):''}
+  ${cabTab==='hist'?(res.length?`<div class="scroll-x"><table class="t"><thead><tr><th>Дата</th><th>Уровень</th><th>Уверенность</th>${AX.map(a=>`<th>${a.en}</th>`).join('')}<th></th></tr></thead><tbody>${res.map((r,i)=>{const b=buildReport(r);return `<tr><td>${fmtDT(r.date)}${r.sim?' <span class="demo-badge">симуляция</span>':''}</td><td><b>${b.label}</b></td><td>${CONFN[b.conf]}</td>${b.axes.map(x=>`<td>${x.score??'—'}</td>`).join('')}<td><button class="chip" data-act="viewres" data-i="${i}">Открыть</button></td></tr>`}).reverse().join('')}</tbody></table></div><p class="note" style="margin-top:14px">Сравнивать прохождения можно, но выводы о реальном прогрессе делать рано: задания различались, а банк ещё не откалиброван.</p>`:'<p class="muted">История пуста.</p>'):''}
+  ${cabTab==='apps'?(leads.length?leads.map(l=>`<div class="kv"><span><b>${l.type==='individual'?esc(l.format):l.type==='waitlist'?'Лист ожидания':'Заявка в группу'}</b>${l.groupName?' · '+esc(l.groupName):''}<br><span class="small muted">${fmtDT(l.created)}</span></span><span class="tag">${esc(l.status)}</span></div>`).join(''):'<p class="muted">Заявок пока нет.</p>'):''}
+  ${cabTab==='notif'?`<div class="stack" style="max-width:560px"><div class="kv"><span>Транзакционные письма (результат, подтверждения заявок)</span><b>включены</b></div>
+    <label class="check"><input type="checkbox" data-act="consent" ${c&&c.marketing?'checked':''}><span>Получать полезные материалы, новые видео и новости о наборе в группы${c&&c.email?' на '+esc(c.email):''}</span></label>
+    <p class="small muted">Отписка от материалов не влияет на доступ к результатам диагностики.</p></div>`:''}
+  ${cabTab==='data'?`<div class="stack"><p class="small muted">Экспорт своих данных и удаление аккаунта.</p><div class="row-flex"><button class="btn btn-ghost" data-act="export">Показать мои данные (JSON)</button><button class="btn btn-ghost" data-act="wipe" style="color:var(--orange)">Удалить все мои данные</button></div><div id="exportBox"></div></div>`:''}
+</section>`};
+
+/* ================= teacher cabinet (demo) ================= */
+let admTab='dash',admPeriod=30,admAuth=false,crmOpen=null,qFilter={comp:'',lvl:''};
+const DEMO={visitors:1240,started:410,completed:318,avgMin:17,self:120,group:64,ind:41,leads:52,paid:11,consults:18,consultPaid:7,consultHours:9,videoLeads:19,testLeads:28,noTestLeads:24,
+ sources:[['Threads',610,240,26,7],['Instagram',210,60,9,2],['Прямой заход',180,52,8,1],['Источник неизвестен',240,66,9,1]],
+ cefr:{A1:18,A2:52,B1:121,B2:94,C1:33},goals:{'Разговорный':140,'Работа':78,'Путешествия':41,'Экзамены':22,'Укрепить базу':37},
+ weeks:[3,5,4,7,6,9,8,10],paidW:[0,1,1,2,1,2,2,2]};
+const DEMO_LEADS=[
+ {id:'d1',name:'Мария (демо)',contact:'demo1@example.com',source:'Threads',cefr:'B1',axes:[62,55,70,58,64],goal:'Разговорный',format:'Индивидуально',sched:'Вечер',seg:'A',status:'Новая',consent:true,last:'2 дня назад',notes:'',hist:[]},
+ {id:'d2',name:'Илья (демо)',contact:'@demo_ilya',source:'Threads',cefr:'B1–B2',axes:[68,60,74,66,70],goal:'Разговорный',format:'Группа',sched:'Вечер',seg:'B',status:'Ожидает решения',consent:true,last:'вчера',notes:'',hist:[]},
+ {id:'d3',name:'Анна (демо)',contact:'demo3@example.com',source:'Instagram',cefr:'A2',axes:[40,34,42,38,45],goal:'Укрепить базу',format:'Группа',sched:'Выходные',seg:'B',status:'Связаться',consent:false,last:'5 дней назад',notes:'',hist:[]},
+ {id:'d4',name:'Олег (демо)',contact:'demo4@example.com',source:'Источник неизвестен',cefr:'B2',axes:[78,70,80,74,76],goal:'Работа',format:'Самостоятельно',sched:'—',seg:'C',status:'Не актуально',consent:false,last:'2 недели назад',notes:'',hist:[]},
+ {id:'d5',name:'Светлана (демо)',contact:'demo5@example.com',source:'Threads',cefr:'B1',axes:[58,52,60,57,66],goal:'Разговорный',format:'Индивидуально',sched:'Вечер',seg:'E',status:'Записан на встречу',consent:true,last:'сегодня',notes:'Вернулась через 3 недели после теста',hist:[]},
+ {id:'d6',name:'Кирилл (демо)',contact:'demo6@example.com',source:'Прямой заход',cefr:'C1',axes:[90,84,92,88,86],goal:'Экзамены',format:'Подписка',sched:'—',seg:'D',status:'Не актуально',consent:true,last:'неделю назад',notes:'',hist:[]}];
+const STATUSES=['Новая','Связаться','Связались','Ожидает решения','Записан на встречу','Начал платное обучение','Отказался','Не актуально'];
+const POOL=[[3,'speaking',['evening'],'month'],[4,'speaking',['evening'],'now'],[3,'speaking',['evening','weekend'],'month'],[4,'speaking',['day'],'later'],[3,'speaking',['evening'],'now'],[2,'base',['weekend'],'month'],[2,'base',['weekend','evening'],'now'],[1,'base',['weekend'],'month'],[4,'work',['morning'],'month'],[5,'work',['morning'],'now'],[4,'work',['morning','day'],'later'],[3,'travel',['evening'],'later']];
+
+function crmRows(){
+  const st=S('crm',{});
+  const local=S('leads',[]).map(l=>{const res=S('results',[]);const r=res.find(x=>x.id===l.resultId);const b=r?buildReport(r):null;const seg=computeSegment();return {id:l.id,name:l.name||'Аноним (этот браузер)',contact:l.contact||'—',source:l.source||'Источник неизвестен',cefr:b?b.label:'—',axes:b?b.axes.map(x=>x.score??'—'):['—','—','—','—','—'],goal:l.goal||'—',format:l.type==='individual'?'Индивидуально':'Группа',sched:l.time||'—',seg:seg.k,status:l.status,consent:!!(S('consent',{})||{}).marketing,last:fmtDT(l.created),notes:'',hist:[],local:true}});
+  return [...local,...DEMO_LEADS].map(r=>Object.assign({},r,st[r.id]||{}));
+}
+R.admin=()=>{
+  if(!admAuth)return `<section class="sec" style="margin-top:14px;max-width:560px;margin-left:auto;margin-right:auto"><span class="tag">Закрытый раздел</span><h2 style="margin-top:16px">Кабинет преподавателя</h2><p class="muted" style="margin-top:10px">В рабочей версии — вход через Google или email с серверной проверкой роли «администратор». Здесь вход демонстрационный.</p><button class="btn btn-dark" style="margin-top:20px" data-act="admin-in">Войти как преподаватель (демо)</button></section>`;
+  return `<section class="sec" style="margin-top:14px">
+  <div class="head"><h2>Кабинет преподавателя</h2><div class="row-flex"><span class="demo-badge">Демо-данные помечены</span><button class="chip" data-act="admin-out">Выйти</button></div></div>
+  <div class="tabs">${[['dash','Аналитика'],['crm','Ученики и заявки'],['grp','Подбор групп'],['bank','Банк вопросов'],['utm','Ссылки и источники'],['content','Контент сайта']].map(([k,n])=>`<button class="chip ${admTab===k?'on':''}" data-act="admtab" data-t="${k}">${n}</button>`).join('')}</div>
+  <div id="admBody">${({dash:admDash,crm:admCrm,grp:admGrp,bank:admBank,utm:admUtm,content:admContent})[admTab]()}</div></section>`;
+};
+function pct(a,b){return b?Math.round(a/b*1000)/10+'%':'—'}
+function admDash(){
+  const k={7:.22,30:1,90:2.7}[admPeriod];const n=v=>Math.round(v*k);const D=DEMO;
+  const ev=S('events',[]);const cnt=x=>ev.filter(e=>e.name===x).length;
+  const funnel=[['Посетили сайт',n(D.visitors)],['Начали диагностику',n(D.started)],['Получили результат',n(D.completed)],['Интерес к формату',n(D.group+D.ind)],['Оставили заявку',n(D.leads)],['Начали платное обучение',n(D.paid)]];
+  const metrics=[['Test Completion Rate',pct(n(D.completed),n(D.started)),'завершили / начали диагностику'],['Lead Conversion Rate',pct(n(D.leads),n(D.visitors)),'заявки / уникальные посетители'],['Lead-to-Paid',pct(n(D.paid),n(D.leads)),'начали платное обучение / заявки'],['Group Interest Rate',pct(n(D.group),n(D.visitors)),'выбрали группы / посетители'],['Free Consultation → Paid',pct(n(D.consultPaid),n(D.consults)),'оплатили после знакомства / знакомства'],['Teacher Time per Paid Student',(D.consultHours/D.paid).toFixed(1)+' ч','часы знакомств / новые платные ученики']];
+  const maxC=Math.max(...Object.values(D.cefr)),maxG=Math.max(...Object.values(D.goals));
+  return `<div class="row-flex" style="margin-bottom:16px">${[7,30,90].map(p=>`<button class="chip ${admPeriod===p?'on':''}" data-act="period" data-p="${p}">${p} дней</button>`).join('')}<span class="chip" style="cursor:default;opacity:.7">Произвольный период</span><span class="chip" style="cursor:default;opacity:.7">Фильтры: источник, уровень, формат, сегмент</span></div>
+  <div class="card bg-yellow" style="margin-bottom:14px"><b>Данные этого браузера (реальные события прототипа):</b> <span class="small">page_view: ${cnt('page_view')} · diagnostic_started: ${cnt('diagnostic_started')} · diagnostic_completed: ${cnt('diagnostic_completed')} · learning_option_selected: ${cnt('learning_option_selected')} · lead_created: ${cnt('lead_created')} · group_waitlist_joined: ${cnt('group_waitlist_joined')} · video_opened: ${cnt('video_opened')}</span><br><span class="small">Ваш текущий сегмент: <b>${computeSegment().k} — ${SEGN[computeSegment().k]}</b>. ${esc(computeSegment().why)}</span></div>
+  <p class="small muted" style="margin-bottom:12px"><span class="demo-badge">Демо</span> Ниже — демонстрационные цифры, чтобы показать дашборд. Посетители, заявки и платные ученики считаются отдельно и не смешиваются.</p>
+  <div class="grid3">${metrics.map(([t,v,f])=>`<div class="metric"><div class="small">${t}</div><div class="v">${v}</div><div class="formula">${f}</div></div>`).join('')}</div>
+  <div class="grid2" style="margin-top:14px">
+    <div class="card bg-soft"><h3>Воронка</h3><div style="margin-top:14px">${funnel.map(([t,v],i)=>`<div class="bar-row"><span>${t}</span><div class="bar"><i style="width:${v/funnel[0][1]*100}%;background:${['#151613','#4a4c46','var(--lav)','var(--sage)','var(--lime)','var(--orange)'][i]}"></i></div><b>${v}</b></div>`).join('')}</div><p class="formula" style="margin-top:8px">Платные ученики — только по подтверждённому статусу «Начал платное обучение», а не по кликам.</p></div>
+    <div class="card bg-soft"><h3>Источники трафика</h3><div class="scroll-x" style="margin-top:10px"><table class="t" style="min-width:420px"><thead><tr><th>Источник</th><th>Визиты</th><th>Тест</th><th>Заявки</th><th>Оплаты</th><th>Конв. в оплату</th></tr></thead><tbody>${D.sources.map(s=>`<tr><td><b>${s[0]}</b></td><td>${n(s[1])}</td><td>${n(s[2])}</td><td>${n(s[3])}</td><td>${n(s[4])}</td><td>${pct(s[4],s[1])}</td></tr>`).join('')}</tbody></table></div>
+      <div class="grid3" style="margin-top:12px"><div class="metric"><div class="small">Конверсия из теста</div><div class="v" style="font-size:22px">${pct(D.testLeads,D.completed)}</div><div class="formula">заявки после теста / завершили тест</div></div><div class="metric"><div class="small">Конверсия без теста</div><div class="v" style="font-size:22px">${pct(D.noTestLeads,D.visitors-D.started)}</div><div class="formula">заявки без теста / не начинали тест</div></div><div class="metric"><div class="small">После видео</div><div class="v" style="font-size:22px">${D.videoLeads}</div><div class="formula">заявки после video_opened</div></div></div></div>
+  </div>
+  <div class="grid2" style="margin-top:14px">
+    <div class="card bg-soft"><h3>Распределение по CEFR</h3><div style="margin-top:14px">${Object.entries(D.cefr).map(([l,v])=>`<div class="bar-row"><span>${l}</span><div class="bar"><i style="width:${v/maxC*100}%;background:var(--lav)"></i></div><b>${n(v)}</b></div>`).join('')}</div></div>
+    <div class="card bg-soft"><h3>Учебные цели</h3><div style="margin-top:14px">${Object.entries(D.goals).map(([l,v])=>`<div class="bar-row"><span>${l}</span><div class="bar"><i style="width:${v/maxG*100}%;background:var(--sage)"></i></div><b>${n(v)}</b></div>`).join('')}</div></div>
+  </div>
+  <div class="grid2" style="margin-top:14px">
+    <div class="card bg-soft"><h3>Динамика заявок и платных учеников (по неделям)</h3>${sparkBars(D.weeks,D.paidW)}</div>
+    <div class="card bg-soft"><h3>Знакомства без покупки</h3><p class="v" style="font-size:42px;font-weight:600;margin-top:10px">${pct(D.consults-D.consultPaid,D.consults)}</p><p class="formula">знакомства без последующей оплаты / все знакомства. Длительность встреч вводится вручную или импортируется из календаря (требует подключения).</p></div>
+  </div>`;
+}
+function sparkBars(a,b){const m=Math.max(...a);return `<div style="display:flex;gap:10px;align-items:flex-end;height:150px;margin-top:16px">${a.map((v,i)=>`<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:3px;height:100%"><div title="заявки: ${v}" style="height:${v/m*100}%;background:var(--lime);border-radius:8px;position:relative"><div style="position:absolute;bottom:0;left:0;right:0;height:${b[i]/v*100}%;background:var(--orange);border-radius:8px"></div></div><span class="tiny muted" style="text-align:center">н${i+1}</span></div>`).join('')}</div><p class="tiny muted" style="margin-top:8px"><span class="dot" style="color:var(--lime)"></span> заявки · <span class="dot" style="color:var(--orange)"></span> начали платное обучение</p>`}
+function admCrm(){
+  const rows=crmRows();
+  return `<div class="row-flex" style="margin-bottom:14px"><input class="inp" style="max-width:280px" placeholder="Поиск по имени или контакту" id="crmQ" data-act="crmsearch"><span class="small muted">Сегменты: ${Object.entries(SEGN).filter(([k])=>k!=='—').map(([k,v])=>`<span class="seg seg-${k}">${k}</span> ${v}`).join(' · ')}</span></div>
+  <div class="scroll-x"><table class="t" id="crmTable"><thead><tr><th>Имя</th><th>Контакт</th><th>Источник</th><th>CEFR</th><th>DNA (VK/LU/GA/GR/CC)</th><th>Цель</th><th>Формат</th><th>Сегмент</th><th>Статус</th><th>Согласие</th><th>Последнее</th></tr></thead><tbody>
+  ${rows.map(r=>`<tr class="clk" data-act="crmopen" data-id="${r.id}" data-q="${esc((r.name+' '+r.contact).toLowerCase())}"><td><b>${esc(r.name)}</b>${r.local?' <span class="demo-badge" style="background:var(--lime)">этот браузер</span>':''}</td><td>${esc(r.contact)}</td><td>${esc(r.source)}</td><td>${esc(r.cefr)}</td><td class="small">${r.axes.join(' / ')}</td><td>${esc(r.goal)}</td><td>${esc(r.format)}</td><td><span class="seg seg-${r.seg}">${r.seg}</span></td><td>${esc(r.status)}</td><td>${r.consent?'да':'нет'}</td><td class="small">${esc(r.last)}</td></tr>`).join('')}
+  </tbody></table></div><p class="tiny muted" style="margin-top:10px">Экспорт в CSV включает только поля, разрешённые политикой данных. Контакты видны только администратору.</p><button class="btn btn-ghost" style="margin-top:8px" data-act="csv">Экспорт CSV (предпросмотр)</button><div id="csvBox"></div>`;
+}
+function crmCard(id){
+  const r=crmRows().find(x=>x.id===id);if(!r)return;
+  modal(`<span class="seg seg-${r.seg}">${r.seg}</span><h3 style="margin-top:10px">${esc(r.name)}</h3><p class="small muted">${esc(r.contact)} · ${esc(r.source)}</p>
+   <div class="grid2" style="margin-top:16px"><label class="f"><span>Статус заявки</span><select class="inp" id="crmStatus">${STATUSES.map(s=>`<option ${s===r.status?'selected':''}>${s}</option>`).join('')}</select></label>
+   <label class="f"><span>Сегмент (ручная корректировка)</span><select class="inp" id="crmSeg">${['A','B','C','D','E'].map(s=>`<option value="${s}" ${s===r.seg?'selected':''}>${s} — ${SEGN[s]}</option>`).join('')}</select></label></div>
+   <label class="f" style="margin-top:12px"><span>Заметки преподавателя</span><textarea class="inp" id="crmNote">${esc(r.notes)}</textarea></label>
+   <div class="row-flex" style="margin-top:12px"><button class="btn btn-dark" data-act="crmsave" data-id="${r.id}">Сохранить</button></div>
+   <h3 style="margin-top:22px;font-size:18px">Хронология</h3><div class="timeline" style="margin-top:10px">${(r.hist||[]).slice().reverse().map(h=>`<div><b>${esc(h.what)}</b><br><span class="muted">${fmtDT(h.t)}</span></div>`).join('')}<div><b>Результат диагностики: ${esc(r.cefr)}</b><br><span class="muted">DNA: ${r.axes.join(' / ')}</span></div><div><b>Интерес к формату: ${esc(r.format)}</b><br><span class="muted">${esc(r.goal)} · ${esc(r.sched)}</span></div><div><b>Первый визит</b><br><span class="muted">Источник: ${esc(r.source)}</span></div></div>`);
+}
+function admGrp(){
+  const pool=POOL.map(p=>({lvl:p[0],goal:p[1],slots:p[2],start:p[3]}));
+  S('leads',[]).filter(l=>l.type==='group'||l.type==='waitlist').forEach(l=>{if(l.form)pool.push(Object.assign({local:true},l.form))});
+  const band=l=>l<=2?'A1–A2':l<=4?'B1–B2':'B2–C1';
+  const cl={};pool.forEach(p=>{const k=band(p.lvl)+'|'+p.goal;(cl[k]=cl[k]||[]).push(p)});
+  const out=Object.entries(cl).map(([k,arr])=>{const [b,g]=k.split('|');const sc={};arr.forEach(p=>p.slots.forEach(s=>sc[s]=(sc[s]||0)+1));const top=Object.entries(sc).sort((a,b)=>b[1]-a[1])[0];const soon=arr.filter(p=>p.start!=='later').length;return {b,g,n:arr.length,top,soon,local:arr.some(p=>p.local)}}).sort((a,b)=>b.n-a.n);
+  return `<p class="muted small" style="margin-bottom:14px">Рекомендательный режим: система группирует заинтересованных по уровню, цели и времени. Приглашения не отправляются автоматически — решение за преподавателем. <span class="demo-badge">Пул — демо + заявки этого браузера</span></p>
+  <div class="grid3">${out.map(o=>`<div class="card ${o.n>=4?'bg-lime':'bg-soft'}"><span class="tag">${o.n>=4?'Можно собирать':'Копим интерес'}</span><h3 style="margin-top:12px">Потенциальная группа: ${o.b}, ${GOALS[o.g].toLowerCase()}</h3><p class="small" style="margin-top:10px">${o.n} заинтересованных${o.local?' (включая вас)':''}<br>У ${o.top[1]} совпадает время: ${SLOTS[o.top[0]].toLowerCase()}<br>Готовы начать в ближайший месяц: ${o.soon}</p><button class="btn btn-ghost" style="margin-top:12px" data-act="toast" data-m="В рабочей версии откроется черновик приглашения — отправка только после вашего подтверждения.">Подготовить приглашение</button></div>`).join('')}</div>`;
+}
+function admBank(){
+  const qs=S('qstatus',{});
+  const list=BANK.filter(x=>(!qFilter.comp||x.comp===qFilter.comp)&&(!qFilter.lvl||String(x.lvl)===qFilter.lvl));
+  const cnt={};BANK.forEach(x=>{const k=x.lvl+x.comp;cnt[k]=(cnt[k]||0)+1});
+  return `<div class="card bg-soft" style="margin-bottom:14px"><b>Покрытие банка</b> (цель MVP — по 30 заданий на ячейку, сейчас демо-набор):
+   <div class="scroll-x"><table class="t" style="min-width:420px;margin-top:8px"><thead><tr><th>Уровень</th><th>Vocabulary</th><th>Grammar</th><th>Context</th></tr></thead><tbody>${[1,2,3,4,5].map(l=>`<tr><td>${LV[l]}</td>${['V','G','C'].map(c=>`<td>${cnt[l+c]||0} / 30</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>
+  <div class="row-flex" style="margin-bottom:12px"><select class="inp" style="max-width:200px" data-act="qf" id="qfComp"><option value="">Все компетенции</option>${Object.entries(COMPN).map(([k,v])=>`<option value="${k}" ${qFilter.comp===k?'selected':''}>${v}</option>`).join('')}</select><select class="inp" style="max-width:160px" data-act="qf" id="qfLvl"><option value="">Все уровни</option>${[1,2,3,4,5].map(l=>`<option value="${l}" ${qFilter.lvl===String(l)?'selected':''}>${LV[l]}</option>`).join('')}</select><button class="btn btn-ghost" data-act="toast" data-m="В рабочей версии откроется редактор: текст, варианты, правильный ответ, ось, тема, объяснение.">Добавить вопрос</button></div>
+  <div class="scroll-x"><table class="t"><thead><tr><th>ID</th><th>Ур.</th><th>Ось</th><th>Тема</th><th>Задание</th><th>Статус</th><th></th></tr></thead><tbody>${list.map(x=>`<tr><td class="small">${x.id}</td><td>${LV[x.lvl]}</td><td class="small">${AXK[x.sub].en}</td><td class="small">${esc(TOP[x.topic].n)}</td><td>${esc(x.prompt)}</td><td>${qs[x.id]==='ok'?'<span style="color:var(--ok)">Проверено преподавателем</span>':'<span class="muted">Черновик</span>'}</td><td><div class="row-flex" style="flex-wrap:nowrap"><button class="chip" data-act="qprev" data-id="${x.id}">Просмотр</button><button class="chip" data-act="qok" data-id="${x.id}">${qs[x.id]==='ok'?'Снять отметку':'Проверено'}</button></div></td></tr>`).join('')}</tbody></table></div>
+  <p class="tiny muted" style="margin-top:10px">Публикуются только задания со статусом «Проверено преподавателем». Сгенерированные задания не считаются валидированными. Статистический параметр сложности (IRT) появится после накопления ответов.</p>`;
+}
+function admUtm(){const at=S('attr',{});return `<div class="grid2"><div class="stack">
+  <h3>Ссылка для публикации</h3>
+  <label class="f"><span>Куда ведёт</span><select class="inp" id="uPage"><option value="dna">Диагностика</option><option value="individual">Индивидуальные занятия</option><option value="groups">Группы</option><option value="videos">Видео</option><option value="home">Главная</option></select></label>
+  <div class="grid2"><label class="f"><span>utm_source</span><input class="inp" id="uSrc" value="threads"></label><label class="f"><span>utm_medium</span><input class="inp" id="uMed" value="social"></label></div>
+  <div class="grid2"><label class="f"><span>utm_campaign</span><input class="inp" id="uCamp" value="grammar_post"></label><label class="f"><span>utm_content</span><input class="inp" id="uCont" value="present_perfect"></label></div>
+  <button class="btn btn-dark" data-act="utm">Собрать ссылку</button><div id="utmOut"></div></div>
+  <div class="card bg-soft"><h3>Атрибуция этого браузера</h3><div class="kv"><span>Первая точка входа</span><b>${esc((at.first||{}).source||'Источник неизвестен')}</b></div><div class="kv"><span>Последняя перед заявкой</span><b>${esc((at.last||{}).source||'Источник неизвестен')}</b></div><div class="kv"><span>Referrer</span><b class="small">${esc((at.first||{}).referrer||'недоступен')}</b></div>
+  <p class="small muted" style="margin-top:12px">Если источник не определён, система пишет «Источник неизвестен» и не угадывает. Для проверки можно симулировать переход:</p><div class="row-flex" style="margin-top:8px">${['Threads','Instagram','YouTube'].map(s=>`<button class="chip" data-act="simsrc" data-s="${s}">Пришёл из ${s}</button>`).join('')}</div></div></div>`}
+function admContent(){const st=SET();const f=(k,l,t)=>`<label class="f"><span>${l}</span>${t==='ta'?`<textarea class="inp" data-k="${k}">${esc(st[k])}</textarea>`:`<input class="inp" data-k="${k}" value="${esc(st[k])}">`}</label>`;return `<p class="muted small" style="margin-bottom:14px">Изменения сразу применяются на сайте (в демо — в этом браузере). Пустые поля показываются посетителям как аккуратные заглушки.</p>
+  <div class="grid2"><div class="stack">${f('name','Имя преподавателя')}${f('heroTitle','Заголовок главной')}${f('heroText','Подзаголовок главной','ta')}${f('about','Обо мне','ta')}${f('approach','Подход к обучению','ta')}${f('requests','Для каких запросов','ta')}</div>
+  <div class="stack">${f('threads','Ссылка на Threads')}${f('instagram','Ссылка на Instagram')}${f('youtube','Ссылка на YouTube')}${f('indPrice','Стоимость индивидуального занятия')}${f('indDuration','Продолжительность')}${f('indFormat','Формат (онлайн / офлайн)')}${f('indPolicy','Правила оплаты и отмены','ta')}${f('indSeats','Свободные места (число или пусто)')}${f('groupPrice','Стоимость группового занятия')}${f('paidDiagPrice','Стоимость подробной диагностики')}${f('bookingUrl','Ссылка на сервис бронирования')}
+  <label class="check"><input type="checkbox" data-k="paidDiag" ${st.paidDiag?'checked':''}><span>Показывать платную подробную диагностику</span></label><label class="check"><input type="checkbox" data-k="intro" ${st.intro?'checked':''}><span>Открыта запись на короткое знакомство</span></label></div></div>
+  <div class="row-flex" style="margin-top:18px"><button class="btn btn-dark" data-act="savesettings">Сохранить изменения</button><button class="btn btn-ghost" data-act="resetsettings">Вернуть заглушки</button></div>`}
+
+/* ================= footer ================= */
+function footer(){const st=SET();return `<div class="grid2" style="align-items:end"><div><div class="logo" style="color:var(--ink)"><span class="logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 3c0 6 10 6 10 12s-10 3-10 6M17 3c0 6-10 6-10 12s10 3 10 6"/></svg></span>${st.name?esc(st.name):'English DNA'}</div><p class="muted small" style="margin-top:10px;max-width:380px">Персональный сайт преподавателя английского и бесплатная диагностика English Learning DNA.</p></div>
+  <div class="row-flex" style="justify-content:flex-end">${socials(st)}</div></div>
+  <div class="foot-bottom"><span class="small muted">Прототип механик · данные хранятся только в этом браузере</span><div class="row-flex"><a class="small" href="#admin">Кабинет преподавателя</a><button class="chip" data-act="policy">Конфиденциальность</button></div></div>`}
+
+/* ================= router ================= */
+function render(keep){
+  const app=$('#app');const y=window.scrollY;
+  app.innerHTML=(R[cur]||R.home)();
+  document.querySelectorAll('#navLinks a').forEach(a=>a.classList.toggle('on',a.dataset.r===cur||(cur==='test'||cur==='results')&&a.dataset.r==='dna'));
+  $('#foot').innerHTML=footer();
+  const st=SET();$('#brandName').textContent=st.name||'English DNA';
+  if(keep)window.scrollTo(0,y);
+}
+function route(){
+  const h=(location.hash||'#home').slice(1);cur=R[h]?h:'home';
+  $('#navLinks').classList.remove('open');
+  if(cur!=='test')reviewIdx=null;
+  render(false);window.scrollTo(0,0);
+  track('page_view',{page:cur});
+  if(cur==='individual')track('individual_lesson_viewed');
+  if(cur==='groups')track('group_lesson_viewed');
+  if(cur==='results'&&S('results',[]).length)track('report_viewed');
+}
+function go(r){if(location.hash==='#'+r)route();else location.hash=r}
+
+/* ================= actions ================= */
+const ACT={
+  burger:()=>$('#navLinks').classList.toggle('open'),
+  close:closeModal,
+  go:el=>go(el.dataset.to),
+  track:el=>track(el.dataset.ev),
+  start:()=>{const s=newSession();W('session',s);picked=null;reviewIdx=null;track('diagnostic_started');go('test')},
+  resume:()=>{picked=null;reviewIdx=null;go('test')},
+  sim:el=>{const r=runSim(el.dataset.id);viewRes=null;chosenPath=null;practiceAns={};toast('Прохождение смоделировано: 42 вопроса');go('results')},
+  pick:el=>{picked=el.dataset.v;render(true)},
+  confirm:()=>{const s=S('session',null);if(!s||!picked)return;const done=submitAnswer(s,picked);picked=null;track('diagnostic_question_answered',{n:s.idx});
+    if(done){finishSession(s,false);viewRes=null;chosenPath=null;practiceAns={};go('results')}else{W('session',s);render(false);document.querySelector('.test-wrap').scrollIntoView({block:'start'})}},
+  back:()=>{const s=S('session',null);if(!s)return;reviewIdx=reviewIdx==null?s.idx-1:Math.max(0,reviewIdx-1);render(true)},
+  tocur:()=>{reviewIdx=null;render(true)},
+  axis:el=>{activeAxis=el.dataset.k;render(true)},
+  practice:el=>{practiceAns[el.dataset.t]=el.dataset.v;render(true)},
+  path:el=>{chosenPath=el.dataset.p;track('learning_option_selected',{option:chosenPath});
+    if(chosenPath==='group'){go('groups');return}if(chosenPath==='individual'){go('individual');return}
+    render(true);setTimeout(()=>{const p=$('#pathPanel');if(p)p.scrollIntoView({behavior:'smooth',block:'start'})},30)},
+  savereport:()=>{track('report_saved');toast('Отчёт сохранён в этом браузере')},
+  saveacc:()=>modal(`<h3>Сохранить результат в аккаунте</h3><p class="muted" style="margin-top:10px">В рабочей версии: вход через Google или email. Анонимный результат безопасно привяжется к аккаунту после входа.</p><div class="row-flex" style="margin-top:18px"><button class="btn btn-dark" data-act="close">Войти через Google</button><button class="btn btn-ghost" data-act="close">Войти по email</button></div><p class="tiny muted" style="margin-top:14px">Требует подключения: Supabase Auth / Google OAuth.</p>`),
+  viewres:el=>{viewRes=Number(el.dataset.i);activeAxis='vk';chosenPath=null;practiceAns={};go('results')},
+  video:el=>{const id=el.dataset.id;const v=VIDEOS.find(x=>x.id===id);track('video_opened',{video:id});
+    modal(`<div style="aspect-ratio:16/9;border-radius:20px;background:linear-gradient(135deg,#2a2b28,#4b4c47);display:grid;place-items:center;color:#fff;text-align:center;padding:20px"><div><span class="arrow lime" style="margin:0 auto 12px;width:64px;height:64px">${PLAY}</span><p class="small">Здесь будет встроенное видео (YouTube) или превью со ссылкой на оригинал в соцсети</p></div></div>
+    <h3 style="margin-top:18px">${v?esc(v.t):'Видео-знакомство'}</h3>${v?`<p class="muted" style="margin-top:6px">${esc(v.d)}</p><div class="row-flex" style="margin-top:10px">${v.tags.map(t=>`<span class="tag">${esc(TOP[t].n)}</span>`).join('')}</div>`:''}
+    <div class="card bg-soft" style="margin-top:18px;padding:18px"><p>Понравилось, как я объясняю? Посмотри, как устроены мои занятия.</p><a class="btn btn-dark" href="#lessons" data-act="close" style="margin-top:12px">Как проходят занятия</a></div>`)},
+  vfilter:el=>{videoFilter=el.dataset.t;render(true)},
+  subscribe:el=>{const w=el.dataset.w;const em=($('#subEmail-'+w)||{}).value||'';const ok=($('#subOk-'+w)||{}).checked;const er=$('#subErr-'+w);
+    if(!/^\S+@\S+\.\S+$/.test(em)){er.textContent='Укажи email в формате name@example.com';return}
+    if(!ok){er.textContent='Отметь согласие на получение материалов — без него подписка не оформляется';return}
+    W('consent',{marketing:true,email:em,at:Date.now()});track('marketing_consent_given',{where:w});toast('Подписка оформлена');render(true)},
+  consent:el=>{const c=S('consent',{})||{};if(el.checked){c.marketing=true;c.at=Date.now();W('consent',c);track('marketing_consent_given')}else{c.marketing=false;W('consent',c);track('marketing_consent_withdrawn');toast('Вы отписаны. Результаты остались в кабинете')}},
+  lead:()=>{const n=$('#lName').value.trim(),c=$('#lContact').value.trim();if(!n||!c){$('#lErr').textContent='Заполни имя и контакт для связи';return}
+    const res=S('results',[]);const at=S('attr',{});
+    const l={id:'L'+Date.now().toString(36),type:'individual',name:n,contact:c,format:$('#lFormat').value,goal:$('#lGoal').value,time:$('#lTime').value.trim(),resultId:res.length?res[res.length-1].id:null,status:'Новая',created:Date.now(),visit:VISIT,source:(at.last||{}).source||'Источник неизвестен',firstSource:(at.first||{}).source||'Источник неизвестен'};
+    const ls=S('leads',[]);ls.push(l);W('leads',ls);track('booking_started');track('lead_created',{format:'individual'});track('booking_completed');render(false)},
+  newlead:()=>{R.__forceForm=true;render(false)},
+  booklink:()=>track('booking_started',{via:'external'}),
+  gmatch:()=>{const f={lvl:Number($('#gLvl').value),goal:$('#gGoal').value,slots:[...document.querySelectorAll('.gSlot:checked')].map(x=>x.value),tz:$('#gTz').value,int:Number($('#gInt').value),start:$('#gStart').value,budget:$('#gBudget').value};
+    if(!f.slots.length){toast('Отметь хотя бы одно удобное время');return}gForm=f;gMatches=matchGroups(f);$('#gResults').innerHTML=gResultsHtml();if(window.innerWidth<640)$('#gResults').scrollIntoView({behavior:'smooth'})},
+  gjoin:el=>{if(!gForm){toast('Сначала заполни параметры подбора');return}const g=GROUPS.find(x=>x.id===el.dataset.id);const wait=!!el.dataset.w;
+    modal(`<h3>${wait?'Лист ожидания':'Заявка в группу'}${g?': '+g.name:''}</h3><p class="muted small" style="margin-top:8px">Подтверди заинтересованность — преподаватель свяжется и уточнит детали. Приглашения без твоего согласия не отправляются.</p>
+    <div class="stack" style="margin-top:14px"><label class="f"><span>Имя</span><input class="inp" id="gjName"></label><label class="f"><span>Контакт</span><input class="inp" id="gjContact"></label><div class="err" id="gjErr"></div>
+    <button class="btn btn-dark" data-act="gjsend" data-id="${el.dataset.id}" data-w="${wait?1:''}">Подтвердить</button></div>`)},
+  gjsend:el=>{const n=$('#gjName').value.trim(),c=$('#gjContact').value.trim();if(!n||!c){$('#gjErr').textContent='Заполни имя и контакт';return}
+    const g=GROUPS.find(x=>x.id===el.dataset.id);const wait=!!el.dataset.w;const res=S('results',[]);const at=S('attr',{});
+    const ls=S('leads',[]);ls.push({id:'L'+Date.now().toString(36),type:wait?'waitlist':'group',groupId:el.dataset.id,groupName:g?g.name:'Пул интереса',name:n,contact:c,goal:GOALS[gForm.goal],time:gForm.slots.map(s=>SLOTS[s]).join(', '),form:gForm,resultId:res.length?res[res.length-1].id:null,status:'Новая',created:Date.now(),visit:VISIT,source:(at.last||{}).source||'Источник неизвестен'});W('leads',ls);
+    track(wait?'group_waitlist_joined':'lead_created',{format:'group',group:el.dataset.id});closeModal();toast(wait?'Ты в листе ожидания':'Заявка в группу отправлена');$('#gResults').innerHTML=gResultsHtml()},
+  gnotify:()=>{toast('Подпишись на новости о наборе — это отдельное согласие');go('home')},
+  cabtab:el=>{cabTab=el.dataset.t;render(true)},
+  export:()=>{const data={sid:SID,results:S('results',[]).map(r=>({date:new Date(r.date).toISOString(),level:buildReport(r).label,axes:buildReport(r).axes.map(x=>({axis:x.en,score:x.score}))})),leads:S('leads',[]),consent:S('consent',null),attribution:S('attr',null)};$('#exportBox').innerHTML=`<textarea class="inp" style="min-height:220px;font-size:12.5px">${esc(JSON.stringify(data,null,2))}</textarea>`},
+  wipe:()=>{if(!confirm('Удалить все результаты, заявки и согласия из этого браузера?'))return;['results','leads','consent','session','events','seen','attr','sid','crm'].forEach(k=>{try{localStorage.removeItem('eldna_'+k)}catch(e){}});toast('Данные удалены');render(false)},
+  'admin-in':()=>{admAuth=true;render(false)},
+  'admin-out':()=>{admAuth=false;render(false)},
+  admtab:el=>{admTab=el.dataset.t;render(true)},
+  period:el=>{admPeriod=Number(el.dataset.p);render(true)},
+  crmopen:el=>crmCard(el.dataset.id),
+  crmsave:el=>{const id=el.dataset.id;const crm=S('crm',{});const rows=crmRows();const r=rows.find(x=>x.id===id);const o=crm[id]||{hist:r.hist||[]};
+    const ns=$('#crmStatus').value,sg=$('#crmSeg').value,nt=$('#crmNote').value;o.hist=o.hist||[];
+    if(ns!==r.status){o.hist.push({t:Date.now(),what:`Статус: ${r.status} → ${ns}`});track('lead_status_changed',{to:ns});if(ns==='Начал платное обучение')track('paid_student_confirmed')}
+    if(sg!==r.seg)o.hist.push({t:Date.now(),what:`Сегмент вручную: ${r.seg} → ${sg}`});
+    o.status=ns;o.seg=sg;o.notes=nt;crm[id]=o;W('crm',crm);
+    const ls=S('leads',[]);const li=ls.findIndex(x=>x.id===id);if(li>=0){ls[li].status=ns;W('leads',ls)}
+    closeModal();toast('Сохранено, изменение записано в историю');render(true)},
+  csv:()=>{const rows=crmRows();const head=['name','source','cefr','goal','format','segment','status','consent'];const lines=[head.join(',')].concat(rows.map(r=>[r.name,r.source,r.cefr,r.goal,r.format,r.seg,r.status,r.consent?'yes':'no'].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')));$('#csvBox').innerHTML=`<textarea class="inp" style="margin-top:10px;min-height:160px;font-size:12.5px">${esc(lines.join('\n'))}</textarea><p class="tiny muted">Контакты исключены из экспорта по умолчанию.</p>`},
+  qprev:el=>{const x=QB[el.dataset.id];modal(`<span class="tag">${LV[x.lvl]} · ${AXK[x.sub].en}</span><p class="qprompt" style="margin-top:14px">${esc(x.prompt)}</p><div class="opts">${x.opts.map((o,i)=>`<div class="opt locked ${i===0?'sel':''}"><b>${'ABCD'[i]}</b>${esc(o)}</div>`).join('')}</div><p class="small" style="margin-top:14px"><b>Объяснение:</b> ${esc(x.expl)}</p><p class="tiny muted" style="margin-top:8px">Тема: ${esc(TOP[x.topic].n)} · правильный вариант отмечен (в тесте варианты перемешиваются)</p>`)},
+  qok:el=>{const qs=S('qstatus',{});qs[el.dataset.id]=qs[el.dataset.id]==='ok'?'':'ok';W('qstatus',qs);render(true)},
+  utm:()=>{const p=new URLSearchParams();[['utm_source','uSrc'],['utm_medium','uMed'],['utm_campaign','uCamp'],['utm_content','uCont']].forEach(([k,id])=>{const v=$('#'+id).value.trim();if(v)p.set(k,v)});$('#utmOut').innerHTML=`<div class="card bg-lime" style="padding:16px;word-break:break-all"><b class="small">https://ваш-домен.ru/${$('#uPage').value}?${esc(p.toString())}</b><p class="tiny" style="margin-top:6px">Домен подключается позже. Параметры сохраняются как первая и последняя точка входа.</p></div>`},
+  simsrc:el=>{const a=S('attr',{})||{};const now={source:el.dataset.s,referrer:'(симуляция)',at:Date.now(),visit:VISIT};if(!a.first||a.first.source==='Источник неизвестен')a.first=now;a.last=now;W('attr',a);toast('Источник визита: '+el.dataset.s);render(true)},
+  savesettings:()=>{const st=SET();document.querySelectorAll('[data-k]').forEach(i=>{st[i.dataset.k]=i.type==='checkbox'?i.checked:i.value.trim()});W('settings',st);toast('Изменения сохранены и применены на сайте');render(true)},
+  resetsettings:()=>{W('settings',{});toast('Вернули заглушки');render(true)},
+  toast:el=>toast(el.dataset.m),
+  policy:()=>modal(`<h3>Конфиденциальность</h3><p class="muted" style="margin-top:10px">В прототипе все данные хранятся только в вашем браузере. В рабочей версии: HTTPS, защищённая авторизация, разграничение ролей, отдельное согласие на рассылку, экспорт и удаление своих данных. Полный текст политики добавит преподаватель.</p>`)
+};
+// показать форму повторно после «Отправить ещё одну заявку»
+const _ind=R.individual;R.individual=()=>{if(R.__forceForm){R.__forceForm=false;const ls=S('leads',[]);const tmp=ls.map(l=>l.type==='individual'?Object.assign({},l,{type:'individual_prev'}):l);W('leads',tmp);const html=_ind();W('leads',ls);return html}return _ind()};
+
+if(typeof document!=='undefined'&&document.addEventListener){
+  document.addEventListener('click',e=>{
+    if(e.target.id==='modal'){closeModal();return}
+    const el=e.target.closest('[data-act]');if(!el)return;const a=el.dataset.act;
+    if(['crmsearch','qf','consent'].includes(a))return;
+    if(ACT[a]){if(el.tagName==='A'&&!el.getAttribute('href').startsWith('#'))ACT[a](el,e);else if(el.tagName==='A'){ACT[a](el,e)}else{e.preventDefault();ACT[a](el,e)}}
+  });
+  document.addEventListener('change',e=>{const el=e.target;if(el.dataset.act==='consent')ACT.consent(el);if(el.dataset.act==='qf'){qFilter={comp:$('#qfComp').value,lvl:$('#qfLvl').value};render(true)}});
+  document.addEventListener('input',e=>{if(e.target.id==='crmQ'){const v=e.target.value.toLowerCase();document.querySelectorAll('#crmTable tbody tr').forEach(tr=>tr.style.display=tr.dataset.q.includes(v)?'':'none')}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.lbl')){e.preventDefault();ACT.axis(e.target)}});
+  window.addEventListener('hashchange',route);
+  document.addEventListener('DOMContentLoaded',route);
+}
+</script>
+</body>
+</html>
