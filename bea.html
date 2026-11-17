@@ -1,0 +1,3853 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cognitive Vocabulary Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#EEF1F7; --surface:#FFFFFF; --surface2:#F6F7FB; --ink:#23283A; --muted:#5C6378; --line:#DCE1EC;
+  --peri:#5966D6; --peri-ink:#FFFFFF; --peri-soft:#E3E6FB; --peri-mid:#AEB6F2;
+  --mint:#D6F1E1; --mint-ink:#1E6943; --mint-line:#93D3AE;
+  --rose:#FBDCDC; --rose-ink:#A12F3A; --rose-line:#EFA3A8;
+  --butter:#F7E3A1; --butter-soft:#FBF1CF; --lav:#ECE8FC;
+  --shadow:0 1px 2px rgba(35,40,58,.06),0 8px 24px rgba(35,40,58,.06);
+  --ui:"Onest","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  --lex:"Newsreader",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  color-scheme:dark; --bg:#171A24; --surface:#20242F; --surface2:#262B38; --ink:#E8EAF2; --muted:#A3A9BC; --line:#343A4A;
+  --peri:#8E99F2; --peri-ink:#151827; --peri-soft:#2C3152; --peri-mid:#5562B8;
+  --mint:#1D3A2B; --mint-ink:#9FE0BC; --mint-line:#2F6B4A; --rose:#432428; --rose-ink:#F5B3B8; --rose-line:#7A3940;
+  --butter:#D9C47A; --butter-soft:#3A3524; --lav:#2A2740; --shadow:0 1px 2px rgba(0,0,0,.3);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#171A24; --surface:#20242F; --surface2:#262B38; --ink:#E8EAF2; --muted:#A3A9BC; --line:#343A4A;
+  --peri:#8E99F2; --peri-ink:#151827; --peri-soft:#2C3152; --peri-mid:#5562B8;
+  --mint:#1D3A2B; --mint-ink:#9FE0BC; --mint-line:#2F6B4A; --rose:#432428; --rose-ink:#F5B3B8; --rose-line:#7A3940;
+  --butter:#D9C47A; --butter-soft:#3A3524; --lav:#2A2740; --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+button:disabled{cursor:default}
+:focus-visible{outline:3px solid var(--peri);outline-offset:2px}
+[lang="en"].en,.en{font-family:var(--lex);font-weight:500}
+.muted{color:var(--muted)} .small{font-size:15px}
+.app{max-width:960px;margin:0 auto;padding:20px 20px 64px}
+
+/* header */
+.top{display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap}
+.brand h1{margin:0;font-family:var(--lex);font-weight:600;font-size:30px;letter-spacing:-.01em;line-height:1.15}
+.brand .sub{margin:2px 0 0;color:var(--muted);font-size:15px;max-width:520px}
+.top-r{display:flex;align-items:center;gap:10px}
+.schema{display:flex;align-items:center;gap:12px;background:var(--surface);border-radius:16px;padding:8px 14px 8px 10px;box-shadow:var(--shadow)}
+.cells{display:grid;grid-template-columns:repeat(20,9px);gap:3px}
+.cells i{width:9px;height:9px;border-radius:50%;background:transparent;box-shadow:inset 0 0 0 1.5px var(--line)}
+.cells i.m1{background:var(--peri-soft);box-shadow:none}.cells i.m2{background:var(--peri-mid);box-shadow:none}.cells i.m3{background:var(--peri);box-shadow:none}
+.schema-l{font-size:14px;line-height:1.3;max-width:170px}
+.icon-btn{width:44px;height:44px;border-radius:14px;border:none;background:var(--surface);box-shadow:var(--shadow);display:grid;place-items:center}
+.icon-btn svg{width:22px;height:22px}
+.menu-w{position:relative}
+.menu{position:absolute;right:0;top:52px;z-index:30;background:var(--surface);border-radius:16px;box-shadow:0 12px 40px rgba(35,40,58,.18);padding:12px;width:300px}
+.menu p{margin:2px 6px 8px}
+.menu button{display:block;width:100%;text-align:left;border:none;background:transparent;padding:10px;border-radius:10px}
+.menu button:hover{background:var(--surface2)}
+
+/* tabs */
+.tabs{display:flex;gap:8px;margin:22px 0 18px;overflow-x:auto;scrollbar-width:none;padding:2px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:1 1 0;min-width:0;border:none;background:var(--surface);border-radius:16px;padding:10px 12px 12px;text-align:left;display:grid;grid-template-columns:auto 1fr;column-gap:8px;row-gap:6px;align-items:center;box-shadow:var(--shadow);color:var(--muted);transition:background .2s,color .2s}
+.tab .tn{width:26px;height:26px;border-radius:9px;background:var(--surface2);display:grid;place-items:center;font-weight:600;font-size:14px;color:var(--ink)}
+.tab .tt{font-size:14px;font-weight:500;line-height:1.2}
+.tab .tp{grid-column:1 / -1;height:4px;border-radius:2px;background:var(--surface2);overflow:hidden}
+.tab .tp i{display:block;height:100%;background:var(--peri-mid)}
+.tab[aria-selected="true"]{background:var(--peri);color:var(--peri-ink)}
+.tab[aria-selected="true"] .tn{background:rgba(255,255,255,.22);color:var(--peri-ink)}
+.tab[aria-selected="true"] .tp{background:rgba(255,255,255,.25)}.tab[aria-selected="true"] .tp i{background:var(--peri-ink)}
+.tab-final{background:var(--butter-soft)}
+.tab-final .tn{background:var(--butter)}
+.tab-final[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.tab-final[aria-selected="true"] .tn{background:var(--butter);color:#23283A}
+
+/* level head */
+.lv-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.learned{display:flex;align-items:center;gap:12px;font-size:15px}
+.learned b{font-weight:600}
+.bar{display:inline-block;width:140px;height:6px;border-radius:3px;background:var(--line);overflow:hidden;vertical-align:middle}
+.bar i{display:block;height:100%;background:var(--peri);border-radius:3px;transition:width .4s}
+.lv-ctrl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--surface);border-radius:12px;padding:3px;box-shadow:var(--shadow)}
+.seg button{border:none;background:transparent;padding:7px 12px;border-radius:9px;font-size:14px;color:var(--muted);white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--peri-soft);color:var(--ink);font-weight:600}
+
+/* cards */
+.card{background:var(--surface);border-radius:24px;padding:28px 32px;box-shadow:var(--shadow);margin-bottom:16px;position:relative}
+.card h2{font-family:var(--lex);font-weight:600;font-size:30px;margin:0 0 10px;letter-spacing:-.01em}
+.h3{font-family:var(--lex);font-weight:600;font-size:24px;margin:0 0 10px}
+.sess-prog{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;color:var(--muted);margin-bottom:18px}
+.sess-prog .bar{width:180px}
+.hint{color:var(--muted);margin:0 0 14px}
+.word{font-family:var(--lex);font-weight:500;font-size:clamp(34px,6vw,56px);line-height:1.08;letter-spacing:-.015em;margin:8px 0 24px;overflow-wrap:anywhere}
+.word.ru{font-family:var(--ui);font-weight:600;font-size:clamp(24px,4vw,34px);letter-spacing:-.01em;line-height:1.2}
+.mean{color:var(--muted);margin:-10px 0 18px}
+.ex{font-family:var(--lex);font-style:italic;font-size:18px}
+
+/* buttons */
+.btn{border:none;border-radius:14px;padding:13px 22px;font-weight:600;font-size:16px;min-height:48px;transition:transform .12s,background .2s,opacity .2s}
+.btn:active:not(:disabled){transform:scale(.98)}
+.btn:disabled{opacity:.45}
+.btn-primary{background:var(--peri);color:var(--peri-ink)}
+.btn-ghost{background:var(--surface2);color:var(--ink)}
+.btn-ok{background:var(--mint);color:var(--mint-ink)}
+.btn-bad{background:var(--rose);color:var(--rose-ink)}
+.btn.faded{opacity:.4}
+.row2{display:flex;gap:10px;flex-wrap:wrap}
+.row2 .btn{flex:1 1 200px}
+
+/* feedback */
+.fb{border-radius:18px;padding:16px 18px;margin-top:18px;display:grid;gap:8px;animation:pop .25s ease}
+.fb-ok{background:var(--mint);color:var(--mint-ink)}
+.fb-bad{background:var(--rose);color:var(--rose-ink)}
+.fb-h{font-weight:700;font-size:18px}
+.fb-b{color:var(--ink);font-size:16px}
+.fb .btn{justify-self:start}
+.fb-ok .btn-primary{background:var(--mint-ink);color:var(--mint)}
+.fb-bad .btn-primary{background:var(--rose-ink);color:var(--rose)}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* level 1 */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.col{display:grid;gap:10px;align-content:start}
+.pair{border:1.5px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 14px;min-height:56px;text-align:left;font-size:16px;line-height:1.3;transition:background .2s,border-color .2s,opacity .3s}
+.pair.en{font-family:var(--lex);font-size:20px;font-weight:500}
+.pair:hover:not(:disabled){border-color:var(--peri-mid)}
+.pair.sel{border-color:var(--peri);background:var(--peri-soft)}
+.pair.good{background:var(--mint);border-color:var(--mint-line)}
+.pair.badf{background:var(--rose);border-color:var(--rose-line);animation:shake .3s}
+.pair.matched{background:var(--mint);border-color:transparent;color:var(--mint-ink);opacity:.55}
+.match-msg{min-height:20px}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+/* level 2 */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{border:1.5px solid var(--line);background:var(--surface);border-radius:16px;padding:14px 16px;text-align:left;display:flex;gap:12px;align-items:center;min-height:64px;font-size:16px;line-height:1.3}
+.opt .k{flex:none;width:28px;height:28px;border-radius:9px;background:var(--surface2);display:grid;place-items:center;font-weight:600;font-size:14px}
+.opt:hover:not(:disabled){border-color:var(--peri)}
+.opt.good{background:var(--mint);border-color:var(--mint-line)}
+.opt.badf{background:var(--rose);border-color:var(--rose-line)}
+.opt.faded{opacity:.45}
+
+/* level 3 */
+.flip{background:var(--lav);border-radius:20px;padding:30px 28px;margin-bottom:18px;min-height:220px;display:flex;flex-direction:column;justify-content:center}
+.flip .word{margin:0}
+.flip .back{margin-top:22px;padding-top:18px;border-top:1.5px dashed var(--peri-mid);animation:pop .3s ease}
+.answer{font-size:clamp(22px,3.4vw,30px);font-weight:600;line-height:1.25}
+.answer.en{font-family:var(--lex);font-weight:500}
+.replist{margin:0;padding-left:20px}.replist li{margin:6px 0}
+
+/* level 4/5 */
+.cloze{font-family:var(--lex);font-size:clamp(22px,3.4vw,30px);line-height:1.5;margin:6px 0 20px}
+.gap{display:inline-flex;gap:8px;vertical-align:baseline}
+.gapw{display:inline-block;height:1.05em;border-bottom:2.5px solid var(--peri);vertical-align:-.15em}
+.answer-form{display:flex;gap:10px;flex-wrap:wrap}
+.answer-form input{flex:1 1 260px;min-height:54px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface2);padding:12px 16px;font-family:var(--lex);font-size:22px}
+.answer-form input:focus{border-color:var(--peri);outline:none;background:var(--surface)}
+.answer-form input:disabled{opacity:1}
+
+/* level 6 */
+.claim{display:flex;flex-direction:column;gap:6px;margin:4px 0 22px}
+.claim .word{margin:0}
+.eq{color:var(--muted);font-size:15px}
+.claim-ru{font-size:clamp(20px,3vw,26px);font-weight:600;line-height:1.3}
+
+/* summary & final */
+.summary .sum-line{font-size:18px}
+.big{font-family:var(--lex);font-size:34px;font-weight:600}
+.final-mode .card.test{background:var(--surface)}
+.neutral{color:var(--muted)}
+.test-nav{display:flex;gap:10px;margin:14px 0 18px}
+.grid50{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.cell{border:1.5px solid var(--line);background:var(--surface);border-radius:10px;min-height:38px;font-size:14px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.cell.filled{background:var(--surface2);color:var(--ink);border-color:var(--surface2)}
+.cell.cur{border-color:var(--ink);color:var(--ink);font-weight:700}
+.finish-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.intro p{max-width:62ch}
+.stats3,.stats4{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.stats4{grid-template-columns:repeat(4,1fr)}
+.stats3>div,.stats4>div{background:var(--surface2);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.sv{font-family:var(--lex);font-size:32px;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.sl{font-size:14px;color:var(--muted);line-height:1.3}
+.hist-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.daysel{display:flex;gap:8px;align-items:center;font-size:15px;color:var(--muted)}
+.daysel select{border-radius:10px;border:1.5px solid var(--line);background:var(--surface2);padding:8px 10px;color:var(--ink)}
+.tblwrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
+th{text-align:left;color:var(--muted);font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:9px 10px;border-bottom:1px solid var(--line)}
+.win{text-align:center;overflow:hidden;background:linear-gradient(180deg,var(--butter-soft),var(--surface) 70%)}
+.win-h{font-size:clamp(26px,4vw,36px)!important;max-width:620px;margin:10px auto 8px!important}
+.badge{width:120px;height:120px;margin:6px auto 0;display:block}
+.confetti{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.modal{position:fixed;inset:0;background:rgba(20,24,38,.45);display:grid;place-items:center;padding:20px;z-index:50}
+.modal-box{background:var(--surface);border-radius:22px;padding:26px;max-width:460px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.25)}
+.modal-box h2{margin:0 0 8px;font-family:var(--lex);font-size:26px}
+
+@media (max-width:640px){
+  .app{padding:14px 12px 48px}
+  .brand h1{font-size:24px}
+  .top-r{width:100%;justify-content:space-between}
+  .card{padding:20px 18px;border-radius:20px}
+  .opts{grid-template-columns:1fr}
+  .match{gap:8px}
+  .pair{padding:10px;font-size:14px}.pair.en{font-size:17px}
+  .grid50{grid-template-columns:repeat(7,1fr)} .cells{grid-template-columns:repeat(15,9px)}
+  .stats4{grid-template-columns:1fr 1fr}
+  .stats3{grid-template-columns:1fr 1fr 1fr}.sv{font-size:26px}
+  .lv-head{flex-direction:column;align-items:stretch}
+  .tab{flex:0 0 auto;min-width:112px}.tab .tt{white-space:nowrap}
+  .bar{width:100px}.sess-prog .bar{width:100px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/htm@3.1.1/dist/htm.umd.js"></script>
+<!-- Словарь: отдельный блок данных -->
+<script id="vocabulary">
+/* ==========================================================
+   СЛОВАРЬ. Набор хранится отдельно от игровой логики.
+   Чтобы добавить новый набор, создайте такой же массив.
+   Поля:
+   id, english, russian (перевод из словаря), testPrompt (однозначная
+   русская подсказка для заданий с вводом), acceptedEnglishAnswers,
+   acceptedRussianAnswers, exampleSentence ([[...]] отмечает слово),
+   exampleTranslation, category, group (группа близких по смыслу слов:
+   их не ставим рядом как варианты ответа), wrongRussian (неверный
+   перевод для уровня «Найди ошибку»), clozeAnswers (если форма в
+   предложении отличается от словарной).
+   ========================================================== */
+window.VOCAB_SET = {
+  "id": "building-effective-agents-123-v3",
+  "title": "Building Effective Agents",
+  "words": [
+    {
+      "sourceNumber": 244,
+      "english": "extensive testing",
+      "russian": "всестороннее тестирование",
+      "testPrompt": "всестороннее тестирование",
+      "acceptedEnglishAnswers": [
+        "extensive testing"
+      ],
+      "acceptedRussianAnswers": [
+        "всестороннее тестирование"
+      ],
+      "exampleSentence": "We recommend [[extensive testing]] in sandboxed environments, along with the appropriate guardrails.",
+      "exampleTranslation": "Перевод целевого выражения: всестороннее тестирование.",
+      "extraExamples": [
+        "The release requires extensive testing.",
+        "Extensive testing uncovered an edge case."
+      ],
+      "category": "agents",
+      "wrongRussian": "автоматизация оценивания моделей",
+      "clozeAnswers": [
+        "[[extensive testi",
+        "extensive testing"
+      ],
+      "id": 1
+    },
+    {
+      "sourceNumber": 52,
+      "english": "tradeoff",
+      "russian": "компромисс между преимуществами и недостатками",
+      "testPrompt": "компромисс между преимуществами и недостатками",
+      "acceptedEnglishAnswers": [
+        "tradeoff"
+      ],
+      "acceptedRussianAnswers": [
+        "компромисс между преимуществами и недостатками"
+      ],
+      "exampleSentence": "Agentic systems often trade latency and cost for better task performance, and you should consider when this [[tradeoff]] makes sense.",
+      "exampleTranslation": "Перевод целевого выражения: компромисс между преимуществами и недостатками.",
+      "extraExamples": [
+        "Every design choice involves a tradeoff.",
+        "The tradeoff between speed and quality is worth discussing."
+      ],
+      "category": "language",
+      "wrongRussian": "было бы достаточно",
+      "clozeAnswers": [
+        "[[tradeo",
+        "tradeoff"
+      ],
+      "id": 2
+    },
+    {
+      "sourceNumber": 94,
+      "english": "assumption",
+      "russian": "предположение",
+      "testPrompt": "предположение",
+      "acceptedEnglishAnswers": [
+        "assumption"
+      ],
+      "acceptedRussianAnswers": [
+        "предположение"
+      ],
+      "exampleSentence": "Incorrect [[assumptions]] about what's under the hood are a common source of customer error.",
+      "exampleTranslation": "Перевод целевого выражения: предположение.",
+      "extraExamples": [
+        "We made an assumption about user behavior.",
+        "That assumption needs to be tested."
+      ],
+      "category": "development",
+      "wrongRussian": "проявляется в",
+      "clozeAnswers": [
+        "[[assumptio",
+        "assumption"
+      ],
+      "id": 3
+    },
+    {
+      "sourceNumber": 165,
+      "english": "run in parallel",
+      "russian": "выполняться параллельно",
+      "testPrompt": "выполняться параллельно",
+      "acceptedEnglishAnswers": [
+        "run in parallel"
+      ],
+      "acceptedRussianAnswers": [
+        "выполняться параллельно"
+      ],
+      "exampleSentence": "Sectioning: Breaking a task into independent subtasks [[run in parallel]].",
+      "exampleTranslation": "Перевод целевого выражения: выполняться параллельно.",
+      "extraExamples": [
+        "The calculations run in parallel to save time.",
+        "Both experiments run in parallel this week."
+      ],
+      "category": "workflow",
+      "wrongRussian": "наборы инструментов",
+      "clozeAnswers": [
+        "[[run in parall",
+        "run in parallel"
+      ],
+      "id": 4
+    },
+    {
+      "sourceNumber": 84,
+      "english": "harder to debug",
+      "russian": "сложнее отлаживать",
+      "testPrompt": "сложнее отлаживать",
+      "acceptedEnglishAnswers": [
+        "harder to debug"
+      ],
+      "acceptedRussianAnswers": [
+        "сложнее отлаживать"
+      ],
+      "exampleSentence": "However, they often create extra layers of abstraction that can obscure the underlying prompts ​​and responses, making them [[harder to debug]].",
+      "exampleTranslation": "Перевод целевого выражения: сложнее отлаживать.",
+      "extraExamples": [
+        "Nested callbacks make code harder to debug.",
+        "The inconsistent logs made the issue harder to debug."
+      ],
+      "category": "development",
+      "wrongRussian": "чётко формулировать",
+      "clozeAnswers": [
+        "[[harder to deb",
+        "harder to debug"
+      ],
+      "id": 5
+    },
+    {
+      "sourceNumber": 228,
+      "english": "ground truth",
+      "russian": "достоверная информация из реальной среды",
+      "testPrompt": "достоверная информация из реальной среды",
+      "acceptedEnglishAnswers": [
+        "ground truth"
+      ],
+      "acceptedRussianAnswers": [
+        "достоверная информация из реальной среды"
+      ],
+      "exampleSentence": "During execution, it's crucial for the agents to gain “[[ground truth]]” from the environment at each step (such as tool call results or code execution) to assess its progress.",
+      "exampleTranslation": "Перевод целевого выражения: достоверная информация из реальной среды.",
+      "extraExamples": [
+        "The team checked the model's output against ground truth.",
+        "Accurate labels provide ground truth for evaluation."
+      ],
+      "category": "agents",
+      "wrongRussian": "использование инструментов",
+      "clozeAnswers": [
+        "[[ground tru",
+        "ground truth"
+      ],
+      "id": 6
+    },
+    {
+      "sourceNumber": 22,
+      "english": "use the term to describe",
+      "russian": "используют термин для обозначения",
+      "testPrompt": "используют термин для обозначения",
+      "acceptedEnglishAnswers": [
+        "use the term to describe"
+      ],
+      "acceptedRussianAnswers": [
+        "используют термин для обозначения"
+      ],
+      "exampleSentence": "Others [[use the term to describe]] more prescriptive implementations that follow predefined workflows.",
+      "exampleTranslation": "Перевод целевого выражения: используют термин для обозначения.",
+      "extraExamples": [
+        "We use the term to describe a reusable component.",
+        "Teachers use the term to describe a learning strategy."
+      ],
+      "category": "language",
+      "wrongRussian": "заранее определённые",
+      "clozeAnswers": [
+        "[[use the term to descri",
+        "use the term to describe"
+      ],
+      "id": 7
+    },
+    {
+      "sourceNumber": 79,
+      "english": "chaining calls together",
+      "russian": "связывание вызовов в цепочку",
+      "testPrompt": "связывание вызовов в цепочку",
+      "acceptedEnglishAnswers": [
+        "chaining calls together"
+      ],
+      "acceptedRussianAnswers": [
+        "связывание вызовов в цепочку"
+      ],
+      "exampleSentence": "These frameworks make it easy to get started by simplifying standard low-level tasks like calling LLMs, defining and parsing tools, and [[chaining calls together]].",
+      "exampleTranslation": "Перевод целевого выражения: связывание вызовов в цепочку.",
+      "extraExamples": [
+        "Chaining calls together is useful for multistep analysis.",
+        "We reduced errors by chaining calls together carefully."
+      ],
+      "category": "development",
+      "wrongRussian": "учитывать, рассматривать",
+      "clozeAnswers": [
+        "[[chaining calls togeth",
+        "chaining calls together"
+      ],
+      "id": 8
+    },
+    {
+      "sourceNumber": 141,
+      "english": "follow-up",
+      "russian": "Последующее действие / уточнение (что)",
+      "testPrompt": "Последующее действие / уточнение (что)",
+      "acceptedEnglishAnswers": [
+        "follow-up"
+      ],
+      "acceptedRussianAnswers": [
+        "Последующее действие / уточнение (что)"
+      ],
+      "exampleSentence": "Routing classifies an input and directs it to a specialized [[followup]] task.",
+      "exampleTranslation": "Перевод целевого выражения: последующее действие / уточнение (что).",
+      "extraExamples": [
+        "Please send a follow-up after the meeting.",
+        "The customer asked a follow-up question."
+      ],
+      "category": "workflow",
+      "wrongRussian": "Поддерживать, обслуживать",
+      "clozeAnswers": [
+        "[[follow",
+        "follow-up"
+      ],
+      "id": 9
+    },
+    {
+      "sourceNumber": 106,
+      "english": "augmentations",
+      "russian": "дополнительные возможности, расширения",
+      "testPrompt": "дополнительные возможности, расширения",
+      "acceptedEnglishAnswers": [
+        "augmentations"
+      ],
+      "acceptedRussianAnswers": [
+        "дополнительные возможности",
+        "расширения"
+      ],
+      "exampleSentence": "The basic building block of agentic systems is an LLM enhanced with [[augmentations]] such as retrieval, tools, and memory.",
+      "exampleTranslation": "Перевод целевого выражения: дополнительные возможности, расширения.",
+      "extraExamples": [
+        "These augmentations improve the original system.",
+        "The browser supports several accessibility augmentations."
+      ],
+      "category": "development",
+      "wrongRussian": "помечать код как проблемный",
+      "clozeAnswers": [
+        "[[augmentatio",
+        "augmentations"
+      ],
+      "id": 10
+    },
+    {
+      "sourceNumber": 38,
+      "english": "explore in detail",
+      "russian": "подробно рассмотреть",
+      "testPrompt": "подробно рассмотреть",
+      "acceptedEnglishAnswers": [
+        "explore in detail"
+      ],
+      "acceptedRussianAnswers": [
+        "подробно рассмотреть"
+      ],
+      "exampleSentence": "Below, we will [[explore]] both types of agentic systems in detail.",
+      "exampleTranslation": "Перевод целевого выражения: подробно рассмотреть.",
+      "extraExamples": [
+        "The course will explore in detail how cities grow.",
+        "We plan to explore in detail the reasons for the decline."
+      ],
+      "category": "language",
+      "wrongRussian": "поиск и извлечение информации",
+      "clozeAnswers": [
+        "[[explo",
+        "explore in detail"
+      ],
+      "id": 11
+    },
+    {
+      "sourceNumber": 215,
+      "english": "useful critiques",
+      "russian": "полезные замечания",
+      "testPrompt": "полезные замечания",
+      "acceptedEnglishAnswers": [
+        "useful critiques"
+      ],
+      "acceptedRussianAnswers": [
+        "полезные замечания"
+      ],
+      "exampleSentence": "Literary translation where there are nuances that the translator LLM might not capture initially, but where an evaluator LLM can provide [[useful critiques]].",
+      "exampleTranslation": "Перевод целевого выражения: полезные замечания.",
+      "extraExamples": [
+        "The editor gave useful critiques of the draft.",
+        "Useful critiques help designers improve their work."
+      ],
+      "category": "agents",
+      "wrongRussian": "одновременно",
+      "clozeAnswers": [
+        "[[useful critiqu",
+        "useful critiques"
+      ],
+      "id": 12
+    },
+    {
+      "sourceNumber": 109,
+      "english": "appropriate tools",
+      "russian": "подходящие инструменты",
+      "testPrompt": "подходящие инструменты",
+      "acceptedEnglishAnswers": [
+        "appropriate tools"
+      ],
+      "acceptedRussianAnswers": [
+        "подходящие инструменты"
+      ],
+      "exampleSentence": "Our current models can actively use these capabilities—generating their own search queries, selecting [[appropriate tools]], and determining what information to retain.",
+      "exampleTranslation": "Перевод целевого выражения: подходящие инструменты.",
+      "extraExamples": [
+        "Choose appropriate tools for the task.",
+        "The team struggled to identify appropriate tools."
+      ],
+      "category": "development",
+      "wrongRussian": "во время выполнения",
+      "clozeAnswers": [
+        "[[appropriate too",
+        "appropriate tools"
+      ],
+      "id": 13
+    },
+    {
+      "sourceNumber": 214,
+      "english": "capture initially",
+      "russian": "уловить с первого раза",
+      "testPrompt": "уловить с первого раза",
+      "acceptedEnglishAnswers": [
+        "capture initially"
+      ],
+      "acceptedRussianAnswers": [
+        "уловить с первого раза"
+      ],
+      "exampleSentence": "Literary translation where there are nuances that the translator LLM might not [[capture initially]], but where an evaluator LLM can provide useful critiques.",
+      "exampleTranslation": "Перевод целевого выражения: уловить с первого раза.",
+      "extraExamples": [
+        "A beginner may not capture initially every nuance.",
+        "Some risks are hard to capture initially in a short survey."
+      ],
+      "category": "agents",
+      "wrongRussian": "особая ценность",
+      "clozeAnswers": [
+        "[[capture initial",
+        "capture initially"
+      ],
+      "id": 14
+    },
+    {
+      "sourceNumber": 23,
+      "english": "prescriptive",
+      "russian": "заранее заданная логика, жёсткие предписания",
+      "testPrompt": "заранее заданная логика, жёсткие предписания",
+      "acceptedEnglishAnswers": [
+        "prescriptive"
+      ],
+      "acceptedRussianAnswers": [
+        "заранее заданная логика",
+        "жёсткие предписания"
+      ],
+      "exampleSentence": "Others use the term to describe more [[prescriptive]] implementations that follow predefined workflows.",
+      "exampleTranslation": "Перевод целевого выражения: заранее заданная логика, жёсткие предписания.",
+      "extraExamples": [
+        "The guidelines are too prescriptive for creative work.",
+        "A prescriptive process leaves little room for experimentation."
+      ],
+      "category": "language",
+      "wrongRussian": "оказаться недостаточным",
+      "clozeAnswers": [
+        "[[prescripti",
+        "prescriptive"
+      ],
+      "id": 15
+    },
+    {
+      "sourceNumber": 142,
+      "english": "separation of concerns",
+      "russian": "разделение ответственности",
+      "testPrompt": "разделение ответственности",
+      "acceptedEnglishAnswers": [
+        "separation of concerns"
+      ],
+      "acceptedRussianAnswers": [
+        "разделение ответственности"
+      ],
+      "exampleSentence": "This workflow allows for [[separation of concerns]], and building more specialized prompts.",
+      "exampleTranslation": "Перевод целевого выражения: разделение ответственности.",
+      "extraExamples": [
+        "Separation of concerns makes code easier to test.",
+        "We improved separation of concerns between design and engineering."
+      ],
+      "category": "workflow",
+      "wrongRussian": "более качественное выполнение задач",
+      "clozeAnswers": [
+        "[[separation of concer",
+        "separation of concerns"
+      ],
+      "id": 16
+    },
+    {
+      "sourceNumber": 241,
+      "english": "some level of trust",
+      "russian": "определённый уровень доверия",
+      "testPrompt": "определённый уровень доверия",
+      "acceptedEnglishAnswers": [
+        "some level of trust"
+      ],
+      "acceptedRussianAnswers": [
+        "определённый уровень доверия"
+      ],
+      "exampleSentence": "The LLM will potentially operate for many turns, and you must have [[some level of trust]] in its decision-making.",
+      "exampleTranslation": "Перевод целевого выражения: определённый уровень доверия.",
+      "extraExamples": [
+        "Delegation requires some level of trust.",
+        "We need some level of trust before enabling automation."
+      ],
+      "category": "agents",
+      "wrongRussian": "ухудшать производительность",
+      "clozeAnswers": [
+        "[[some level of tru",
+        "some level of trust"
+      ],
+      "id": 17
+    },
+    {
+      "sourceNumber": 120,
+      "english": "assume",
+      "russian": "предполагать",
+      "testPrompt": "предполагать",
+      "acceptedEnglishAnswers": [
+        "assume"
+      ],
+      "acceptedRussianAnswers": [
+        "предполагать"
+      ],
+      "exampleSentence": "For the remainder of this post, we'll [[assume]] each LLM call has access to these augmented capabilities.",
+      "exampleTranslation": "Перевод целевого выражения: предполагать.",
+      "extraExamples": [
+        "We assume that all users have a valid account.",
+        "Don't assume the customer knows the terminology."
+      ],
+      "category": "development",
+      "wrongRussian": "адаптация под конкретный сценарий использования",
+      "clozeAnswers": [
+        "[[assu",
+        "assume"
+      ],
+      "id": 18
+    },
+    {
+      "sourceNumber": 19,
+      "english": "over extended periods",
+      "russian": "в течение длительного времени",
+      "testPrompt": "в течение длительного времени",
+      "acceptedEnglishAnswers": [
+        "over extended periods"
+      ],
+      "acceptedRussianAnswers": [
+        "в течение длительного времени"
+      ],
+      "exampleSentence": "Some customers define agents as fully autonomous systems that operate independently [[over extended periods]], using various tools to accomplish complex tasks.",
+      "exampleTranslation": "Перевод целевого выражения: в течение длительного времени.",
+      "extraExamples": [
+        "The device can collect readings over extended periods.",
+        "Trust is built through collaboration over extended periods."
+      ],
+      "category": "language",
+      "wrongRussian": "не стесняйтесь, не бойтесь",
+      "clozeAnswers": [
+        "[[over extended perio",
+        "over extended periods"
+      ],
+      "id": 19
+    },
+    {
+      "sourceNumber": 235,
+      "english": "environmental feedback",
+      "russian": "обратная связь из окружающей среды",
+      "testPrompt": "обратная связь из окружающей среды",
+      "acceptedEnglishAnswers": [
+        "environmental feedback"
+      ],
+      "acceptedRussianAnswers": [
+        "обратная связь из окружающей среды"
+      ],
+      "exampleSentence": "They are typically just LLMs using tools based on [[environmental feedback]] in a loop.",
+      "exampleTranslation": "Перевод целевого выражения: обратная связь из окружающей среды.",
+      "extraExamples": [
+        "The robot learns from environmental feedback.",
+        "Environmental feedback helps an autonomous system adjust."
+      ],
+      "category": "agents",
+      "wrongRussian": "проверка кода на уязвимости",
+      "clozeAnswers": [
+        "[[environmental feedba",
+        "environmental feedback"
+      ],
+      "id": 20
+    },
+    {
+      "sourceNumber": 146,
+      "english": "works well for",
+      "russian": "хорошо подходит для",
+      "testPrompt": "хорошо подходит для",
+      "acceptedEnglishAnswers": [
+        "works well for"
+      ],
+      "acceptedRussianAnswers": [
+        "хорошо подходит для"
+      ],
+      "exampleSentence": "When to use this workflow: Routing [[works well for]] complex tasks where there are distinct categories that are better handled separately, and where classification can be handled accurately, either by an LLM or a more traditional classification model/algorithm.",
+      "exampleTranslation": "Перевод целевого выражения: хорошо подходит для.",
+      "extraExamples": [
+        "This method works well for beginners.",
+        "A short survey works well for quick feedback."
+      ],
+      "category": "workflow",
+      "wrongRussian": "критически важный",
+      "clozeAnswers": [
+        "[[works well f",
+        "works well for"
+      ],
+      "id": 21
+    },
+    {
+      "sourceNumber": 130,
+      "english": "on track",
+      "russian": "идёт по плану",
+      "testPrompt": "идёт по плану",
+      "acceptedEnglishAnswers": [
+        "on track"
+      ],
+      "acceptedRussianAnswers": [
+        "идёт по плану"
+      ],
+      "exampleSentence": "You can add programmatic checks (see \"gate” in the diagram below) on any intermediate steps to ensure that the process is still [[on track]].",
+      "exampleTranslation": "Перевод целевого выражения: идёт по плану.",
+      "extraExamples": [
+        "The launch is still on track for Friday.",
+        "Regular check-ins help keep the project on track."
+      ],
+      "category": "workflow",
+      "wrongRussian": "обычно работает лучше",
+      "clozeAnswers": [
+        "[[on tra",
+        "on track"
+      ],
+      "id": 22
+    },
+    {
+      "sourceNumber": 85,
+      "english": "make it tempting",
+      "russian": "создавать соблазн",
+      "testPrompt": "создавать соблазн",
+      "acceptedEnglishAnswers": [
+        "make it tempting"
+      ],
+      "acceptedRussianAnswers": [
+        "создавать соблазн"
+      ],
+      "exampleSentence": "They can also [[make it tempting]] to add complexity when a simpler setup would suffice.",
+      "exampleTranslation": "Перевод целевого выражения: создавать соблазн.",
+      "extraExamples": [
+        "A discount can make it tempting to buy too much.",
+        "Early success may make it tempting to skip testing."
+      ],
+      "category": "development",
+      "wrongRussian": "оптимизация отдельных вызовов LLM",
+      "clozeAnswers": [
+        "[[make it tempti",
+        "make it tempting"
+      ],
+      "id": 23
+    },
+    {
+      "sourceNumber": 82,
+      "english": "underlying",
+      "russian": "лежащие в основе",
+      "testPrompt": "лежащие в основе",
+      "acceptedEnglishAnswers": [
+        "underlying"
+      ],
+      "acceptedRussianAnswers": [
+        "лежащие в основе"
+      ],
+      "exampleSentence": "However, they often create extra layers of abstraction that can obscure the [[underlying]] prompts ​​and responses, making them harder to debug.",
+      "exampleTranslation": "Перевод целевого выражения: лежащие в основе.",
+      "extraExamples": [
+        "We should investigate the underlying cause of the issue.",
+        "The underlying assumptions may be incorrect."
+      ],
+      "category": "development",
+      "wrongRussian": "оправданный, обоснованный",
+      "clozeAnswers": [
+        "[[underlyi",
+        "underlying"
+      ],
+      "id": 24
+    },
+    {
+      "sourceNumber": 12,
+      "english": "composable",
+      "russian": "комбинируемые",
+      "testPrompt": "комбинируемые",
+      "acceptedEnglishAnswers": [
+        "composable"
+      ],
+      "acceptedRussianAnswers": [
+        "комбинируемые"
+      ],
+      "exampleSentence": "Instead, they were building with simple, [[composable]] patterns.",
+      "exampleTranslation": "Перевод целевого выражения: комбинируемые.",
+      "extraExamples": [
+        "These modules are composable and can be reused.",
+        "The system uses composable components rather than one large service."
+      ],
+      "category": "language",
+      "wrongRussian": "практическое правило, эмпирическое правило",
+      "clozeAnswers": [
+        "[[composab",
+        "composable"
+      ],
+      "id": 25
+    },
+    {
+      "sourceNumber": 156,
+      "english": "capable models",
+      "russian": "мощные модели",
+      "testPrompt": "мощные модели",
+      "acceptedEnglishAnswers": [
+        "capable models"
+      ],
+      "acceptedRussianAnswers": [
+        "мощные модели"
+      ],
+      "exampleSentence": "Routing easy/common questions to smaller, cost-efficient models like Claude Haiku 4.5 and hard/unusual questions to more [[capable models]] like Claude Sonnet 4.5 to optimize for best performance.",
+      "exampleTranslation": "Перевод целевого выражения: мощные модели.",
+      "extraExamples": [
+        "More capable models can solve harder problems.",
+        "The platform needs capable models for complex queries."
+      ],
+      "category": "workflow",
+      "wrongRussian": "маршрутизация",
+      "clozeAnswers": [
+        "[[capable mode",
+        "capable models"
+      ],
+      "id": 26
+    },
+    {
+      "sourceNumber": 205,
+      "english": "clear evaluation criteria",
+      "russian": "чёткие критерии оценки",
+      "testPrompt": "чёткие критерии оценки",
+      "acceptedEnglishAnswers": [
+        "clear evaluation criteria"
+      ],
+      "acceptedRussianAnswers": [
+        "чёткие критерии оценки"
+      ],
+      "exampleSentence": "When to use this workflow: This workflow is particularly effective when we have [[clear evaluation criteria]], and when iterative refinement provides measurable value.",
+      "exampleTranslation": "Перевод целевого выражения: чёткие критерии оценки.",
+      "extraExamples": [
+        "Define clear evaluation criteria before testing.",
+        "The committee published clear evaluation criteria."
+      ],
+      "category": "agents",
+      "wrongRussian": "тем, как они выполняют задачи",
+      "clozeAnswers": [
+        "[[clear evaluation criter",
+        "clear evaluation criteria"
+      ],
+      "id": 27
+    },
+    {
+      "sourceNumber": 232,
+      "english": "maximum number of iterations",
+      "russian": "максимальное количество итераций",
+      "testPrompt": "максимальное количество итераций",
+      "acceptedEnglishAnswers": [
+        "maximum number of iterations"
+      ],
+      "acceptedRussianAnswers": [
+        "максимальное количество итераций"
+      ],
+      "exampleSentence": "The task often terminates upon completion, but it’s also common to include stopping conditions (such as a [[maximum number of iterations]]) to maintain control.",
+      "exampleTranslation": "Перевод целевого выражения: максимальное количество итераций.",
+      "extraExamples": [
+        "We configured a maximum number of iterations.",
+        "A maximum number of iterations keeps costs predictable."
+      ],
+      "category": "agents",
+      "wrongRussian": "изолированные среды тестирования",
+      "clozeAnswers": [
+        "[[maximum number of iteratio",
+        "maximum number of iterations"
+      ],
+      "id": 28
+    },
+    {
+      "sourceNumber": 31,
+      "english": "on the other hand",
+      "russian": "с другой стороны",
+      "testPrompt": "с другой стороны",
+      "acceptedEnglishAnswers": [
+        "on the other hand"
+      ],
+      "acceptedRussianAnswers": [
+        "с другой стороны"
+      ],
+      "exampleSentence": "Agents, [[on the other hand]], are systems where LLMs dynamically direct their own processes and tool usage, maintaining control over how they accomplish tasks.",
+      "exampleTranslation": "Перевод целевого выражения: с другой стороны.",
+      "extraExamples": [
+        "The design looks elegant; on the other hand, it is expensive.",
+        "She wants to move; on the other hand, she likes her neighborhood."
+      ],
+      "category": "language",
+      "wrongRussian": "на основе плана",
+      "clozeAnswers": [
+        "[[on the other ha",
+        "on the other hand"
+      ],
+      "id": 29
+    },
+    {
+      "sourceNumber": 5,
+      "english": "worked with dozens of teams",
+      "russian": "работали с десятками команд",
+      "testPrompt": "работали с десятками команд",
+      "acceptedEnglishAnswers": [
+        "worked with dozens of teams"
+      ],
+      "acceptedRussianAnswers": [
+        "работали с десятками команд"
+      ],
+      "exampleSentence": "Over the past year, we've [[worked with dozens of teams]] building large language model (LLM) agents across industries.",
+      "exampleTranslation": "Перевод целевого выражения: работали с десятками команд.",
+      "extraExamples": [
+        "We have worked with dozens of teams on onboarding.",
+        "The researchers worked with dozens of teams across Europe."
+      ],
+      "category": "language",
+      "wrongRussian": "явно",
+      "clozeAnswers": [
+        "[[worked with dozens of tea",
+        "worked with dozens of teams"
+      ],
+      "id": 30
+    },
+    {
+      "sourceNumber": 135,
+      "english": "accuracy",
+      "russian": "точность",
+      "testPrompt": "точность",
+      "acceptedEnglishAnswers": [
+        "accuracy"
+      ],
+      "acceptedRussianAnswers": [
+        "точность"
+      ],
+      "exampleSentence": "The main goal is to trade off latency for higher [[accuracy]], by making each LLM call an easier task.",
+      "exampleTranslation": "Перевод целевого выражения: точность.",
+      "extraExamples": [
+        "We measured the accuracy of the model.",
+        "Higher accuracy matters more than speed in this case."
+      ],
+      "category": "workflow",
+      "wrongRussian": "по мере развития LLM",
+      "clozeAnswers": [
+        "[[accura",
+        "accuracy"
+      ],
+      "id": 31
+    },
+    {
+      "sourceNumber": 7,
+      "english": "consistently",
+      "russian": "неизменно, стабильно",
+      "testPrompt": "неизменно, стабильно",
+      "acceptedEnglishAnswers": [
+        "consistently"
+      ],
+      "acceptedRussianAnswers": [
+        "неизменно",
+        "стабильно"
+      ],
+      "exampleSentence": "[[Consistently]], the most successful implementations weren't using complex frameworks or specialized libraries.",
+      "exampleTranslation": "Перевод целевого выражения: неизменно, стабильно.",
+      "extraExamples": [
+        "She consistently delivers reports before the deadline.",
+        "The system consistently handles a thousand requests per minute."
+      ],
+      "category": "language",
+      "wrongRussian": "условия остановки",
+      "clozeAnswers": [
+        "[[Consistent",
+        "consistently"
+      ],
+      "id": 32
+    },
+    {
+      "sourceNumber": 230,
+      "english": "encountering blockers",
+      "russian": "сталкиваясь с препятствиями",
+      "testPrompt": "сталкиваясь с препятствиями",
+      "acceptedEnglishAnswers": [
+        "encountering blockers"
+      ],
+      "acceptedRussianAnswers": [
+        "сталкиваясь с препятствиями"
+      ],
+      "exampleSentence": "Agents can then pause for human feedback at checkpoints or when [[encountering blockers]].",
+      "exampleTranslation": "Перевод целевого выражения: сталкиваясь с препятствиями.",
+      "extraExamples": [
+        "When encountering blockers, ask for clarification.",
+        "The project slowed after encountering blockers."
+      ],
+      "category": "agents",
+      "wrongRussian": "необходимо при масштабировании",
+      "clozeAnswers": [
+        "[[encountering blocke",
+        "encountering blockers"
+      ],
+      "id": 33
+    },
+    {
+      "sourceNumber": 202,
+      "english": "evaluation and feedback",
+      "russian": "оценка и обратная связь",
+      "testPrompt": "оценка и обратная связь",
+      "acceptedEnglishAnswers": [
+        "evaluation and feedback"
+      ],
+      "acceptedRussianAnswers": [
+        "оценка и обратная связь"
+      ],
+      "exampleSentence": "In the evaluator-optimizer workflow, one LLM call generates a response while another provides [[evaluation and feedback]] in a loop.",
+      "exampleTranslation": "Перевод целевого выражения: оценка и обратная связь.",
+      "extraExamples": [
+        "The manager provided evaluation and feedback after the demo.",
+        "Regular evaluation and feedback help the team improve."
+      ],
+      "category": "agents",
+      "wrongRussian": "реализация",
+      "clozeAnswers": [
+        "[[evaluation and feedba",
+        "evaluation and feedback"
+      ],
+      "id": 34
+    },
+    {
+      "sourceNumber": 154,
+      "english": "downstream",
+      "russian": "последующие процессы / последствия (как)",
+      "testPrompt": "последующие процессы / последствия (как)",
+      "acceptedEnglishAnswers": [
+        "downstream"
+      ],
+      "acceptedRussianAnswers": [
+        "последующие процессы / последствия (как)"
+      ],
+      "exampleSentence": "Directing different types of customer service queries (general questions, refund requests, technical support) into different [[downstream]] processes, prompts, and tools.",
+      "exampleTranslation": "Перевод целевого выражения: последующие процессы / последствия (как).",
+      "extraExamples": [
+        "The change affected downstream services.",
+        "We considered the downstream impact of the decision."
+      ],
+      "category": "workflow",
+      "wrongRussian": "тщательно доработанный",
+      "clozeAnswers": [
+        "[[downstre",
+        "downstream"
+      ],
+      "id": 35
+    },
+    {
+      "sourceNumber": 78,
+      "english": "parsing tools",
+      "russian": "разбор инструментов",
+      "testPrompt": "разбор инструментов",
+      "acceptedEnglishAnswers": [
+        "parsing tools"
+      ],
+      "acceptedRussianAnswers": [
+        "разбор инструментов"
+      ],
+      "exampleSentence": "These frameworks make it easy to get started by simplifying standard low-level tasks like calling LLMs, defining and [[parsing tools]], and chaining calls together.",
+      "exampleTranslation": "Перевод целевого выражения: разбор инструментов.",
+      "extraExamples": [
+        "The framework simplifies parsing tools and interpreting responses.",
+        "Parsing tools correctly is essential for automation."
+      ],
+      "category": "development",
+      "wrongRussian": "конструктор рабочих процессов",
+      "clozeAnswers": [
+        "[[parsing too",
+        "parsing tools"
+      ],
+      "id": 36
+    },
+    {
+      "sourceNumber": 57,
+      "english": "well-defined tasks",
+      "russian": "чётко определённые задачи",
+      "testPrompt": "чётко определённые задачи",
+      "acceptedEnglishAnswers": [
+        "well-defined tasks"
+      ],
+      "acceptedRussianAnswers": [
+        "чётко определённые задачи"
+      ],
+      "exampleSentence": "When more complexity is warranted, workflows offer predictability and consistency for [[well-defined tasks]], whereas agents are the better option when flexibility and model-driven decision-making are needed at scale.",
+      "exampleTranslation": "Перевод целевого выражения: чётко определённые задачи.",
+      "extraExamples": [
+        "Automation is useful for well-defined tasks.",
+        "Assign well-defined tasks to each team member."
+      ],
+      "category": "language",
+      "wrongRussian": "начинающие применяться в реальных системах",
+      "clozeAnswers": [
+        "[[well-defined tas",
+        "well-defined tasks"
+      ],
+      "id": 37
+    },
+    {
+      "sourceNumber": 98,
+      "english": "building blocks",
+      "russian": "базовые компоненты",
+      "testPrompt": "базовые компоненты",
+      "acceptedEnglishAnswers": [
+        "building blocks"
+      ],
+      "acceptedRussianAnswers": [
+        "базовые компоненты"
+      ],
+      "exampleSentence": "[[Building blocks]], workflows, and agents",
+      "exampleTranslation": "Перевод целевого выражения: базовые компоненты.",
+      "extraExamples": [
+        "Use these building blocks to assemble a workflow.",
+        "Trust and communication are building blocks of teamwork."
+      ],
+      "category": "development",
+      "wrongRussian": "фундаментальный компонент",
+      "clozeAnswers": [
+        "[[Building bloc",
+        "building blocks"
+      ],
+      "id": 38
+    },
+    {
+      "sourceNumber": 49,
+      "english": "latency",
+      "russian": "задержка, время отклика",
+      "testPrompt": "задержка, время отклика",
+      "acceptedEnglishAnswers": [
+        "latency"
+      ],
+      "acceptedRussianAnswers": [
+        "задержка",
+        "время отклика"
+      ],
+      "exampleSentence": "The main goal is to trade off [[latency]] for higher accuracy, by making each LLM call an easier task.",
+      "exampleTranslation": "Перевод целевого выражения: задержка, время отклика.",
+      "extraExamples": [
+        "High latency makes video calls frustrating.",
+        "The team reduced network latency by twenty percent."
+      ],
+      "category": "language",
+      "wrongRussian": "несколько точек зрения",
+      "clozeAnswers": [
+        "[[laten",
+        "latency"
+      ],
+      "id": 39
+    },
+    {
+      "sourceNumber": 247,
+      "english": "align with broader requirements",
+      "russian": "соответствовать более широким требованиям",
+      "testPrompt": "соответствовать более широким требованиям",
+      "acceptedEnglishAnswers": [
+        "align with broader requirements"
+      ],
+      "acceptedRussianAnswers": [
+        "соответствовать более широким требованиям"
+      ],
+      "exampleSentence": "However, whereas automated testing helps verify functionality, human review remains crucial for ensuring solutions [[align with]] broader system requirements.",
+      "exampleTranslation": "Перевод целевого выражения: соответствовать более широким требованиям.",
+      "extraExamples": [
+        "New features must align with broader requirements.",
+        "The proposal should align with broader requirements for security."
+      ],
+      "category": "agents",
+      "wrongRussian": "последовательность шагов",
+      "clozeAnswers": [
+        "[[align wi",
+        "align with broader requirements"
+      ],
+      "id": 40
+    },
+    {
+      "sourceNumber": 108,
+      "english": "search queries",
+      "russian": "поисковые запросы",
+      "testPrompt": "поисковые запросы",
+      "acceptedEnglishAnswers": [
+        "search queries"
+      ],
+      "acceptedRussianAnswers": [
+        "поисковые запросы"
+      ],
+      "exampleSentence": "Our current models can actively use these capabilities—generating their own [[search queries]], selecting appropriate tools, and determining what information to retain.",
+      "exampleTranslation": "Перевод целевого выражения: поисковые запросы.",
+      "extraExamples": [
+        "The assistant generates search queries automatically.",
+        "Short search queries can miss important details."
+      ],
+      "category": "development",
+      "wrongRussian": "просто, понятно",
+      "clozeAnswers": [
+        "[[search queri",
+        "search queries"
+      ],
+      "id": 41
+    },
+    {
+      "sourceNumber": 81,
+      "english": "obscure",
+      "russian": "скрывать, затруднять понимание",
+      "testPrompt": "скрывать, затруднять понимание",
+      "acceptedEnglishAnswers": [
+        "obscure"
+      ],
+      "acceptedRussianAnswers": [
+        "скрывать",
+        "затруднять понимание"
+      ],
+      "exampleSentence": "However, they often create extra layers of abstraction that can [[obscure]] the underlying prompts ​​and responses, making them harder to debug.",
+      "exampleTranslation": "Перевод целевого выражения: скрывать, затруднять понимание.",
+      "extraExamples": [
+        "Too many charts can obscure the main finding.",
+        "The error message should not obscure the next step."
+      ],
+      "category": "development",
+      "wrongRussian": "Аспекты, факторы, соображения",
+      "clozeAnswers": [
+        "[[obscu",
+        "obscure"
+      ],
+      "id": 42
+    },
+    {
+      "sourceNumber": 182,
+      "english": "vote thresholds",
+      "russian": "пороговые значения голосования",
+      "testPrompt": "пороговые значения голосования",
+      "acceptedEnglishAnswers": [
+        "vote thresholds"
+      ],
+      "acceptedRussianAnswers": [
+        "пороговые значения голосования"
+      ],
+      "exampleSentence": "Evaluating whether a given piece of content is inappropriate, with multiple prompts evaluating different aspects or requiring different [[vote thresholds]] to balance false positives and negatives.",
+      "exampleTranslation": "Перевод целевого выражения: пороговые значения голосования.",
+      "extraExamples": [
+        "Higher vote thresholds reduce false alarms.",
+        "We adjusted vote thresholds after examining the results."
+      ],
+      "category": "workflow",
+      "wrongRussian": "перетаскивание элементов",
+      "clozeAnswers": [
+        "[[vote threshol",
+        "vote thresholds"
+      ],
+      "id": 43
+    },
+    {
+      "sourceNumber": 122,
+      "english": "prompt chaining",
+      "russian": "последовательное связывание промптов",
+      "testPrompt": "последовательное связывание промптов",
+      "acceptedEnglishAnswers": [
+        "prompt chaining"
+      ],
+      "acceptedRussianAnswers": [
+        "последовательное связывание промптов"
+      ],
+      "exampleSentence": "Workflow: [[Prompt chaining]]",
+      "exampleTranslation": "Перевод целевого выражения: последовательное связывание промптов.",
+      "extraExamples": [
+        "Prompt chaining helps break complex requests into steps.",
+        "We compared prompt chaining with a single-call approach."
+      ],
+      "category": "workflow",
+      "wrongRussian": "сложные, многоуровневые задачи",
+      "clozeAnswers": [
+        "[[Prompt chaini",
+        "prompt chaining"
+      ],
+      "id": 44
+    },
+    {
+      "sourceNumber": 217,
+      "english": "comprehensive information",
+      "russian": "исчерпывающая информация",
+      "testPrompt": "исчерпывающая информация",
+      "acceptedEnglishAnswers": [
+        "comprehensive information"
+      ],
+      "acceptedRussianAnswers": [
+        "исчерпывающая информация"
+      ],
+      "exampleSentence": "Complex search tasks that require multiple rounds of searching and analysis to gather [[comprehensive information]], where the evaluator decides whether further searches are warranted.",
+      "exampleTranslation": "Перевод целевого выражения: исчерпывающая информация.",
+      "extraExamples": [
+        "We need comprehensive information before choosing a vendor.",
+        "The guide provides comprehensive information on enrollment."
+      ],
+      "category": "agents",
+      "wrongRussian": "расширенная дополнительными возможностями LLM",
+      "clozeAnswers": [
+        "[[comprehensive informati",
+        "comprehensive information"
+      ],
+      "id": 45
+    },
+    {
+      "sourceNumber": 216,
+      "english": "multiple rounds of searching",
+      "russian": "несколько раундов поиска",
+      "testPrompt": "несколько раундов поиска",
+      "acceptedEnglishAnswers": [
+        "multiple rounds of searching"
+      ],
+      "acceptedRussianAnswers": [
+        "несколько раундов поиска"
+      ],
+      "exampleSentence": "Complex search tasks that require [[multiple rounds of searching]] and analysis to gather comprehensive information, where the evaluator decides whether further searches are warranted.",
+      "exampleTranslation": "Перевод целевого выражения: несколько раундов поиска.",
+      "extraExamples": [
+        "The investigation required multiple rounds of searching.",
+        "Multiple rounds of searching uncovered the missing report."
+      ],
+      "category": "agents",
+      "wrongRussian": "накапливающиеся ошибки",
+      "clozeAnswers": [
+        "[[multiple rounds of searchi",
+        "multiple rounds of searching"
+      ],
+      "id": 46
+    },
+    {
+      "sourceNumber": 198,
+      "english": "gathering and analyzing",
+      "russian": "сбор и анализ",
+      "testPrompt": "сбор и анализ",
+      "acceptedEnglishAnswers": [
+        "gathering and analyzing"
+      ],
+      "acceptedRussianAnswers": [
+        "сбор и анализ"
+      ],
+      "exampleSentence": "Search tasks that involve [[gathering and analyzing]] information from multiple sources for possible relevant information.",
+      "exampleTranslation": "Перевод целевого выражения: сбор и анализ.",
+      "extraExamples": [
+        "The job involves gathering and analyzing customer feedback.",
+        "Gathering and analyzing data takes time."
+      ],
+      "category": "agents",
+      "wrongRussian": "разбивает задачи на части",
+      "clozeAnswers": [
+        "[[gathering and analyzi",
+        "gathering and analyzing"
+      ],
+      "id": 47
+    },
+    {
+      "sourceNumber": 178,
+      "english": "core response",
+      "russian": "основной ответ",
+      "testPrompt": "основной ответ",
+      "acceptedEnglishAnswers": [
+        "core response"
+      ],
+      "acceptedRussianAnswers": [
+        "основной ответ"
+      ],
+      "exampleSentence": "This tends to perform better than having the same LLM call handle both guardrails and the [[core response]].",
+      "exampleTranslation": "Перевод целевого выражения: основной ответ.",
+      "extraExamples": [
+        "The core response should address the user's question.",
+        "Keep the core response short and add details later."
+      ],
+      "category": "workflow",
+      "wrongRussian": "жёстко задать фиксированный путь в коде",
+      "clozeAnswers": [
+        "[[core respon",
+        "core response"
+      ],
+      "id": 48
+    },
+    {
+      "sourceNumber": 206,
+      "english": "refinement",
+      "russian": "улучшение",
+      "testPrompt": "улучшение",
+      "acceptedEnglishAnswers": [
+        "refinement"
+      ],
+      "acceptedRussianAnswers": [
+        "улучшение"
+      ],
+      "exampleSentence": "When to use this workflow: This workflow is particularly effective when we have clear evaluation criteria, and when iterative [[refinement]] provides measurable value.",
+      "exampleTranslation": "Перевод целевого выражения: улучшение.",
+      "extraExamples": [
+        "The draft needs another round of refinement.",
+        "Refinement can make the output clearer."
+      ],
+      "category": "agents",
+      "wrongRussian": "экономичные модели",
+      "clozeAnswers": [
+        "[[refineme",
+        "refinement"
+      ],
+      "id": 49
+    },
+    {
+      "sourceNumber": 48,
+      "english": "trade latency and cost",
+      "russian": "жертвовать скоростью и стоимостью",
+      "testPrompt": "жертвовать скоростью и стоимостью",
+      "acceptedEnglishAnswers": [
+        "trade latency and cost"
+      ],
+      "acceptedRussianAnswers": [
+        "жертвовать скоростью и стоимостью"
+      ],
+      "exampleSentence": "Agentic systems often [[trade latency and cost]] for better task performance, and you should consider when this tradeoff makes sense.",
+      "exampleTranslation": "Перевод целевого выражения: жертвовать скоростью и стоимостью.",
+      "extraExamples": [
+        "Some teams trade latency and cost for better quality.",
+        "We cannot trade latency and cost without measuring the benefit."
+      ],
+      "category": "language",
+      "wrongRussian": "выполнение рассуждений и планирования",
+      "clozeAnswers": [
+        "[[trade latency and co",
+        "trade latency and cost"
+      ],
+      "id": 50
+    },
+    {
+      "sourceNumber": 223,
+      "english": "reliably",
+      "russian": "Надежный, достоверный",
+      "testPrompt": "Надежный, достоверный",
+      "acceptedEnglishAnswers": [
+        "reliably"
+      ],
+      "acceptedRussianAnswers": [
+        "Надежный",
+        "достоверный"
+      ],
+      "exampleSentence": "Agents are emerging in production as LLMs mature in key capabilities—understanding complex inputs, engaging in reasoning and planning, using tools [[reliably]], and recovering from errors.",
+      "exampleTranslation": "Перевод целевого выражения: надежный, достоверный.",
+      "extraExamples": [
+        "The system must respond reliably under load.",
+        "The backup process runs reliably every night."
+      ],
+      "category": "agents",
+      "wrongRussian": "экосистема инструментов",
+      "clozeAnswers": [
+        "[[reliab",
+        "reliably"
+      ],
+      "id": 51
+    },
+    {
+      "sourceNumber": 87,
+      "english": "simpler setup",
+      "russian": "более простая конфигурация",
+      "testPrompt": "более простая конфигурация",
+      "acceptedEnglishAnswers": [
+        "simpler setup"
+      ],
+      "acceptedRussianAnswers": [
+        "более простая конфигурация"
+      ],
+      "exampleSentence": "They can also make it tempting to add complexity when a [[simpler setup]] would suffice.",
+      "exampleTranslation": "Перевод целевого выражения: более простая конфигурация.",
+      "extraExamples": [
+        "A simpler setup can be easier to maintain.",
+        "For a prototype, a simpler setup is usually better."
+      ],
+      "category": "development",
+      "wrongRussian": "признаки того, что подходит",
+      "clozeAnswers": [
+        "[[simpler set",
+        "simpler setup"
+      ],
+      "id": 52
+    },
+    {
+      "sourceNumber": 203,
+      "english": "in a loop",
+      "russian": "в цикле",
+      "testPrompt": "в цикле",
+      "acceptedEnglishAnswers": [
+        "in a loop"
+      ],
+      "acceptedRussianAnswers": [
+        "в цикле"
+      ],
+      "exampleSentence": "They are typically just LLMs using tools based on environmental feedback [[in a loop]].",
+      "exampleTranslation": "Перевод целевого выражения: в цикле.",
+      "extraExamples": [
+        "The service checks results in a loop.",
+        "They practice the same skill in a loop until it feels natural."
+      ],
+      "category": "agents",
+      "wrongRussian": "последовательность, стабильность",
+      "clozeAnswers": [
+        "[[in a lo",
+        "in a loop"
+      ],
+      "id": 53
+    },
+    {
+      "sourceNumber": 27,
+      "english": "distinction",
+      "russian": "различие",
+      "testPrompt": "различие",
+      "acceptedEnglishAnswers": [
+        "distinction"
+      ],
+      "acceptedRussianAnswers": [
+        "различие"
+      ],
+      "exampleSentence": "At Anthropic, we categorize all these variations as agentic systems, but draw an important architectural [[distinction]] between workflows and agents:",
+      "exampleTranslation": "Перевод целевого выражения: различие.",
+      "extraExamples": [
+        "There is an important distinction between speed and quality.",
+        "The distinction becomes clear in the second example."
+      ],
+      "category": "language",
+      "wrongRussian": "защитные ограничения",
+      "clozeAnswers": [
+        "[[distincti",
+        "distinction"
+      ],
+      "id": 54
+    },
+    {
+      "sourceNumber": 21,
+      "english": "to accomplish",
+      "russian": "Выполнять, совершать",
+      "testPrompt": "Выполнять, совершать",
+      "acceptedEnglishAnswers": [
+        "to accomplish"
+      ],
+      "acceptedRussianAnswers": [
+        "Выполнять",
+        "совершать"
+      ],
+      "exampleSentence": "Some customers define agents as fully autonomous systems that operate independently over extended periods, using various tools [[to accomplish]] complex tasks.",
+      "exampleTranslation": "Перевод целевого выражения: выполнять, совершать.",
+      "extraExamples": [
+        "We need more time to accomplish the goal.",
+        "This tool helps the team accomplish repetitive tasks."
+      ],
+      "category": "language",
+      "wrongRussian": "текущий подход",
+      "clozeAnswers": [
+        "[[to accompli",
+        "to accomplish"
+      ],
+      "id": 55
+    },
+    {
+      "sourceNumber": 117,
+      "english": "third-party tools",
+      "russian": "сторонние инструменты",
+      "testPrompt": "сторонние инструменты",
+      "acceptedEnglishAnswers": [
+        "third-party tools"
+      ],
+      "acceptedRussianAnswers": [
+        "сторонние инструменты"
+      ],
+      "exampleSentence": "While there are many ways to implement these augmentations, one approach is through our recently released Model Context Protocol, which allows developers to integrate with a growing ecosystem of [[third-party tools]] with a simple client implementation.",
+      "exampleTranslation": "Перевод целевого выражения: сторонние инструменты.",
+      "extraExamples": [
+        "The company restricts access to third-party tools.",
+        "We connected several third-party tools to the dashboard."
+      ],
+      "category": "development",
+      "wrongRussian": "проверяет",
+      "clozeAnswers": [
+        "[[third-party too",
+        "third-party tools"
+      ],
+      "id": 56
+    },
+    {
+      "sourceNumber": 256,
+      "english": "carefully craft",
+      "russian": "тщательно проектировать",
+      "testPrompt": "тщательно проектировать",
+      "acceptedEnglishAnswers": [
+        "carefully craft"
+      ],
+      "acceptedRussianAnswers": [
+        "тщательно проектировать"
+      ],
+      "exampleSentence": "[[Carefully craft]] your agent-computer interface (ACI) through thorough tool documentation and testing.",
+      "exampleTranslation": "Перевод целевого выражения: тщательно проектировать.",
+      "extraExamples": [
+        "Take time to carefully craft the opening paragraph.",
+        "We carefully craft each survey question."
+      ],
+      "category": "agents",
+      "wrongRussian": "убедиться, обеспечить",
+      "clozeAnswers": [
+        "[[Carefully cra",
+        "carefully craft"
+      ],
+      "id": 57
+    },
+    {
+      "sourceNumber": 179,
+      "english": "automating evals",
+      "russian": "автоматизация оценивания моделей",
+      "testPrompt": "автоматизация оценивания моделей",
+      "acceptedEnglishAnswers": [
+        "automating evals"
+      ],
+      "acceptedRussianAnswers": [
+        "автоматизация оценивания моделей"
+      ],
+      "exampleSentence": "[[Automating evals]] for evaluating LLM performance, where each LLM call evaluates a different aspect of the model’s performance on a given prompt.",
+      "exampleTranslation": "Перевод целевого выражения: автоматизация оценивания моделей.",
+      "extraExamples": [
+        "Automating evals saves the research team time.",
+        "We started automating evals after defining success metrics."
+      ],
+      "category": "workflow",
+      "wrongRussian": "характер изменения",
+      "clozeAnswers": [
+        "[[Automating eva",
+        "automating evals"
+      ],
+      "id": 58
+    },
+    {
+      "sourceNumber": 88,
+      "english": "would suffice",
+      "russian": "было бы достаточно",
+      "testPrompt": "было бы достаточно",
+      "acceptedEnglishAnswers": [
+        "would suffice"
+      ],
+      "acceptedRussianAnswers": [
+        "было бы достаточно"
+      ],
+      "exampleSentence": "They can also make it tempting to add complexity when a simpler setup [[would suffice]].",
+      "exampleTranslation": "Перевод целевого выражения: было бы достаточно.",
+      "extraExamples": [
+        "A brief email would suffice for this update.",
+        "One clear example would suffice to explain the rule."
+      ],
+      "category": "development",
+      "wrongRussian": "чётко различающиеся категории",
+      "clozeAnswers": [
+        "[[would suffi",
+        "would suffice"
+      ],
+      "id": 59
+    },
+    {
+      "sourceNumber": 161,
+      "english": "manifests in",
+      "russian": "проявляется в",
+      "testPrompt": "проявляется в",
+      "acceptedEnglishAnswers": [
+        "manifests in"
+      ],
+      "acceptedRussianAnswers": [
+        "проявляется в"
+      ],
+      "exampleSentence": "This workflow, parallelization, [[manifests in]] two key variations:",
+      "exampleTranslation": "Перевод целевого выражения: проявляется в.",
+      "extraExamples": [
+        "The problem manifests in unexpected delays.",
+        "Stress manifests in different ways for different people."
+      ],
+      "category": "workflow",
+      "wrongRussian": "под капотом, во внутреннем устройстве",
+      "clozeAnswers": [
+        "[[manifests ",
+        "manifests in"
+      ],
+      "id": 60
+    },
+    {
+      "sourceNumber": 237,
+      "english": "toolsets",
+      "russian": "наборы инструментов",
+      "testPrompt": "наборы инструментов",
+      "acceptedEnglishAnswers": [
+        "toolsets"
+      ],
+      "acceptedRussianAnswers": [
+        "наборы инструментов"
+      ],
+      "exampleSentence": "It is therefore crucial to design [[toolsets]] and their documentation clearly and thoughtfully.",
+      "exampleTranslation": "Перевод целевого выражения: наборы инструментов.",
+      "extraExamples": [
+        "Different teams need different toolsets.",
+        "The course introduces toolsets for data analysis."
+      ],
+      "category": "agents",
+      "wrongRussian": "задачи без заранее определённого способа решения",
+      "clozeAnswers": [
+        "[[toolse",
+        "toolsets"
+      ],
+      "id": 61
+    },
+    {
+      "sourceNumber": 210,
+      "english": "articulate",
+      "russian": "чётко формулировать",
+      "testPrompt": "чётко формулировать",
+      "acceptedEnglishAnswers": [
+        "articulate"
+      ],
+      "acceptedRussianAnswers": [
+        "чётко формулировать"
+      ],
+      "exampleSentence": "The two signs of good fit are, first, that LLM responses can be demonstrably improved when a human [[articulates]] their feedback; and second, that the LLM can provide such feedback.",
+      "exampleTranslation": "Перевод целевого выражения: чётко формулировать.",
+      "extraExamples": [
+        "She can articulate the problem clearly.",
+        "It takes practice to articulate complex ideas."
+      ],
+      "category": "agents",
+      "wrongRussian": "хорошо документированный",
+      "clozeAnswers": [
+        "[[articulat",
+        "articulate"
+      ],
+      "id": 62
+    },
+    {
+      "sourceNumber": 34,
+      "english": "tool usage",
+      "russian": "использование инструментов",
+      "testPrompt": "использование инструментов",
+      "acceptedEnglishAnswers": [
+        "tool usage"
+      ],
+      "acceptedRussianAnswers": [
+        "использование инструментов"
+      ],
+      "exampleSentence": "Agents, on the other hand, are systems where LLMs dynamically direct their own processes and [[tool usage]], maintaining control over how they accomplish tasks.",
+      "exampleTranslation": "Перевод целевого выражения: использование инструментов.",
+      "extraExamples": [
+        "We monitor tool usage to understand costs.",
+        "The policy defines acceptable tool usage."
+      ],
+      "category": "language",
+      "wrongRussian": "хорошо подходит для",
+      "clozeAnswers": [
+        "[[tool usa",
+        "tool usage"
+      ],
+      "id": 63
+    },
+    {
+      "sourceNumber": 24,
+      "english": "predefined",
+      "russian": "заранее определённые",
+      "testPrompt": "заранее определённые",
+      "acceptedEnglishAnswers": [
+        "predefined"
+      ],
+      "acceptedRussianAnswers": [
+        "заранее определённые"
+      ],
+      "exampleSentence": "Others use the term to describe more prescriptive implementations that follow [[predefined]] workflows.",
+      "exampleTranslation": "Перевод целевого выражения: заранее определённые.",
+      "extraExamples": [
+        "The meeting follows a predefined agenda.",
+        "We use predefined rules for common requests."
+      ],
+      "category": "language",
+      "wrongRussian": "принятие решений самой моделью",
+      "clozeAnswers": [
+        "[[predefin",
+        "predefined"
+      ],
+      "id": 64
+    },
+    {
+      "sourceNumber": 51,
+      "english": "consider",
+      "russian": "учитывать, рассматривать",
+      "testPrompt": "учитывать, рассматривать",
+      "acceptedEnglishAnswers": [
+        "consider"
+      ],
+      "acceptedRussianAnswers": [
+        "учитывать",
+        "рассматривать"
+      ],
+      "exampleSentence": "To repeat: you should [[consider]] adding complexity only when it demonstrably improves outcomes.",
+      "exampleTranslation": "Перевод целевого выражения: учитывать, рассматривать.",
+      "extraExamples": [
+        "Please consider the impact on new users.",
+        "We should consider two alternatives before deciding."
+      ],
+      "category": "language",
+      "wrongRussian": "удобный в поддержке",
+      "clozeAnswers": [
+        "[[consid",
+        "consider"
+      ],
+      "id": 65
+    },
+    {
+      "sourceNumber": 35,
+      "english": "maintain",
+      "russian": "Поддерживать, обслуживать",
+      "testPrompt": "Поддерживать, обслуживать",
+      "acceptedEnglishAnswers": [
+        "maintain"
+      ],
+      "acceptedRussianAnswers": [
+        "Поддерживать",
+        "обслуживать"
+      ],
+      "exampleSentence": "Agents, on the other hand, are systems where LLMs dynamically direct their own processes and tool usage, [[maintaining]] control over how they accomplish tasks.",
+      "exampleTranslation": "Перевод целевого выражения: поддерживать, обслуживать.",
+      "extraExamples": [
+        "We maintain the service throughout the year.",
+        "It is difficult to maintain a large codebase without tests."
+      ],
+      "category": "language",
+      "wrongRussian": "тогда как, в то время как",
+      "clozeAnswers": [
+        "[[maintaini",
+        "maintain"
+      ],
+      "id": 66
+    },
+    {
+      "sourceNumber": 181,
+      "english": "flag the code",
+      "russian": "помечать код как проблемный",
+      "testPrompt": "помечать код как проблемный",
+      "acceptedEnglishAnswers": [
+        "flag the code"
+      ],
+      "acceptedRussianAnswers": [
+        "помечать код как проблемный"
+      ],
+      "exampleSentence": "Reviewing a piece of code for vulnerabilities, where several different prompts review and [[flag the code]] if they find a problem.",
+      "exampleTranslation": "Перевод целевого выражения: помечать код как проблемный.",
+      "extraExamples": [
+        "The scanner may flag the code as risky.",
+        "The reviewer will flag the code if it contains a secret."
+      ],
+      "category": "workflow",
+      "wrongRussian": "всестороннее тестирование",
+      "clozeAnswers": [
+        "[[flag the co",
+        "flag the code"
+      ],
+      "id": 67
+    },
+    {
+      "sourceNumber": 65,
+      "english": "retrieval",
+      "russian": "поиск и извлечение информации",
+      "testPrompt": "поиск и извлечение информации",
+      "acceptedEnglishAnswers": [
+        "retrieval"
+      ],
+      "acceptedRussianAnswers": [
+        "поиск и извлечение информации"
+      ],
+      "exampleSentence": "For many applications, however, optimizing single LLM calls with [[retrieval]] and in-context examples is usually enough.",
+      "exampleTranslation": "Перевод целевого выражения: поиск и извлечение информации.",
+      "extraExamples": [
+        "Retrieval helps students recall facts.",
+        "The app uses retrieval to find relevant documents."
+      ],
+      "category": "language",
+      "wrongRussian": "компромисс между преимуществами и недостатками",
+      "clozeAnswers": [
+        "[[retriev",
+        "retrieval"
+      ],
+      "id": 68
+    },
+    {
+      "sourceNumber": 159,
+      "english": "simultaneously",
+      "russian": "одновременно",
+      "testPrompt": "одновременно",
+      "acceptedEnglishAnswers": [
+        "simultaneously"
+      ],
+      "acceptedRussianAnswers": [
+        "одновременно"
+      ],
+      "exampleSentence": "LLMs can sometimes work [[simultaneously]] on a task and have their outputs aggregated programmatically.",
+      "exampleTranslation": "Перевод целевого выражения: одновременно.",
+      "extraExamples": [
+        "Three services can run simultaneously.",
+        "She was managing two projects simultaneously."
+      ],
+      "category": "workflow",
+      "wrongRussian": "предположение",
+      "clozeAnswers": [
+        "[[simultaneous",
+        "simultaneously"
+      ],
+      "id": 69
+    },
+    {
+      "sourceNumber": 227,
+      "english": "during execution",
+      "russian": "во время выполнения",
+      "testPrompt": "во время выполнения",
+      "acceptedEnglishAnswers": [
+        "during execution"
+      ],
+      "acceptedRussianAnswers": [
+        "во время выполнения"
+      ],
+      "exampleSentence": "[[During execution]], it's crucial for the agents to gain “ground truth” from the environment at each step (such as tool call results or code execution) to assess its progress.",
+      "exampleTranslation": "Перевод целевого выражения: во время выполнения.",
+      "extraExamples": [
+        "We record errors during execution.",
+        "The task failed during execution because of a timeout."
+      ],
+      "category": "agents",
+      "wrongRussian": "выполняться параллельно",
+      "clozeAnswers": [
+        "[[During executi",
+        "during execution"
+      ],
+      "id": 70
+    },
+    {
+      "sourceNumber": 39,
+      "english": "particular value",
+      "russian": "особая ценность",
+      "testPrompt": "особая ценность",
+      "acceptedEnglishAnswers": [
+        "particular value"
+      ],
+      "acceptedRussianAnswers": [
+        "особая ценность"
+      ],
+      "exampleSentence": "In Appendix 1 (“Agents in Practice”), we describe two domains where customers have found [[particular value]] in using these kinds of systems.",
+      "exampleTranslation": "Перевод целевого выражения: особая ценность.",
+      "extraExamples": [
+        "The data has particular value for small businesses.",
+        "Her experience brings particular value to this project."
+      ],
+      "category": "language",
+      "wrongRussian": "сложнее отлаживать",
+      "clozeAnswers": [
+        "[[particular val",
+        "particular value"
+      ],
+      "id": 71
+    },
+    {
+      "sourceNumber": 253,
+      "english": "fall short",
+      "russian": "оказаться недостаточным",
+      "testPrompt": "оказаться недостаточным",
+      "acceptedEnglishAnswers": [
+        "fall short"
+      ],
+      "acceptedRussianAnswers": [
+        "оказаться недостаточным"
+      ],
+      "exampleSentence": "Start with simple prompts, optimize them with comprehensive evaluation, and add multi-step agentic systems only when simpler solutions [[fall short]].",
+      "exampleTranslation": "Перевод целевого выражения: оказаться недостаточным.",
+      "extraExamples": [
+        "The original plan may fall short of the target.",
+        "A brief explanation will fall short for expert readers."
+      ],
+      "category": "agents",
+      "wrongRussian": "достоверная информация из реальной среды",
+      "clozeAnswers": [
+        "[[fall sho",
+        "fall short"
+      ],
+      "id": 72
+    },
+    {
+      "sourceNumber": 50,
+      "english": "better task performance",
+      "russian": "более качественное выполнение задач",
+      "testPrompt": "более качественное выполнение задач",
+      "acceptedEnglishAnswers": [
+        "better task performance"
+      ],
+      "acceptedRussianAnswers": [
+        "более качественное выполнение задач"
+      ],
+      "exampleSentence": "Agentic systems often trade latency and cost for [[better task performance]], and you should consider when this tradeoff makes sense.",
+      "exampleTranslation": "Перевод целевого выражения: более качественное выполнение задач.",
+      "extraExamples": [
+        "Clear instructions usually lead to better task performance.",
+        "Better task performance matters more than fancy features."
+      ],
+      "category": "language",
+      "wrongRussian": "используют термин для обозначения",
+      "clozeAnswers": [
+        "[[better task performan",
+        "better task performance"
+      ],
+      "id": 73
+    },
+    {
+      "sourceNumber": 145,
+      "english": "hurt performance",
+      "russian": "ухудшать производительность",
+      "testPrompt": "ухудшать производительность",
+      "acceptedEnglishAnswers": [
+        "hurt performance"
+      ],
+      "acceptedRussianAnswers": [
+        "ухудшать производительность"
+      ],
+      "exampleSentence": "Without this workflow, optimizing for one kind of input can [[hurt performance]] on other inputs.",
+      "exampleTranslation": "Перевод целевого выражения: ухудшать производительность.",
+      "extraExamples": [
+        "Unnecessary animations can hurt performance.",
+        "Large files may hurt performance on older phones."
+      ],
+      "category": "workflow",
+      "wrongRussian": "связывание вызовов в цепочку",
+      "clozeAnswers": [
+        "[[hurt performan",
+        "hurt performance"
+      ],
+      "id": 74
+    },
+    {
+      "sourceNumber": 112,
+      "english": "tailoring to your specific use case",
+      "russian": "адаптация под конкретный сценарий использования",
+      "testPrompt": "адаптация под конкретный сценарий использования",
+      "acceptedEnglishAnswers": [
+        "tailoring to your specific use case"
+      ],
+      "acceptedRussianAnswers": [
+        "адаптация под конкретный сценарий использования"
+      ],
+      "exampleSentence": "We recommend focusing on two key aspects of the implementation: [[tailoring]] these capabilities to your specific use case and ensuring they provide an easy, well-documented interface for your LLM.",
+      "exampleTranslation": "Перевод целевого выражения: адаптация под конкретный сценарий использования.",
+      "extraExamples": [
+        "Tailoring to your specific use case matters more than adding features.",
+        "Start by tailoring to your specific use case."
+      ],
+      "category": "development",
+      "wrongRussian": "Последующее действие / уточнение (что)",
+      "clozeAnswers": [
+        "[[tailori",
+        "tailoring to your specific use case"
+      ],
+      "id": 75
+    },
+    {
+      "sourceNumber": 257,
+      "english": "don't hesitate to",
+      "russian": "не стесняйтесь, не бойтесь",
+      "testPrompt": "не стесняйтесь, не бойтесь",
+      "acceptedEnglishAnswers": [
+        "don't hesitate to"
+      ],
+      "acceptedRussianAnswers": [
+        "не стесняйтесь",
+        "не бойтесь"
+      ],
+      "exampleSentence": "Frameworks can help you get started quickly, but [[don't hesitate to]] reduce abstraction layers and build with basic components as you move to production.",
+      "exampleTranslation": "Перевод целевого выражения: не стесняйтесь, не бойтесь.",
+      "extraExamples": [
+        "Don't hesitate to ask if something is unclear.",
+        "Don't hesitate to contact support."
+      ],
+      "category": "agents",
+      "wrongRussian": "дополнительные возможности, расширения",
+      "clozeAnswers": [
+        "[[don't hesitate ",
+        "don't hesitate to"
+      ],
+      "id": 76
+    },
+    {
+      "sourceNumber": 180,
+      "english": "reviewing code for vulnerabilities",
+      "russian": "проверка кода на уязвимости",
+      "testPrompt": "проверка кода на уязвимости",
+      "acceptedEnglishAnswers": [
+        "reviewing code for vulnerabilities"
+      ],
+      "acceptedRussianAnswers": [
+        "проверка кода на уязвимости"
+      ],
+      "exampleSentence": "[[Reviewing]] a piece of code for vulnerabilities, where several different prompts review and flag the code if they find a problem.",
+      "exampleTranslation": "Перевод целевого выражения: проверка кода на уязвимости.",
+      "extraExamples": [
+        "Reviewing code for vulnerabilities is part of the audit.",
+        "We practiced reviewing code for vulnerabilities together."
+      ],
+      "category": "workflow",
+      "wrongRussian": "подробно рассмотреть",
+      "clozeAnswers": [
+        "[[Reviewi",
+        "reviewing code for vulnerabilities"
+      ],
+      "id": 77
+    },
+    {
+      "sourceNumber": 236,
+      "english": "crucial",
+      "russian": "критически важный",
+      "testPrompt": "критически важный",
+      "acceptedEnglishAnswers": [
+        "crucial"
+      ],
+      "acceptedRussianAnswers": [
+        "критически важный"
+      ],
+      "exampleSentence": "It is therefore [[crucial]] to design toolsets and their documentation clearly and thoughtfully.",
+      "exampleTranslation": "Перевод целевого выражения: критически важный.",
+      "extraExamples": [
+        "Clear communication is crucial during emergencies.",
+        "It is crucial to verify the final result."
+      ],
+      "category": "agents",
+      "wrongRussian": "полезные замечания",
+      "clozeAnswers": [
+        "[[cruci",
+        "crucial"
+      ],
+      "id": 78
+    },
+    {
+      "sourceNumber": 177,
+      "english": "tends to perform better",
+      "russian": "обычно работает лучше",
+      "testPrompt": "обычно работает лучше",
+      "acceptedEnglishAnswers": [
+        "tends to perform better"
+      ],
+      "acceptedRussianAnswers": [
+        "обычно работает лучше"
+      ],
+      "exampleSentence": "This [[tends to perform better]] than having the same LLM call handle both guardrails and the core response.",
+      "exampleTranslation": "Перевод целевого выражения: обычно работает лучше.",
+      "extraExamples": [
+        "A smaller batch tends to perform better here.",
+        "The new version tends to perform better under load."
+      ],
+      "category": "workflow",
+      "wrongRussian": "подходящие инструменты",
+      "clozeAnswers": [
+        "[[tends to perform bett",
+        "tends to perform better"
+      ],
+      "id": 79
+    },
+    {
+      "sourceNumber": 64,
+      "english": "optimizing single LLM calls",
+      "russian": "оптимизация отдельных вызовов LLM",
+      "testPrompt": "оптимизация отдельных вызовов LLM",
+      "acceptedEnglishAnswers": [
+        "optimizing single LLM calls"
+      ],
+      "acceptedRussianAnswers": [
+        "оптимизация отдельных вызовов LLM"
+      ],
+      "exampleSentence": "For many applications, however, [[optimizing single LLM calls]] with retrieval and in-context examples is usually enough.",
+      "exampleTranslation": "Перевод целевого выражения: оптимизация отдельных вызовов LLM.",
+      "extraExamples": [
+        "Optimizing single LLM calls can cut operating costs.",
+        "Start by optimizing single LLM calls before adding agents."
+      ],
+      "category": "language",
+      "wrongRussian": "уловить с первого раза",
+      "clozeAnswers": [
+        "[[optimizing single LLM cal",
+        "optimizing single LLM calls"
+      ],
+      "id": 80
+    },
+    {
+      "sourceNumber": 54,
+      "english": "warranted",
+      "russian": "оправданный, обоснованный",
+      "testPrompt": "оправданный, обоснованный",
+      "acceptedEnglishAnswers": [
+        "warranted"
+      ],
+      "acceptedRussianAnswers": [
+        "оправданный",
+        "обоснованный"
+      ],
+      "exampleSentence": "Complex search tasks that require multiple rounds of searching and analysis to gather comprehensive information, where the evaluator decides whether further searches are [[warranted]].",
+      "exampleTranslation": "Перевод целевого выражения: оправданный, обоснованный.",
+      "extraExamples": [
+        "A larger budget is warranted by the new requirements.",
+        "Further investigation is warranted after the incident."
+      ],
+      "category": "language",
+      "wrongRussian": "заранее заданная логика, жёсткие предписания",
+      "clozeAnswers": [
+        "[[warrant",
+        "warranted"
+      ],
+      "id": 81
+    },
+    {
+      "sourceNumber": 260,
+      "english": "rule of thumb",
+      "russian": "практическое правило, эмпирическое правило",
+      "testPrompt": "практическое правило, эмпирическое правило",
+      "acceptedEnglishAnswers": [
+        "rule of thumb"
+      ],
+      "acceptedRussianAnswers": [
+        "практическое правило",
+        "эмпирическое правило"
+      ],
+      "exampleSentence": "One [[rule of thumb]] is to think about how much effort goes into human-computer interfaces (HCI), and plan to invest just as much effort in creating good agent-computer interfaces (ACI).",
+      "exampleTranslation": "Перевод целевого выражения: практическое правило, эмпирическое правило.",
+      "extraExamples": [
+        "As a rule of thumb, test before deploying.",
+        "A useful rule of thumb is to keep instructions short."
+      ],
+      "category": "agents",
+      "wrongRussian": "разделение ответственности",
+      "clozeAnswers": [
+        "[[rule of thu",
+        "rule of thumb"
+      ],
+      "id": 82
+    },
+    {
+      "sourceNumber": 138,
+      "english": "routing",
+      "russian": "маршрутизация",
+      "testPrompt": "маршрутизация",
+      "acceptedEnglishAnswers": [
+        "routing"
+      ],
+      "acceptedRussianAnswers": [
+        "маршрутизация"
+      ],
+      "exampleSentence": "Workflow: [[Routing]]",
+      "exampleTranslation": "Перевод целевого выражения: маршрутизация.",
+      "extraExamples": [
+        "Routing sends each request to the right department.",
+        "Efficient routing reduces delivery time."
+      ],
+      "category": "workflow",
+      "wrongRussian": "определённый уровень доверия",
+      "clozeAnswers": [
+        "[[Routi",
+        "routing"
+      ],
+      "id": 83
+    },
+    {
+      "sourceNumber": 36,
+      "english": "how they accomplish tasks",
+      "russian": "тем, как они выполняют задачи",
+      "testPrompt": "тем, как они выполняют задачи",
+      "acceptedEnglishAnswers": [
+        "how they accomplish tasks"
+      ],
+      "acceptedRussianAnswers": [
+        "тем",
+        "как они выполняют задачи"
+      ],
+      "exampleSentence": "Agents, on the other hand, are systems where LLMs dynamically direct their own processes and tool usage, maintaining control over [[how they accomplish tasks]].",
+      "exampleTranslation": "Перевод целевого выражения: тем, как они выполняют задачи.",
+      "extraExamples": [
+        "We evaluate how they accomplish tasks, not just their final answers.",
+        "Ask employees how they accomplish tasks during a busy shift."
+      ],
+      "category": "language",
+      "wrongRussian": "предполагать",
+      "clozeAnswers": [
+        "[[how they accomplish tas",
+        "how they accomplish tasks"
+      ],
+      "id": 84
+    },
+    {
+      "sourceNumber": 245,
+      "english": "sandboxed environments",
+      "russian": "изолированные среды тестирования",
+      "testPrompt": "изолированные среды тестирования",
+      "acceptedEnglishAnswers": [
+        "sandboxed environments"
+      ],
+      "acceptedRussianAnswers": [
+        "изолированные среды тестирования"
+      ],
+      "exampleSentence": "We recommend extensive testing in [[sandboxed environments]], along with the appropriate guardrails.",
+      "exampleTranslation": "Перевод целевого выражения: изолированные среды тестирования.",
+      "extraExamples": [
+        "We run untrusted code in sandboxed environments.",
+        "Students experiment in sandboxed environments."
+      ],
+      "category": "agents",
+      "wrongRussian": "в течение длительного времени",
+      "clozeAnswers": [
+        "[[sandboxed environmen",
+        "sandboxed environments"
+      ],
+      "id": 85
+    },
+    {
+      "sourceNumber": 137,
+      "english": "based on the outline",
+      "russian": "на основе плана",
+      "testPrompt": "на основе плана",
+      "acceptedEnglishAnswers": [
+        "based on the outline"
+      ],
+      "acceptedRussianAnswers": [
+        "на основе плана"
+      ],
+      "exampleSentence": "Writing an outline of a document, checking that the outline meets certain criteria, then writing the document [[based on the outline]].",
+      "exampleTranslation": "Перевод целевого выражения: на основе плана.",
+      "extraExamples": [
+        "She wrote the article based on the outline.",
+        "The workshop was planned based on the outline."
+      ],
+      "category": "workflow",
+      "wrongRussian": "обратная связь из окружающей среды",
+      "clozeAnswers": [
+        "[[based on the outli",
+        "based on the outline"
+      ],
+      "id": 86
+    },
+    {
+      "sourceNumber": 255,
+      "english": "explicitly",
+      "russian": "явно",
+      "testPrompt": "явно",
+      "acceptedEnglishAnswers": [
+        "explicitly"
+      ],
+      "acceptedRussianAnswers": [
+        "явно"
+      ],
+      "exampleSentence": "Prioritize transparency by [[explicitly]] showing the agent’s planning steps.",
+      "exampleTranslation": "Перевод целевого выражения: явно.",
+      "extraExamples": [
+        "Please state your assumptions explicitly.",
+        "The contract explicitly defines the responsibilities."
+      ],
+      "category": "agents",
+      "wrongRussian": "хорошо подходит для",
+      "clozeAnswers": [
+        "[[explicit",
+        "explicitly"
+      ],
+      "id": 87
+    },
+    {
+      "sourceNumber": 220,
+      "english": "as LLMs mature",
+      "russian": "по мере развития LLM",
+      "testPrompt": "по мере развития LLM",
+      "acceptedEnglishAnswers": [
+        "as LLMs mature"
+      ],
+      "acceptedRussianAnswers": [
+        "по мере развития LLM"
+      ],
+      "exampleSentence": "Agents are emerging in production [[as LLMs mature]] in key capabilities—understanding complex inputs, engaging in reasoning and planning, using tools reliably, and recovering from errors.",
+      "exampleTranslation": "Перевод целевого выражения: по мере развития LLM.",
+      "extraExamples": [
+        "As LLMs mature, developers can delegate harder tasks.",
+        "Safety requirements evolve as LLMs mature."
+      ],
+      "category": "agents",
+      "wrongRussian": "идёт по плану",
+      "clozeAnswers": [
+        "[[as LLMs matu",
+        "as LLMs mature"
+      ],
+      "id": 88
+    },
+    {
+      "sourceNumber": 231,
+      "english": "stopping conditions",
+      "russian": "условия остановки",
+      "testPrompt": "условия остановки",
+      "acceptedEnglishAnswers": [
+        "stopping conditions"
+      ],
+      "acceptedRussianAnswers": [
+        "условия остановки"
+      ],
+      "exampleSentence": "The task often terminates upon completion, but it’s also common to include [[stopping conditions]] (such as a maximum number of iterations) to maintain control.",
+      "exampleTranslation": "Перевод целевого выражения: условия остановки.",
+      "extraExamples": [
+        "Clear stopping conditions prevent endless retries.",
+        "Set stopping conditions before running the experiment."
+      ],
+      "category": "agents",
+      "wrongRussian": "создавать соблазн",
+      "clozeAnswers": [
+        "[[stopping conditio",
+        "stopping conditions"
+      ],
+      "id": 89
+    },
+    {
+      "sourceNumber": 61,
+      "english": "needed at scale",
+      "russian": "необходимо при масштабировании",
+      "testPrompt": "необходимо при масштабировании",
+      "acceptedEnglishAnswers": [
+        "needed at scale"
+      ],
+      "acceptedRussianAnswers": [
+        "необходимо при масштабировании"
+      ],
+      "exampleSentence": "When more complexity is warranted, workflows offer predictability and consistency for well-defined tasks, whereas agents are the better option when flexibility and model-driven decision-making are [[needed at scale]].",
+      "exampleTranslation": "Перевод целевого выражения: необходимо при масштабировании.",
+      "extraExamples": [
+        "Stronger monitoring is needed at scale.",
+        "Manual reviews become too expensive when needed at scale."
+      ],
+      "category": "language",
+      "wrongRussian": "лежащие в основе",
+      "clozeAnswers": [
+        "[[needed at sca",
+        "needed at scale"
+      ],
+      "id": 90
+    },
+    {
+      "sourceNumber": 8,
+      "english": "implementation",
+      "russian": "реализация",
+      "testPrompt": "реализация",
+      "acceptedEnglishAnswers": [
+        "implementation"
+      ],
+      "acceptedRussianAnswers": [
+        "реализация"
+      ],
+      "exampleSentence": "Consistently, the most successful [[implementations]] weren't using complex frameworks or specialized libraries.",
+      "exampleTranslation": "Перевод целевого выражения: реализация.",
+      "extraExamples": [
+        "The implementation took longer than expected.",
+        "We reviewed the implementation before launch."
+      ],
+      "category": "language",
+      "wrongRussian": "комбинируемые",
+      "clozeAnswers": [
+        "[[implementatio",
+        "implementation"
+      ],
+      "id": 91
+    },
+    {
+      "sourceNumber": 212,
+      "english": "polished",
+      "russian": "тщательно доработанный",
+      "testPrompt": "тщательно доработанный",
+      "acceptedEnglishAnswers": [
+        "polished"
+      ],
+      "acceptedRussianAnswers": [
+        "тщательно доработанный"
+      ],
+      "exampleSentence": "This is analogous to the iterative writing process a human writer might go through when producing a [[polished]] document.",
+      "exampleTranslation": "Перевод целевого выражения: тщательно доработанный.",
+      "extraExamples": [
+        "The report looks polished and professional.",
+        "We need a polished presentation for the meeting."
+      ],
+      "category": "agents",
+      "wrongRussian": "мощные модели",
+      "clozeAnswers": [
+        "[[polish",
+        "polished"
+      ],
+      "id": 92
+    },
+    {
+      "sourceNumber": 72,
+      "english": "workflow builder",
+      "russian": "конструктор рабочих процессов",
+      "testPrompt": "конструктор рабочих процессов",
+      "acceptedEnglishAnswers": [
+        "workflow builder"
+      ],
+      "acceptedRussianAnswers": [
+        "конструктор рабочих процессов"
+      ],
+      "exampleSentence": "Rivet, a drag and drop GUI LLM [[workflow builder]]; and",
+      "exampleTranslation": "Перевод целевого выражения: конструктор рабочих процессов.",
+      "extraExamples": [
+        "The workflow builder lets employees automate approvals.",
+        "A visual workflow builder can simplify onboarding."
+      ],
+      "category": "development",
+      "wrongRussian": "чёткие критерии оценки",
+      "clozeAnswers": [
+        "[[workflow build",
+        "workflow builder"
+      ],
+      "id": 93
+    },
+    {
+      "sourceNumber": 219,
+      "english": "emerging in production",
+      "russian": "начинающие применяться в реальных системах",
+      "testPrompt": "начинающие применяться в реальных системах",
+      "acceptedEnglishAnswers": [
+        "emerging in production"
+      ],
+      "acceptedRussianAnswers": [
+        "начинающие применяться в реальных системах"
+      ],
+      "exampleSentence": "Agents are [[emerging in production]] as LLMs mature in key capabilities—understanding complex inputs, engaging in reasoning and planning, using tools reliably, and recovering from errors.",
+      "exampleTranslation": "Перевод целевого выражения: начинающие применяться в реальных системах.",
+      "extraExamples": [
+        "The technology is emerging in production at several banks.",
+        "This practice is emerging in production across our industry."
+      ],
+      "category": "agents",
+      "wrongRussian": "максимальное количество итераций",
+      "clozeAnswers": [
+        "[[emerging in producti",
+        "emerging in production"
+      ],
+      "id": 94
+    },
+    {
+      "sourceNumber": 101,
+      "english": "foundational building block",
+      "russian": "фундаментальный компонент",
+      "testPrompt": "фундаментальный компонент",
+      "acceptedEnglishAnswers": [
+        "foundational building block"
+      ],
+      "acceptedRussianAnswers": [
+        "фундаментальный компонент"
+      ],
+      "exampleSentence": "We'll start with our [[foundational building block]]—the augmented LLM—and progressively increase complexity, from simple compositional workflows to autonomous agents.",
+      "exampleTranslation": "Перевод целевого выражения: фундаментальный компонент.",
+      "extraExamples": [
+        "A reliable database is a foundational building block.",
+        "The API acts as a foundational building block for the product."
+      ],
+      "category": "development",
+      "wrongRussian": "с другой стороны",
+      "clozeAnswers": [
+        "[[foundational building blo",
+        "foundational building block"
+      ],
+      "id": 95
+    },
+    {
+      "sourceNumber": 170,
+      "english": "multiple perspectives",
+      "russian": "несколько точек зрения",
+      "testPrompt": "несколько точек зрения",
+      "acceptedEnglishAnswers": [
+        "multiple perspectives"
+      ],
+      "acceptedRussianAnswers": [
+        "несколько точек зрения"
+      ],
+      "exampleSentence": "When to use this workflow: Parallelization is effective when the divided subtasks can be parallelized for speed, or when [[multiple perspectives]] or attempts are needed for higher confidence results.",
+      "exampleTranslation": "Перевод целевого выражения: несколько точек зрения.",
+      "extraExamples": [
+        "We need multiple perspectives to understand the issue.",
+        "The report combines multiple perspectives on the market."
+      ],
+      "category": "workflow",
+      "wrongRussian": "работали с десятками команд",
+      "clozeAnswers": [
+        "[[multiple perspectiv",
+        "multiple perspectives"
+      ],
+      "id": 96
+    },
+    {
+      "sourceNumber": 124,
+      "english": "a sequence of steps",
+      "russian": "последовательность шагов",
+      "testPrompt": "последовательность шагов",
+      "acceptedEnglishAnswers": [
+        "a sequence of steps"
+      ],
+      "acceptedRussianAnswers": [
+        "последовательность шагов"
+      ],
+      "exampleSentence": "Prompt chaining decomposes a task into [[a sequence of steps]], where each LLM call processes the output of the previous one.",
+      "exampleTranslation": "Перевод целевого выражения: последовательность шагов.",
+      "extraExamples": [
+        "The tutorial follows a sequence of steps.",
+        "Please document the sequence of steps you took."
+      ],
+      "category": "workflow",
+      "wrongRussian": "точность",
+      "clozeAnswers": [
+        "[[a sequence of ste",
+        "a sequence of steps"
+      ],
+      "id": 97
+    },
+    {
+      "sourceNumber": 234,
+      "english": "straightforward",
+      "russian": "просто, понятно",
+      "testPrompt": "просто, понятно",
+      "acceptedEnglishAnswers": [
+        "straightforward"
+      ],
+      "acceptedRussianAnswers": [
+        "просто",
+        "понятно"
+      ],
+      "exampleSentence": "Agents can handle sophisticated tasks, but their implementation is often [[straightforward]].",
+      "exampleTranslation": "Перевод целевого выражения: просто, понятно.",
+      "extraExamples": [
+        "The instructions are straightforward.",
+        "We need a straightforward solution to this problem."
+      ],
+      "category": "agents",
+      "wrongRussian": "неизменно, стабильно",
+      "clozeAnswers": [
+        "[[straightforwa",
+        "straightforward"
+      ],
+      "id": 98
+    },
+    {
+      "sourceNumber": 172,
+      "english": "consideration",
+      "russian": "Аспекты, факторы, соображения",
+      "testPrompt": "Аспекты, факторы, соображения",
+      "acceptedEnglishAnswers": [
+        "consideration"
+      ],
+      "acceptedRussianAnswers": [
+        "Аспекты",
+        "факторы",
+        "соображения"
+      ],
+      "exampleSentence": "For complex tasks with multiple [[considerations]], LLMs generally perform better when each consideration is handled by a separate LLM call, allowing focused attention on each specific aspect.",
+      "exampleTranslation": "Перевод целевого выражения: аспекты, факторы, соображения.",
+      "extraExamples": [
+        "Cost is an important consideration.",
+        "Security considerations should shape the architecture."
+      ],
+      "category": "workflow",
+      "wrongRussian": "сталкиваясь с препятствиями",
+      "clozeAnswers": [
+        "[[consideratio",
+        "consideration"
+      ],
+      "id": 99
+    },
+    {
+      "sourceNumber": 71,
+      "english": "drag-and-drop",
+      "russian": "перетаскивание элементов",
+      "testPrompt": "перетаскивание элементов",
+      "acceptedEnglishAnswers": [
+        "drag-and-drop"
+      ],
+      "acceptedRussianAnswers": [
+        "перетаскивание элементов"
+      ],
+      "exampleSentence": "Rivet, a [[drag and drop]] GUI LLM workflow builder; and",
+      "exampleTranslation": "Перевод целевого выражения: перетаскивание элементов.",
+      "extraExamples": [
+        "The drag-and-drop editor works without coding.",
+        "She built the dashboard with a drag-and-drop interface."
+      ],
+      "category": "development",
+      "wrongRussian": "оценка и обратная связь",
+      "clozeAnswers": [
+        "[[drag and dr",
+        "drag-and-drop"
+      ],
+      "id": 100
+    },
+    {
+      "sourceNumber": 233,
+      "english": "sophisticated tasks",
+      "russian": "сложные, многоуровневые задачи",
+      "testPrompt": "сложные, многоуровневые задачи",
+      "acceptedEnglishAnswers": [
+        "sophisticated tasks"
+      ],
+      "acceptedRussianAnswers": [
+        "сложные",
+        "многоуровневые задачи"
+      ],
+      "exampleSentence": "Agents can handle [[sophisticated tasks]], but their implementation is often straightforward.",
+      "exampleTranslation": "Перевод целевого выражения: сложные, многоуровневые задачи.",
+      "extraExamples": [
+        "The platform can handle sophisticated tasks.",
+        "Sophisticated tasks require careful evaluation."
+      ],
+      "category": "agents",
+      "wrongRussian": "последующие процессы / последствия (как)",
+      "clozeAnswers": [
+        "[[sophisticated tas",
+        "sophisticated tasks"
+      ],
+      "id": 101
+    },
+    {
+      "sourceNumber": 102,
+      "english": "augmented LLM",
+      "russian": "расширенная дополнительными возможностями LLM",
+      "testPrompt": "расширенная дополнительными возможностями LLM",
+      "acceptedEnglishAnswers": [
+        "augmented LLM"
+      ],
+      "acceptedRussianAnswers": [
+        "расширенная дополнительными возможностями LLM"
+      ],
+      "exampleSentence": "The [[augmented LLM]]",
+      "exampleTranslation": "Перевод целевого выражения: расширенная дополнительными возможностями LLM.",
+      "extraExamples": [
+        "An augmented LLM can search company documents.",
+        "We tested an augmented LLM with external tools."
+      ],
+      "category": "development",
+      "wrongRussian": "разбор инструментов",
+      "clozeAnswers": [
+        "[[augmented L",
+        "augmented LLM"
+      ],
+      "id": 102
+    },
+    {
+      "sourceNumber": 243,
+      "english": "compounding errors",
+      "russian": "накапливающиеся ошибки",
+      "testPrompt": "накапливающиеся ошибки",
+      "acceptedEnglishAnswers": [
+        "compounding errors"
+      ],
+      "acceptedRussianAnswers": [
+        "накапливающиеся ошибки"
+      ],
+      "exampleSentence": "The autonomous nature of agents means higher costs, and the potential for [[compounding errors]].",
+      "exampleTranslation": "Перевод целевого выражения: накапливающиеся ошибки.",
+      "extraExamples": [
+        "Small mistakes can lead to compounding errors.",
+        "Compounding errors make long workflows risky."
+      ],
+      "category": "agents",
+      "wrongRussian": "чётко определённые задачи",
+      "clozeAnswers": [
+        "[[compounding erro",
+        "compounding errors"
+      ],
+      "id": 103
+    },
+    {
+      "sourceNumber": 186,
+      "english": "breaks down tasks",
+      "russian": "разбивает задачи на части",
+      "testPrompt": "разбивает задачи на части",
+      "acceptedEnglishAnswers": [
+        "breaks down tasks"
+      ],
+      "acceptedRussianAnswers": [
+        "разбивает задачи на части"
+      ],
+      "exampleSentence": "In the orchestrator-workers workflow, a central LLM dynamically [[breaks down tasks]], delegates them to worker LLMs, and synthesizes their results.",
+      "exampleTranslation": "Перевод целевого выражения: разбивает задачи на части.",
+      "extraExamples": [
+        "The project manager breaks down tasks for the team.",
+        "The planner breaks down tasks into manageable steps."
+      ],
+      "category": "agents",
+      "wrongRussian": "базовые компоненты",
+      "clozeAnswers": [
+        "[[breaks down tas",
+        "breaks down tasks"
+      ],
+      "id": 104
+    },
+    {
+      "sourceNumber": 240,
+      "english": "hardcode a fixed path",
+      "russian": "жёстко задать фиксированный путь в коде",
+      "testPrompt": "жёстко задать фиксированный путь в коде",
+      "acceptedEnglishAnswers": [
+        "hardcode a fixed path"
+      ],
+      "acceptedRussianAnswers": [
+        "жёстко задать фиксированный путь в коде"
+      ],
+      "exampleSentence": "When to use agents: Agents can be used for open-ended problems where it’s difficult or impossible to predict the required number of steps, and where you can’t [[hardcode a fixed path]].",
+      "exampleTranslation": "Перевод целевого выражения: жёстко задать фиксированный путь в коде.",
+      "extraExamples": [
+        "Don't hardcode a fixed path if requirements keep changing.",
+        "We decided to hardcode a fixed path for this small experiment."
+      ],
+      "category": "agents",
+      "wrongRussian": "задержка, время отклика",
+      "clozeAnswers": [
+        "[[hardcode a fixed pa",
+        "hardcode a fixed path"
+      ],
+      "id": 105
+    },
+    {
+      "sourceNumber": 155,
+      "english": "cost-efficient models",
+      "russian": "экономичные модели",
+      "testPrompt": "экономичные модели",
+      "acceptedEnglishAnswers": [
+        "cost-efficient models"
+      ],
+      "acceptedRussianAnswers": [
+        "экономичные модели"
+      ],
+      "exampleSentence": "Routing easy/common questions to smaller, [[cost-efficient models]] like Claude Haiku 4.5 and hard/unusual questions to more capable models like Claude Sonnet 4.5 to optimize for best performance.",
+      "exampleTranslation": "Перевод целевого выражения: экономичные модели.",
+      "extraExamples": [
+        "Cost-efficient models can handle simple requests.",
+        "We use cost-efficient models for basic classification."
+      ],
+      "category": "workflow",
+      "wrongRussian": "соответствовать более широким требованиям",
+      "clozeAnswers": [
+        "[[cost-efficient mode",
+        "cost-efficient models"
+      ],
+      "id": 106
+    },
+    {
+      "sourceNumber": 222,
+      "english": "engaging in reasoning and planning",
+      "russian": "выполнение рассуждений и планирования",
+      "testPrompt": "выполнение рассуждений и планирования",
+      "acceptedEnglishAnswers": [
+        "engaging in reasoning and planning"
+      ],
+      "acceptedRussianAnswers": [
+        "выполнение рассуждений и планирования"
+      ],
+      "exampleSentence": "Agents are emerging in production as LLMs mature in key capabilities—understanding complex inputs, [[engaging in reasoning and planning]], using tools reliably, and recovering from errors.",
+      "exampleTranslation": "Перевод целевого выражения: выполнение рассуждений и планирования.",
+      "extraExamples": [
+        "Engaging in reasoning and planning requires clear goals.",
+        "The agent spent several steps engaging in reasoning and planning."
+      ],
+      "category": "agents",
+      "wrongRussian": "поисковые запросы",
+      "clozeAnswers": [
+        "[[engaging in reasoning and planni",
+        "engaging in reasoning and planning"
+      ],
+      "id": 107
+    },
+    {
+      "sourceNumber": 1,
+      "english": "tooling landscape",
+      "russian": "экосистема инструментов",
+      "testPrompt": "экосистема инструментов",
+      "acceptedEnglishAnswers": [
+        "tooling landscape"
+      ],
+      "acceptedRussianAnswers": [
+        "экосистема инструментов"
+      ],
+      "exampleSentence": "Note: Much of the [[tooling landscape]] described in this post has changed since December 2024.",
+      "exampleTranslation": "Перевод целевого выражения: экосистема инструментов.",
+      "extraExamples": [
+        "The tooling landscape for mobile apps changes quickly.",
+        "We compared the tooling landscape before choosing a platform."
+      ],
+      "category": "language",
+      "wrongRussian": "скрывать, затруднять понимание",
+      "clozeAnswers": [
+        "[[tooling landsca",
+        "tooling landscape"
+      ],
+      "id": 108
+    },
+    {
+      "sourceNumber": 208,
+      "english": "signs of good fit",
+      "russian": "признаки того, что подходит",
+      "testPrompt": "признаки того, что подходит",
+      "acceptedEnglishAnswers": [
+        "signs of good fit"
+      ],
+      "acceptedRussianAnswers": [
+        "признаки того",
+        "что подходит"
+      ],
+      "exampleSentence": "The two [[signs of good fit]] are, first, that LLM responses can be demonstrably improved when a human articulates their feedback; and second, that the LLM can provide such feedback.",
+      "exampleTranslation": "Перевод целевого выражения: признаки того, что подходит.",
+      "extraExamples": [
+        "Fast adoption and low error rates are signs of good fit.",
+        "We looked for signs of good fit before expanding the program."
+      ],
+      "category": "agents",
+      "wrongRussian": "пороговые значения голосования",
+      "clozeAnswers": [
+        "[[signs of good f",
+        "signs of good fit"
+      ],
+      "id": 109
+    },
+    {
+      "sourceNumber": 56,
+      "english": "consistency",
+      "russian": "последовательность, стабильность",
+      "testPrompt": "последовательность, стабильность",
+      "acceptedEnglishAnswers": [
+        "consistency"
+      ],
+      "acceptedRussianAnswers": [
+        "последовательность",
+        "стабильность"
+      ],
+      "exampleSentence": "When more complexity is warranted, workflows offer predictability and [[consistency]] for well-defined tasks, whereas agents are the better option when flexibility and model-driven decision-making are needed at scale.",
+      "exampleTranslation": "Перевод целевого выражения: последовательность, стабильность.",
+      "extraExamples": [
+        "Consistency matters when teaching beginners.",
+        "The interface needs consistency across screens."
+      ],
+      "category": "language",
+      "wrongRussian": "последовательное связывание промптов",
+      "clozeAnswers": [
+        "[[consisten",
+        "consistency"
+      ],
+      "id": 110
+    },
+    {
+      "sourceNumber": 246,
+      "english": "guardrails",
+      "russian": "защитные ограничения",
+      "testPrompt": "защитные ограничения",
+      "acceptedEnglishAnswers": [
+        "guardrails"
+      ],
+      "acceptedRussianAnswers": [
+        "защитные ограничения"
+      ],
+      "exampleSentence": "We recommend extensive testing in sandboxed environments, along with the appropriate [[guardrails]].",
+      "exampleTranslation": "Перевод целевого выражения: защитные ограничения.",
+      "extraExamples": [
+        "We added guardrails to prevent unsafe actions.",
+        "Clear guardrails help teams experiment responsibly."
+      ],
+      "category": "agents",
+      "wrongRussian": "исчерпывающая информация",
+      "clozeAnswers": [
+        "[[guardrai",
+        "guardrails"
+      ],
+      "id": 111
+    },
+    {
+      "sourceNumber": 3,
+      "english": "current approach",
+      "russian": "текущий подход",
+      "testPrompt": "текущий подход",
+      "acceptedEnglishAnswers": [
+        "current approach"
+      ],
+      "acceptedRussianAnswers": [
+        "текущий подход"
+      ],
+      "exampleSentence": "For our [[current approach]], see how we built Claude Managed Agents and the Managed Agents documentation.",
+      "exampleTranslation": "Перевод целевого выражения: текущий подход.",
+      "extraExamples": [
+        "Our current approach is to ship small updates weekly.",
+        "The current approach works for a team of five."
+      ],
+      "category": "language",
+      "wrongRussian": "несколько раундов поиска",
+      "clozeAnswers": [
+        "[[current approa",
+        "current approach"
+      ],
+      "id": 112
+    },
+    {
+      "sourceNumber": 176,
+      "english": "screens",
+      "russian": "проверяет",
+      "testPrompt": "проверяет",
+      "acceptedEnglishAnswers": [
+        "screens"
+      ],
+      "acceptedRussianAnswers": [
+        "проверяет"
+      ],
+      "exampleSentence": "Implementing guardrails where one model instance processes user queries while another [[screens]] them for inappropriate content or requests.",
+      "exampleTranslation": "Перевод целевого выражения: проверяет.",
+      "extraExamples": [
+        "The filter screens applications before review.",
+        "A clinician screens patients for symptoms."
+      ],
+      "category": "workflow",
+      "wrongRussian": "сбор и анализ",
+      "clozeAnswers": [
+        "[[scree",
+        "screens"
+      ],
+      "id": 113
+    },
+    {
+      "sourceNumber": 92,
+      "english": "ensure",
+      "russian": "убедиться, обеспечить",
+      "testPrompt": "убедиться, обеспечить",
+      "acceptedEnglishAnswers": [
+        "ensure"
+      ],
+      "acceptedRussianAnswers": [
+        "убедиться",
+        "обеспечить"
+      ],
+      "exampleSentence": "If you do use a framework, [[ensure]] you understand the underlying code.",
+      "exampleTranslation": "Перевод целевого выражения: убедиться, обеспечить.",
+      "extraExamples": [
+        "Ensure that the document is shared with the team.",
+        "We need to ensure consistent quality."
+      ],
+      "category": "development",
+      "wrongRussian": "основной ответ",
+      "clozeAnswers": [
+        "[[ensu",
+        "ensure"
+      ],
+      "id": 114
+    },
+    {
+      "sourceNumber": 192,
+      "english": "the nature of the change",
+      "russian": "характер изменения",
+      "testPrompt": "характер изменения",
+      "acceptedEnglishAnswers": [
+        "the nature of the change"
+      ],
+      "acceptedRussianAnswers": [
+        "характер изменения"
+      ],
+      "exampleSentence": "When to use this workflow: This workflow is well-suited for complex tasks where you can’t predict the subtasks needed (in coding, for example, the number of files that need to be changed and [[the nature of the change]] in each file likely depend on the task).",
+      "exampleTranslation": "Перевод целевого выражения: характер изменения.",
+      "extraExamples": [
+        "The nature of the change determines the testing effort.",
+        "Explain the nature of the change in your request."
+      ],
+      "category": "agents",
+      "wrongRussian": "улучшение",
+      "clozeAnswers": [
+        "[[the nature of the chan",
+        "the nature of the change"
+      ],
+      "id": 115
+    },
+    {
+      "sourceNumber": 147,
+      "english": "distinct categories",
+      "russian": "чётко различающиеся категории",
+      "testPrompt": "чётко различающиеся категории",
+      "acceptedEnglishAnswers": [
+        "distinct categories"
+      ],
+      "acceptedRussianAnswers": [
+        "чётко различающиеся категории"
+      ],
+      "exampleSentence": "When to use this workflow: Routing works well for complex tasks where there are [[distinct categories]] that are better handled separately, and where classification can be handled accurately, either by an LLM or a more traditional classification model/algorithm.",
+      "exampleTranslation": "Перевод целевого выражения: чётко различающиеся категории.",
+      "extraExamples": [
+        "The data falls into distinct categories.",
+        "We created distinct categories for customer issues."
+      ],
+      "category": "workflow",
+      "wrongRussian": "жертвовать скоростью и стоимостью",
+      "clozeAnswers": [
+        "[[distinct categori",
+        "distinct categories"
+      ],
+      "id": 116
+    },
+    {
+      "sourceNumber": 95,
+      "english": "under the hood",
+      "russian": "под капотом, во внутреннем устройстве",
+      "testPrompt": "под капотом, во внутреннем устройстве",
+      "acceptedEnglishAnswers": [
+        "under the hood"
+      ],
+      "acceptedRussianAnswers": [
+        "под капотом",
+        "во внутреннем устройстве"
+      ],
+      "exampleSentence": "Incorrect assumptions about what's [[under the hood]] are a common source of customer error.",
+      "exampleTranslation": "Перевод целевого выражения: под капотом, во внутреннем устройстве.",
+      "extraExamples": [
+        "I want to know what happens under the hood.",
+        "The tool looks simple, but a lot happens under the hood."
+      ],
+      "category": "development",
+      "wrongRussian": "Надежный, достоверный",
+      "clozeAnswers": [
+        "[[under the ho",
+        "under the hood"
+      ],
+      "id": 117
+    },
+    {
+      "sourceNumber": 239,
+      "english": "open-ended problems",
+      "russian": "задачи без заранее определённого способа решения",
+      "testPrompt": "задачи без заранее определённого способа решения",
+      "acceptedEnglishAnswers": [
+        "open-ended problems"
+      ],
+      "acceptedRussianAnswers": [
+        "задачи без заранее определённого способа решения"
+      ],
+      "exampleSentence": "When to use agents: Agents can be used for [[open-ended problems]] where it’s difficult or impossible to predict the required number of steps, and where you can’t hardcode a fixed path.",
+      "exampleTranslation": "Перевод целевого выражения: задачи без заранее определённого способа решения.",
+      "extraExamples": [
+        "Open-ended problems allow more than one valid answer.",
+        "Students discussed open-ended problems in class."
+      ],
+      "category": "agents",
+      "wrongRussian": "более простая конфигурация",
+      "clozeAnswers": [
+        "[[open-ended proble",
+        "open-ended problems"
+      ],
+      "id": 118
+    },
+    {
+      "sourceNumber": 113,
+      "english": "well-documented",
+      "russian": "хорошо документированный",
+      "testPrompt": "хорошо документированный",
+      "acceptedEnglishAnswers": [
+        "well-documented"
+      ],
+      "acceptedRussianAnswers": [
+        "хорошо документированный"
+      ],
+      "exampleSentence": "We recommend focusing on two key aspects of the implementation: tailoring these capabilities to your specific use case and ensuring they provide an easy, [[well-documented]] interface for your LLM.",
+      "exampleTranslation": "Перевод целевого выражения: хорошо документированный.",
+      "extraExamples": [
+        "The API is well-documented and easy to integrate.",
+        "We prefer a well-documented process over informal instructions."
+      ],
+      "category": "development",
+      "wrongRussian": "в цикле",
+      "clozeAnswers": [
+        "[[well-document",
+        "well-documented"
+      ],
+      "id": 119
+    },
+    {
+      "sourceNumber": 190,
+      "english": "well-suited for",
+      "russian": "хорошо подходит для",
+      "testPrompt": "хорошо подходит для",
+      "acceptedEnglishAnswers": [
+        "well-suited for"
+      ],
+      "acceptedRussianAnswers": [
+        "хорошо подходит для"
+      ],
+      "exampleSentence": "When to use this workflow: This workflow is [[well-suited for]] complex tasks where you can’t predict the subtasks needed (in coding, for example, the number of files that need to be changed and the nature of the change in each file likely depend on the task).",
+      "exampleTranslation": "Перевод целевого выражения: хорошо подходит для.",
+      "extraExamples": [
+        "This strategy is well-suited for iterative design.",
+        "Remote work is well-suited for people who need flexibility."
+      ],
+      "category": "agents",
+      "wrongRussian": "различие",
+      "clozeAnswers": [
+        "[[well-suited f",
+        "well-suited for"
+      ],
+      "id": 120
+    },
+    {
+      "sourceNumber": 60,
+      "english": "model-driven decision-making",
+      "russian": "принятие решений самой моделью",
+      "testPrompt": "принятие решений самой моделью",
+      "acceptedEnglishAnswers": [
+        "model-driven decision-making"
+      ],
+      "acceptedRussianAnswers": [
+        "принятие решений самой моделью"
+      ],
+      "exampleSentence": "When more complexity is warranted, workflows offer predictability and consistency for well-defined tasks, whereas agents are the better option when flexibility and [[model-driven decision-making]] are needed at scale.",
+      "exampleTranslation": "Перевод целевого выражения: принятие решений самой моделью.",
+      "extraExamples": [
+        "Model-driven decision-making can adapt to changing inputs.",
+        "We need to audit model-driven decision-making in sensitive workflows."
+      ],
+      "category": "language",
+      "wrongRussian": "Выполнять, совершать",
+      "clozeAnswers": [
+        "[[model-driven decision-maki",
+        "model-driven decision-making"
+      ],
+      "id": 121
+    },
+    {
+      "sourceNumber": 258,
+      "english": "maintainable",
+      "russian": "удобный в поддержке",
+      "testPrompt": "удобный в поддержке",
+      "acceptedEnglishAnswers": [
+        "maintainable"
+      ],
+      "acceptedRussianAnswers": [
+        "удобный в поддержке"
+      ],
+      "exampleSentence": "By following these principles, you can create agents that are not only powerful but also reliable, [[maintainable]], and trusted by their users.",
+      "exampleTranslation": "Перевод целевого выражения: удобный в поддержке.",
+      "extraExamples": [
+        "The new code is easier to read and maintainable.",
+        "We need a maintainable solution that future teams can understand."
+      ],
+      "category": "agents",
+      "wrongRussian": "сторонние инструменты",
+      "clozeAnswers": [
+        "[[maintainab",
+        "maintainable"
+      ],
+      "id": 122
+    },
+    {
+      "sourceNumber": 58,
+      "english": "whereas",
+      "russian": "тогда как, в то время как",
+      "testPrompt": "тогда как, в то время как",
+      "acceptedEnglishAnswers": [
+        "whereas"
+      ],
+      "acceptedRussianAnswers": [
+        "тогда как",
+        "в то время как"
+      ],
+      "exampleSentence": "However, [[whereas]] automated testing helps verify functionality, human review remains crucial for ensuring solutions align with broader system requirements.",
+      "exampleTranslation": "Перевод целевого выражения: тогда как, в то время как.",
+      "extraExamples": [
+        "The first option is cheaper, whereas the second is faster.",
+        "She enjoys research, whereas her colleague prefers design."
+      ],
+      "category": "language",
+      "wrongRussian": "тщательно проектировать",
+      "clozeAnswers": [
+        "[[where",
+        "whereas"
+      ],
+      "id": 123
+    }
+  ]
+};
+
+</script>
+<!-- Игровая логика -->
+<script id="app">
+(function(){
+"use strict";
+const {useState,useEffect,useRef,useMemo,useCallback} = React;
+const html = htm.bind(React.createElement);
+const SET = window.VOCAB_SET, WORDS = SET.words, BY = Object.fromEntries(WORDS.map(w=>[w.id,w]));
+const TOTAL = WORDS.length;
+const LS_KEY = "cvt:"+SET.id+":v1", LS_PREF = "cvt:prefs";
+
+/* ---------------- utils ---------------- */
+const norm = s => (s||"").toLowerCase().normalize("NFKC")
+  .replace(/[\u2010-\u2015\u2212]/g,"-").replace(/[\u2018\u2019`´]/g,"'")
+  .replace(/-/g," ").replace(/\s+/g," ").trim().replace(/[.!?,;:]+$/,"").trim();
+const accepts = (list, input) => { const n = norm(input); return n.length>0 && list.some(a=>norm(a)===n); };
+const clozeList = w => w.clozeAnswers || w.acceptedEnglishAnswers.filter(a=>!/^(to|an|a) /i.test(a));
+const shuffle = a => { a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const dayKey = ts => { const d=new Date(ts); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+const fmtDT = ts => new Date(ts).toLocaleString("ru-RU",{day:"numeric",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"});
+const fmtD = ts => new Date(ts).toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"});
+const fmtDayKey = k => { const [y,m,d]=k.split("-").map(Number); return new Date(y,m-1,d).toLocaleDateString("ru-RU",{weekday:"short",day:"numeric",month:"long",year:"numeric"}); };
+const plural=(n,a,b,c)=>{const m10=n%10,m100=n%100;return m10===1&&m100!==11?a:(m10>=2&&m10<=4&&(m100<12||m100>14)?b:c);};
+const plainSentence = w => w.exampleSentence.replace(/\[\[(.+?)\]\]/g,"$1");
+const ExtraExamples = ({w}) => html`<div class="muted small">${(w.extraExamples||[]).map((sentence,i)=>html`<p key=${i} style=${{margin:"7px 0 0"}}><span class="ex" lang="en">${sentence}</span></p>`)}</div>`;
+
+/* ---------------- state ---------------- */
+const LEVELS = [
+  {n:1,key:"match",title:"Найди пару",short:"Пары"},
+  {n:2,key:"choice",title:"Выбери перевод",short:"Выбор"},
+  {n:3,key:"cards",title:"Вспомни перевод",short:"Карточки"},
+  {n:4,key:"cloze",title:"Заполни пропуск",short:"Пропуск"},
+  {n:5,key:"reverse",title:"Переведи наоборот",short:"Перевод"},
+  {n:6,key:"truefalse",title:"Найди ошибку",short:"Ошибка"},
+  {n:7,key:"final",title:"Итоговая проверка",short:"Итог"}
+];
+function freshState(){
+  const levels={}; for(let i=1;i<=6;i++) levels[i]={learned:[],size:10,runs:0,session:null};
+  return {v:1,updatedAt:0,stats:{},levels,test:{current:null,history:[]},tab:1};
+}
+function sanitize(s){
+  const f=freshState(); if(!s||typeof s!=="object") return f;
+  const out=Object.assign(f,s); out.levels=Object.assign(freshState().levels,s.levels||{});
+  out.test=Object.assign({current:null,history:[]},s.test||{}); out.stats=s.stats||{}; return out;
+}
+function loadLocal(){ try{ return sanitize(JSON.parse(localStorage.getItem(LS_KEY))); }catch(e){ return freshState(); } }
+function saveLocal(s){ try{ localStorage.setItem(LS_KEY,JSON.stringify(s)); }catch(e){} }
+
+/* weighted pick: words with mistakes and words not yet learned in this level come up more often */
+function pickWords(state, level, n){
+  const learned=new Set(state.levels[level].learned);
+  const keyed=WORDS.map(w=>{const st=state.stats[w.id]||{c:0,w:0};
+    let wt=1+2.2*Math.min(st.w,5)+(learned.has(w.id)?0:1.2)-Math.min(st.c,5)*0.15; wt=Math.max(.3,wt);
+    return {id:w.id,k:Math.pow(Math.random(),1/wt)};});
+  keyed.sort((a,b)=>b.k-a.k); return keyed.slice(0,n).map(x=>x.id);
+}
+function distractors(target, n, field){
+  const t=BY[target];
+  const ok=w=>w.id!==target && !(t.group && w.group===t.group) && w[field]!==t[field];
+  let pool=shuffle(WORDS.filter(w=>ok(w)&&w.category===t.category));
+  if(pool.length<n) pool=pool.concat(shuffle(WORDS.filter(w=>ok(w)&&w.category!==t.category)));
+  return pool.slice(0,n).map(w=>w.id);
+}
+function mastery(st){ if(!st) return 0; const m=st.c-st.w; if(m>=3) return 3; if(m>=1) return 2; return 1; }
+
+/* ---------------- sound ---------------- */
+let actx=null;
+function tone(seq){ try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); const t0=actx.currentTime;
+  seq.forEach(([f,start,dur,vol])=>{const o=actx.createOscillator(),g=actx.createGain();o.type="sine";o.frequency.value=f;
+    g.gain.setValueAtTime(0,t0+start);g.gain.linearRampToValueAtTime(vol||.12,t0+start+.015);g.gain.exponentialRampToValueAtTime(.0001,t0+start+dur);
+    o.connect(g);g.connect(actx.destination);o.start(t0+start);o.stop(t0+start+dur+.05);}); }catch(e){} }
+const SFX={ok:[[660,0,.14],[880,.09,.2]],bad:[[220,0,.22,.1],[196,.12,.28,.08]],done:[[523,0,.3],[659,.08,.3],[784,.16,.4],[1047,.26,.6]],tap:[[520,0,.06,.05]]};
+
+/* ---------------- shared UI ---------------- */
+function Feedback({ok,children,onNext,nextLabel}){
+  const btn=useRef(null);
+  useEffect(()=>{ btn.current&&btn.current.focus({preventScroll:true}); },[]);
+  return html`<div class=${"fb "+(ok?"fb-ok":"fb-bad")} role="status" aria-live="polite">
+    <div class="fb-h">${ok?"Правильно!":"Ошибка"}</div>
+    ${children?html`<div class="fb-b">${children}</div>`:null}
+    ${onNext?html`<button ref=${btn} class="btn btn-primary" onClick=${onNext}>${nextLabel||"Дальше"}</button>`:null}
+  </div>`;
+}
+function LevelHead({level,state,update,onRestart,extra}){
+  const L=state.levels[level], learned=L.learned.length;
+  return html`<div class="lv-head">
+    <div class="lv-meta">
+      <div class="learned"><b>Изучено ${learned} из ${TOTAL}</b><span class="bar" aria-hidden="true"><i style=${{width:(learned/TOTAL*100)+"%"}}></i></span></div>
+    </div>
+    <div class="lv-ctrl">
+      ${extra}
+      <div class="seg" role="group" aria-label="Слов в тренировке">
+        ${[10,20,50].map(n=>html`<button key=${n} aria-pressed=${L.size===n} onClick=${()=>{update(s=>{s.levels[level].size=n;s.levels[level].session=null;});}}>${n} слов</button>`)}
+      </div>
+      <button class="btn btn-ghost" onClick=${onRestart}>Начать заново</button>
+    </div>
+  </div>`;
+}
+function Progress({pos,len,label}){
+  return html`<div class="sess-prog"><span>${label||"Задание"} ${Math.min(pos+1,len)} из ${len}</span><span class="bar" aria-hidden="true"><i style=${{width:(pos/len*100)+"%"}}></i></span></div>`;
+}
+function Summary({sess,level,onAgain}){
+  const pct=Math.round(sess.correct/Math.max(1,sess.correct+sess.wrong)*100);
+  return html`<div class="card summary">
+    <h2>Тренировка завершена</h2>
+    <p class="sum-line"><span class="big">${sess.correct}</span> правильных ответов и <span class="big">${sess.wrong}</span> ${plural(sess.wrong,"ошибка","ошибки","ошибок")}</p>
+    <p class="muted">Точность ${pct}%. Слова с ошибками будут чаще попадаться в следующих тренировках.</p>
+    <button class="btn btn-primary" onClick=${onAgain}>Ещё одна тренировка</button>
+  </div>`;
+}
+
+/* record a training answer */
+function record(s, level, id, ok){
+  const st=s.stats[id]||(s.stats[id]={c:0,w:0}); if(ok) st.c++; else st.w++;
+  if(ok && !s.levels[level].learned.includes(id)) s.levels[level].learned.push(id);
+}
+
+/* ---------------- Level 1: matching ---------------- */
+function buildSets(ids){
+  const sets=[]; const rest=ids.slice();
+  while(rest.length){ const size=rest.length<=8?rest.length:6; const set=[];
+    for(let i=0;i<rest.length&&set.length<size;){ const w=BY[rest[i]];
+      if(!w.group||!set.some(x=>BY[x].group===w.group)){ set.push(rest[i]); rest.splice(i,1);} else i++; }
+    if(!set.length) set.push(rest.shift());
+    sets.push({ids:set,ru:shuffle(set),matched:[]}); }
+  return sets;
+}
+function Match({state,update,sfx}){
+  const lv=1, L=state.levels[lv];
+  const start=()=>update(s=>{const ids=pickWords(s,lv,s.levels[lv].size);s.levels[lv].session={sets:buildSets(ids),idx:0,correct:0,wrong:0,done:false};s.levels[lv].runs++;});
+  useEffect(()=>{ if(!L.session) start(); },[L.session]);
+  const S=L.session;
+  return html`<div>
+    <${LevelHead} level=${lv} state=${state} update=${update} onRestart=${start}/>
+    ${!S?null:S.done?html`<${Summary} sess=${S} onAgain=${start}/>`:html`<${MatchSet} key=${S.idx+":"+L.runs} S=${S} update=${update} sfx=${sfx}/>`}
+  </div>`;
+}
+function MatchSet({S,update,sfx}){
+  const lv=1, set=S.sets[S.idx];
+  const [sel,setSel]=useState({en:null,ru:null}); const [flash,setFlash]=useState(null); const [msg,setMsg]=useState(null);
+  const setDone=set.matched.length===set.ids.length;
+  useEffect(()=>{ if(setDone&&!S.done){ const t=setTimeout(()=>update(s=>{s.levels[lv].session.idx++;}),1100); return ()=>clearTimeout(t);} },[setDone,S.done]);
+  const trySel=(side,id)=>{
+    if(set.matched.includes(id)) return;
+    const next=Object.assign({},sel,{[side]:sel[side]===id?null:id});
+    if(next.en!=null&&next.ru!=null){
+      const ok=next.en===next.ru, en=next.en;
+      setFlash({en:next.en,ru:next.ru,ok}); sfx(ok?"ok":"bad"); setMsg({ok,en});
+      setTimeout(()=>setFlash(null),650); setSel({en:null,ru:null});
+      update(s=>{const ss=s.levels[lv].session, st=ss.sets[ss.idx]; record(s,lv,en,ok);
+        if(ok){ss.correct++; st.matched.push(en); if(st.matched.length===st.ids.length && ss.idx===ss.sets.length-1) ss.done=true;}
+        else ss.wrong++;});
+    } else setSel(next);
+  };
+  const cls=(side,id)=>{ let c="pair"; if(set.matched.includes(id)) c+=" matched"; if(sel[side]===id) c+=" sel";
+    if(flash&&flash[side]===id) c+=flash.ok?" good":" badf"; return c; };
+  return html`<div class="card">
+      <${Progress} pos=${S.idx} len=${S.sets.length} label="Набор"/>
+      <p class="hint">Выберите английское слово, а затем его перевод.</p>
+      <div class="match">
+        <div class="col" role="group" aria-label="Английские слова">${set.ids.map(id=>html`<button key=${"e"+id} class=${cls("en",id)+" en"} disabled=${set.matched.includes(id)} aria-pressed=${sel.en===id} onClick=${()=>trySel("en",id)}><span lang="en">${BY[id].english}</span></button>`)}</div>
+        <div class="col" role="group" aria-label="Переводы">${set.ru.map(id=>html`<button key=${"r"+id} class=${cls("ru",id)} disabled=${set.matched.includes(id)} aria-pressed=${sel.ru===id} onClick=${()=>trySel("ru",id)}>${BY[id].russian}</button>`)}</div>
+      </div>
+      <div class="match-msg" aria-live="polite">
+        ${setDone?html`<div class="fb fb-ok"><div class="fb-h">Набор собран!</div><div class="fb-b">${S.idx<S.sets.length-1?"Переходим к следующему набору.":"Это был последний набор."}</div></div>`
+          :msg?html`<div class=${"fb "+(msg.ok?"fb-ok":"fb-bad")}><div class="fb-h">${msg.ok?"Правильно!":"Ошибка"}</div>${!msg.ok?html`<div class="fb-b"><span lang="en" class="en">${BY[msg.en].english}</span> означает «${BY[msg.en].russian}».</div>`:null}</div>`:null}
+      </div>
+    </div>`;
+}
+
+/* ---------------- queue-based levels (2,4,5,6) ---------------- */
+function newQueueSession(s,lv,extra){ const ids=pickWords(s,lv,s.levels[lv].size);
+  s.levels[lv].session=Object.assign({queue:ids,pos:0,correct:0,wrong:0,requeued:[],ans:null,done:false},extra?extra(ids):{}); s.levels[lv].runs++; }
+function advance(s,lv){ const ss=s.levels[lv].session; ss.pos++; ss.ans=null; if(ss.pos>=ss.queue.length) ss.done=true; }
+function answerQ(s,lv,id,ok,ans){ const ss=s.levels[lv].session; record(s,lv,id,ok); if(ok) ss.correct++; else { ss.wrong++;
+  if(!ss.requeued.includes(id)){ ss.requeued.push(id); const at=Math.min(ss.queue.length, ss.pos+3+Math.floor(Math.random()*3)); ss.queue.splice(at,0,id); } }
+  ss.ans=Object.assign({ok},ans); }
+
+/* Level 2 */
+function Choice({state,update,sfx}){
+  const lv=2,L=state.levels[lv];
+  const start=()=>update(s=>newQueueSession(s,lv,()=>({opts:{}})));
+  useEffect(()=>{ if(!L.session) start(); },[L.session]);
+  const S=L.session;
+  return html`<div><${LevelHead} level=${lv} state=${state} update=${update} onRestart=${start}/>
+    ${!S?null:S.done?html`<${Summary} sess=${S} onAgain=${start}/>`:html`<${ChoiceItem} S=${S} update=${update} sfx=${sfx}/>`}</div>`;
+}
+function ChoiceItem({S,update,sfx}){
+  const lv=2, id=S.queue[S.pos], w=BY[id];
+  useEffect(()=>{ if(!S.opts[S.pos]) update(s=>{const ss=s.levels[lv].session; ss.opts[ss.pos]=shuffle([id].concat(distractors(id,3,"russian")));}); },[S.pos]);
+  const o=S.opts[S.pos]||[];
+  const choose=c=>{ if(S.ans) return; const ok=c===id; sfx(ok?"ok":"bad"); update(s=>answerQ(s,lv,id,ok,{choice:c})); };
+  useEffect(()=>{ const k=e=>{ if(S.ans||/input|textarea|select/i.test(e.target.tagName)) return; const n=parseInt(e.key,10); if(n>=1&&n<=4&&o[n-1]!=null) choose(o[n-1]); };
+    addEventListener("keydown",k); return ()=>removeEventListener("keydown",k); });
+  return html`<div class="card">
+      <${Progress} pos=${S.pos} len=${S.queue.length}/>
+      <div class="word" lang="en">${w.english}</div>
+      <div class="opts" role="group" aria-label="Варианты перевода">
+        ${o.map((c,i)=>{ let cl="opt"; if(S.ans){ if(c===id) cl+=" good"; else if(c===S.ans.choice) cl+=" badf"; else cl+=" faded"; }
+          return html`<button key=${c} class=${cl} disabled=${!!S.ans} onClick=${()=>choose(c)}><span class="k" aria-hidden="true">${i+1}</span>${BY[c].russian}</button>`; })}
+      </div>
+      ${S.ans?html`<${Feedback} key=${"f"+S.pos} ok=${S.ans.ok} onNext=${()=>update(s=>advance(s,lv))}>
+        ${S.ans.ok?html`<span class="ex" lang="en">${plainSentence(w)}</span><${ExtraExamples} w=${w}/>`:html`<span><span lang="en" class="en">${w.english}</span> означает «${w.russian}». Пример: <span class="ex" lang="en">${plainSentence(w)}</span><${ExtraExamples} w=${w}/></span>`}
+      </${Feedback}>`:null}
+    </div>`;
+}
+
+/* Level 3: cards */
+function Cards({state,update,sfx}){
+  const lv=3,L=state.levels[lv];
+  const start=()=>update(s=>{const dir=(s.levels[lv].session&&s.levels[lv].session.dir)||"en";newQueueSession(s,lv,()=>({dir,revealed:false,repeat:[]}));});
+  useEffect(()=>{ if(!L.session) start(); },[L.session]);
+  const S=L.session; if(!S) return null;
+  const setDir=d=>update(s=>{s.levels[lv].session.dir=d;s.levels[lv].session.revealed=false;});
+  const extra=html`<div class="seg" role="group" aria-label="Направление карточек">
+    <button aria-pressed=${S.dir==="en"} onClick=${()=>setDir("en")}>EN → RU</button>
+    <button aria-pressed=${S.dir==="ru"} onClick=${()=>setDir("ru")}>RU → EN</button></div>`;
+  if(S.done) return html`<div><${LevelHead} level=${lv} state=${state} update=${update} onRestart=${start} extra=${extra}/>
+    <${Summary} sess=${S} onAgain=${start}/>
+    ${S.repeat.length?html`<div class="card"><h3 class="h3">Повторить эти слова</h3><ul class="replist">${S.repeat.map(i=>html`<li key=${i}><span lang="en" class="en">${BY[i].english}</span> <span class="muted">${BY[i].russian}</span></li>`)}</ul></div>`:null}</div>`;
+  const id=S.queue[S.pos], w=BY[id];
+  const front = S.dir==="en"? html`<div class="word" lang="en">${w.english}</div>` : html`<div class="word ru">${w.russian}</div>`;
+  const back = S.dir==="en"? html`<div class="answer">${w.russian}</div>` : html`<div class="answer en" lang="en">${w.english}</div>`;
+  const mark=ok=>{ sfx(ok?"ok":"bad"); update(s=>{const ss=s.levels[lv].session; answerQ(s,lv,id,ok,{}); if(!ok&&!ss.repeat.includes(id)) ss.repeat.push(id); advance(s,lv); ss.revealed=false;}); };
+  return html`<div><${LevelHead} level=${lv} state=${state} update=${update} onRestart=${start} extra=${extra}/>
+    <div class="card flash">
+      <${Progress} pos=${S.pos} len=${S.queue.length} label="Карточка"/>
+      <div class=${"flip"+(S.revealed?" on":"")}>
+        ${front}
+        ${S.revealed?html`<div class="back">${back}<p class="ex" lang="en">${plainSentence(w)}</p><p class="muted small">${w.exampleTranslation}</p><${ExtraExamples} w=${w}/></div>`:null}
+      </div>
+      ${!S.revealed?html`<button class="btn btn-primary" onClick=${()=>{sfx("tap");update(s=>{s.levels[lv].session.revealed=true;});}}>Показать перевод</button>`
+        :html`<div class="row2"><button class="btn btn-ok" onClick=${()=>mark(true)}>Я вспомнила правильно</button><button class="btn btn-bad" onClick=${()=>mark(false)}>Не вспомнила</button></div>`}
+      ${S.repeat.length?html`<p class="muted small">Для повторения: ${S.repeat.length}</p>`:null}
+    </div></div>`;
+}
+
+/* Typing levels 4 & 5 */
+function TypeLevel({lv,state,update,sfx,mode}){
+  const L=state.levels[lv];
+  const start=()=>update(s=>newQueueSession(s,lv));
+  useEffect(()=>{ if(!L.session) start(); },[L.session]);
+  const [val,setVal]=useState(""); const inp=useRef(null);
+  const S=L.session;
+  useEffect(()=>{ setVal(""); if(inp.current) inp.current.focus({preventScroll:true}); },[S&&S.pos,S&&S.done]);
+  if(!S) return null;
+  if(S.done) return html`<div><${LevelHead} level=${lv} state=${state} update=${update} onRestart=${start}/><${Summary} sess=${S} onAgain=${start}/></div>`;
+  const id=S.queue[S.pos], w=BY[id];
+  const list = mode==="cloze"? clozeList(w) : w.acceptedEnglishAnswers;
+  const submit=e=>{ e&&e.preventDefault(); if(S.ans||!val.trim()) return; const ok=accepts(list,val); sfx(ok?"ok":"bad"); update(s=>answerQ(s,lv,id,ok,{given:val})); };
+  let prompt;
+  if(mode==="cloze"){
+    const parts=w.exampleSentence.split(/\[\[(.+?)\]\]/);
+    prompt=html`<p class="cloze" lang="en">${parts.map((p,i)=> i%2? html`<span key=${i} class="gap">${p.split(" ").map((x,j)=>html`<span key=${j} class="gapw" style=${{width:Math.max(3,x.length*.62)+"em"}}></span>`)}</span>` : p)}</p>
+      <p class="mean">Значение пропущенного слова: «${w.russian}»</p>`;
+  } else {
+    prompt=html`<div class="word ru">${w.testPrompt.charAt(0).toUpperCase()+w.testPrompt.slice(1)}</div><p class="mean">Напишите английское слово или выражение.</p>`;
+  }
+  return html`<div><${LevelHead} level=${lv} state=${state} update=${update} onRestart=${start}/>
+    <div class="card">
+      <${Progress} pos=${S.pos} len=${S.queue.length}/>
+      ${prompt}
+      <form class="answer-form" onSubmit=${submit}>
+        <input ref=${inp} lang="en" value=${S.ans?S.ans.given:val} disabled=${!!S.ans} onInput=${e=>setVal(e.target.value)} placeholder="Ваш ответ на английском" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Ответ"/>
+        ${!S.ans?html`<button class="btn btn-primary" type="submit" disabled=${!val.trim()}>Проверить</button>`:null}
+      </form>
+      ${S.ans?html`<${Feedback} ok=${S.ans.ok} onNext=${()=>update(s=>advance(s,lv))}>
+        ${mode==="cloze"?html`<span><span class="ex" lang="en">${plainSentence(w)}</span><br/><span class="muted">${w.exampleTranslation}</span><${ExtraExamples} w=${w}/></span>`
+          :html`<span>Правильно: <b lang="en" class="en">${w.english}</b>${w.acceptedEnglishAnswers.length>1?html` <span class="muted">(принимается также: ${w.acceptedEnglishAnswers.filter(a=>norm(a)!==norm(w.english)).join(", ")})</span>`:null}${!S.ans.ok?html`<br/><span class="muted">Это слово встретится ещё раз в этой тренировке.</span>`:null}</span>`}
+      </${Feedback}>`:null}
+    </div></div>`;
+}
+
+/* Level 6 */
+function TrueFalse({state,update,sfx}){
+  const lv=6,L=state.levels[lv];
+  const start=()=>update(s=>newQueueSession(s,lv,ids=>{const t={};const half=shuffle(ids).slice(0,Math.ceil(ids.length/2));ids.forEach(i=>t[i]=half.includes(i));return {truth:t};}));
+  useEffect(()=>{ if(!L.session) start(); },[L.session]);
+  const S=L.session; if(!S) return null;
+  if(S.done) return html`<div><${LevelHead} level=${lv} state=${state} update=${update} onRestart=${start}/><${Summary} sess=${S} onAgain=${start}/></div>`;
+  const id=S.queue[S.pos], w=BY[id];
+  const isTrue = S.truth[id]!==undefined? S.truth[id] : Math.random()<.5;
+  const shown = isTrue? w.russian : w.wrongRussian;
+  const pick=v=>{ if(S.ans) return; const ok=v===isTrue; sfx(ok?"ok":"bad"); update(s=>{ answerQ(s,lv,id,ok,{v,isTrue,shown}); const ss=s.levels[lv].session; if(ss.truth[id]!==undefined && ss.requeued.includes(id)) ss.truth[id]=!ss.truth[id]; }); };
+  const disp = S.ans? S.ans.shown : shown;
+  const truthNow = S.ans? S.ans.isTrue : isTrue;
+  return html`<div><${LevelHead} level=${lv} state=${state} update=${update} onRestart=${start}/>
+    <div class="card">
+      <${Progress} pos=${S.pos} len=${S.queue.length}/>
+      <p class="hint">Верен ли перевод?</p>
+      <div class="claim"><span class="word" lang="en">${w.english}</span><span class="eq">означает</span><span class="claim-ru">«${disp}»</span></div>
+      <div class="row2">
+        <button class=${"btn btn-ok"+(S.ans&&S.ans.v!==true?" faded":"")} disabled=${!!S.ans} onClick=${()=>pick(true)}>Правильно</button>
+        <button class=${"btn btn-bad"+(S.ans&&S.ans.v!==false?" faded":"")} disabled=${!!S.ans} onClick=${()=>pick(false)}>Неправильно</button>
+      </div>
+      ${S.ans?html`<${Feedback} ok=${S.ans.ok} onNext=${()=>update(s=>advance(s,lv))}>
+        ${truthNow?html`<span>Перевод верный: «${w.russian}».</span>`:html`<span>Перевод неверный. Правильно: <b>«${w.russian}»</b>.</span>`}
+      </${Feedback}>`:null}
+    </div></div>`;
+}
+
+/* ---------------- Level 7: final test ---------------- */
+function Confetti(){
+  const ref=useRef(null);
+  useEffect(()=>{ if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const c=ref.current,x=c.getContext("2d"); let W,H; const fit=()=>{W=c.width=c.offsetWidth*devicePixelRatio;H=c.height=c.offsetHeight*devicePixelRatio;}; fit();
+    const cols=["#7C89F0","#9DDBB7","#F6D77A","#F2A9B6","#B9A8F2"];
+    const P=Array.from({length:140},()=>({x:Math.random()*W,y:-Math.random()*H*.6,vx:(Math.random()-.5)*2*devicePixelRatio,vy:(2+Math.random()*3)*devicePixelRatio,r:(4+Math.random()*5)*devicePixelRatio,a:Math.random()*6,va:(Math.random()-.5)*.25,c:cols[Math.floor(Math.random()*cols.length)]}));
+    let raf,t0=performance.now();
+    const step=t=>{x.clearRect(0,0,W,H);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.a+=p.va;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore();});
+      if(t-t0<4200) raf=requestAnimationFrame(step); else x.clearRect(0,0,W,H);};
+    raf=requestAnimationFrame(step); return ()=>cancelAnimationFrame(raf); },[]);
+  return html`<canvas ref=${ref} class="confetti" aria-hidden="true"></canvas>`;
+}
+function Badge(){
+  return html`<svg class="badge" viewBox="0 0 120 120" aria-hidden="true">
+    <circle cx="60" cy="60" r="54" fill="var(--butter)"/><circle cx="60" cy="60" r="44" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="3 5"/>
+    <text x="60" y="58" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="30" font-weight="600" fill="var(--ink)">${TOTAL}/${TOTAL}</text>
+    <text x="60" y="80" text-anchor="middle" font-family="Onest, sans-serif" font-size="11" fill="var(--ink)">все слова</text></svg>`;
+}
+function History({hist}){
+  const days=useMemo(()=>{const m={};hist.forEach(h=>{const k=dayKey(h.ts);(m[k]=m[k]||[]).push(h);});return m;},[hist]);
+  const keys=Object.keys(days).sort().reverse(); const today=dayKey(Date.now());
+  const [day,setDay]=useState(today);
+  const list=(days[day]||[]).slice().sort((a,b)=>a.ts-b.ts);
+  const best=list.length?Math.max(...list.map(h=>h.score)):null;
+  const avg=list.length?(list.reduce((a,h)=>a+h.score,0)/list.length):null;
+  const perfect=hist.filter(h=>h.score===h.total); const lastPerfect=perfect.length?Math.max(...perfect.map(h=>h.ts)):null;
+  const perfectDays=new Set(perfect.map(h=>dayKey(h.ts))).size;
+  const opts=keys.includes(today)?keys:[today].concat(keys);
+  return html`<section class="card hist" aria-labelledby="hist-h">
+    <div class="hist-top"><h2 id="hist-h" class="h3">Мои результаты</h2>
+      <label class="daysel">День <select value=${day} onChange=${e=>setDay(e.target.value)}>${opts.map(k=>html`<option key=${k} value=${k}>${k===today?"Сегодня":fmtDayKey(k)}</option>`)}</select></label></div>
+    <div class="stats4">
+      <div><span class="sv">${best!=null?best+"/"+TOTAL:"—"}</span><span class="sl">лучший результат дня</span></div>
+      <div><span class="sv">${list.length}</span><span class="sl">${plural(list.length,"попытка","попытки","попыток")} за день</span></div>
+      <div><span class="sv">${avg!=null?avg.toFixed(1).replace(".",","):"—"}</span><span class="sl">средний балл за день</span></div>
+      <div><span class="sv">${perfectDays}</span><span class="sl">${plural(perfectDays,"день","дня","дней")} с результатом ${TOTAL}/${TOTAL}</span></div>
+    </div>
+    <p class="muted small">Последнее идеальное прохождение: ${lastPerfect?fmtDT(lastPerfect):"пока не было"}.</p>
+    ${list.length?html`<div class="tblwrap"><table><thead><tr><th>Попытка</th><th>Время</th><th>Результат</th><th>Ошибки</th></tr></thead>
+      <tbody>${list.map((h,i)=>html`<tr key=${h.ts}><td>${i+1}</td><td>${new Date(h.ts).toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"})}</td><td><b>${h.score}/${h.total}</b></td><td>${h.total-h.score}</td></tr>`)}</tbody></table></div>`
+      :html`<p class="muted">В этот день завершённых попыток нет.</p>`}
+  </section>`;
+}
+function Final({state,update,sfx}){
+  const T=state.test, cur=T.current;
+  const [result,setResult]=useState(null); const [confirm,setConfirm]=useState(false);
+  const inp=useRef(null);
+  const begin=()=>{ setResult(null); update(s=>{s.test.current={order:shuffle(WORDS.map(w=>w.id)),answers:{},idx:0,startedAt:Date.now()};}); };
+  useEffect(()=>{ if(inp.current) inp.current.focus({preventScroll:true}); },[cur&&cur.idx]);
+  if(result) {
+    const perfect=result.score===result.total;
+    return html`<div>
+      ${perfect?html`<div class="card win"><${Confetti}/><${Badge}/>
+        <h2 class="win-h">Идеальный результат! ${TOTAL} из ${TOTAL}. Ты знаешь все слова!</h2>
+        <p class="muted">${fmtDT(result.ts)}</p>
+        <button class="btn btn-primary" onClick=${begin}>Пройти ещё раз</button></div>`
+      :html`<div class="card result" role="status">
+        <h2>Тест завершён</h2>
+        <div class="stats3"><div><span class="sv">${result.score}/${result.total}</span><span class="sl">правильных ответов</span></div>
+          <div><span class="sv">${result.total-result.score}</span><span class="sl">${plural(result.total-result.score,"ошибка","ошибки","ошибок")}</span></div>
+          <div><span class="sv">${Math.round(result.score/result.total*100)}%</span><span class="sl">правильных</span></div></div>
+        <p class="muted">${fmtDT(result.ts)}</p>
+        <button class="btn btn-primary" onClick=${begin}>Пройти ещё раз</button></div>`}
+      <${History} hist=${T.history}/></div>`;
+  }
+  if(!cur) return html`<div>
+    <div class="card intro">
+      <h2>Итоговая проверка</h2>
+      <p>${TOTAL} заданий: по русскому значению напишите английское слово или выражение. Каждое слово встретится один раз.</p>
+      <p>Во время теста правильность ответов не показывается. Между заданиями можно свободно переходить и менять ответы. Результат появится после кнопки «Завершить тест».</p>
+      <p class="muted">Цель: ${TOTAL} из ${TOTAL} за одну попытку. Если выйти из вкладки, ответы сохранятся.</p>
+      <button class="btn btn-primary" onClick=${begin}>Начать тест</button>
+    </div>
+    <${History} hist=${T.history}/></div>`;
+  const id=cur.order[cur.idx], w=BY[id];
+  const filled=cur.order.filter(i=>(cur.answers[i]||"").trim()).length;
+  const all=filled===cur.order.length;
+  const setAns=v=>update(s=>{s.test.current.answers[id]=v;});
+  const go=i=>update(s=>{s.test.current.idx=Math.max(0,Math.min(cur.order.length-1,i));});
+  const finish=()=>{ const score=cur.order.reduce((a,i)=>a+(accepts(BY[i].acceptedEnglishAnswers,cur.answers[i])?1:0),0);
+    const r={ts:Date.now(),score,total:cur.order.length}; setConfirm(false); setResult(r); sfx(score===r.total?"done":"tap");
+    update(s=>{s.test.history.push(r);s.test.current=null;}); };
+  return html`<div>
+    <div class="card test">
+      <div class="sess-prog neutral"><span>Задание ${cur.idx+1} из ${cur.order.length}</span><span class="muted">Заполнено ${filled} из ${cur.order.length}</span></div>
+      <div class="word ru">${w.testPrompt.charAt(0).toUpperCase()+w.testPrompt.slice(1)}</div>
+      <form class="answer-form" onSubmit=${e=>{e.preventDefault(); if(cur.idx<cur.order.length-1) go(cur.idx+1); else { const f=cur.order.findIndex(i=>!(cur.answers[i]||"").trim()); if(f>=0) go(f); }}}>
+        <input ref=${inp} lang="en" value=${cur.answers[id]||""} onInput=${e=>setAns(e.target.value)} placeholder="Английское слово или выражение" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label=${"Ответ на задание "+(cur.idx+1)}/>
+      </form>
+      <div class="test-nav">
+        <button class="btn btn-ghost" disabled=${cur.idx===0} onClick=${()=>go(cur.idx-1)}>Назад</button>
+        <button class="btn btn-ghost" disabled=${cur.idx===cur.order.length-1} onClick=${()=>go(cur.idx+1)}>Вперёд</button>
+      </div>
+      <div class="grid50" role="group" aria-label="Переход к заданию">
+        ${cur.order.map((i,n)=>html`<button key=${i} class=${"cell"+(n===cur.idx?" cur":"")+((cur.answers[i]||"").trim()?" filled":"")} aria-label=${"Задание "+(n+1)+((cur.answers[i]||"").trim()?", заполнено":", пусто")} aria-current=${n===cur.idx?"step":undefined} onClick=${()=>go(n)}>${n+1}</button>`)}
+      </div>
+      <div class="finish-row">
+        <span class="muted small">${all?"Все ответы заполнены. Их ещё можно изменить.":"Кнопка станет доступна, когда будут заполнены все ${TOTAL} ответов."}</span>
+        <button class="btn btn-primary" disabled=${!all} onClick=${()=>setConfirm(true)}>Завершить тест</button>
+      </div>
+    </div>
+    ${confirm?html`<div class="modal" role="dialog" aria-modal="true" aria-labelledby="cf-h"><div class="modal-box">
+      <h2 id="cf-h">Завершить тест?</h2><p>После этого ответы проверятся и изменить их будет нельзя.</p>
+      <div class="row2"><button class="btn btn-primary" onClick=${finish}>Завершить тест</button><button class="btn btn-ghost" onClick=${()=>setConfirm(false)}>Вернуться к ответам</button></div></div></div>`:null}
+    <${History} hist=${T.history}/></div>`;
+}
+
+/* ---------------- header schema ---------------- */
+function Schema({state}){
+  const counts=[0,0,0,0]; WORDS.forEach(w=>counts[mastery(state.stats[w.id])]++);
+  return html`<div class="schema" aria-label=${"Закреплено "+counts[3]+" из "+TOTAL+" слов"}>
+    <div class="cells" aria-hidden="true">${WORDS.map(w=>html`<i key=${w.id} class=${"m"+mastery(state.stats[w.id])}></i>`)}</div>
+    <div class="schema-l"><b>${counts[3]}</b> из ${TOTAL} закреплено<span class="muted">, ${counts[2]+counts[3]} знакомо</span></div>
+  </div>`;
+}
+
+/* ---------------- app ---------------- */
+function App(){
+  const [state,setState]=useState(loadLocal);
+  const [prefs,setPrefs]=useState(()=>{try{return Object.assign({sound:true},JSON.parse(localStorage.getItem(LS_PREF)||"{}"));}catch(e){return {sound:true};}});
+  const [menu,setMenu]=useState(false); const [ask,setAsk]=useState(null); const [sync,setSync]=useState("local");
+  const dbRef=useRef(null), saveT=useRef(null), writing=useRef(false), pending=useRef(null);
+  const update=useCallback(fn=>setState(s=>{const n=JSON.parse(JSON.stringify(s));fn(n);n.updatedAt=Date.now();return n;}),[]);
+  const sfx=useCallback(k=>{ if(prefs.sound) tone(SFX[k]); },[prefs.sound]);
+  useEffect(()=>{ try{localStorage.setItem(LS_PREF,JSON.stringify(prefs));}catch(e){} },[prefs]);
+
+  /* persistence: localStorage always; account storage when available */
+  useEffect(()=>{ saveLocal(state);
+    if(!dbRef.current||!state.updatedAt) return;
+    clearTimeout(saveT.current);
+    saveT.current=setTimeout(()=>flush(state),1200);
+  },[state]);
+  const flush=async s=>{ pending.current=s; if(writing.current) return; writing.current=true;
+    while(pending.current){ const d=pending.current; pending.current=null;
+      try{ await dbRef.current.set({json:JSON.stringify(d),updatedAt:d.updatedAt}); setSync("cloud"); }catch(e){ setSync("local"); } }
+    writing.current=false; };
+  useEffect(()=>{ let alive=true;
+    (async()=>{ if(!window.claude||!window.claude.use) return;
+      try{ const [db,user]=await Promise.all([window.claude.use("db"),window.claude.use("user")]); if(!db||!user||!alive) return;
+        const uid=await user.id(); if(!uid) return;
+        const ref=db.doc("data/users/"+uid+"/trainer-"+SET.id);
+        const snap=await ref.get(); dbRef.current=ref;
+        if(snap.exists){ const d=snap.data(); const remote=sanitize(JSON.parse(d.json||"{}"));
+          setState(cur=> (remote.updatedAt||0)>(cur.updatedAt||0)? remote : cur); }
+        setSync("cloud");
+        setState(cur=>{ if(cur.updatedAt) flush(cur); return cur; });
+      }catch(e){ setSync("local"); } })();
+    return ()=>{alive=false}; },[]);
+
+  const tab=state.tab||1;
+  const setTab=n=>update(s=>{s.tab=n;});
+  const resetTraining=()=>update(s=>{const f=freshState();s.stats={};s.levels=f.levels;});
+  const resetHistory=()=>update(s=>{s.test.history=[];});
+  const props={state,update,sfx};
+  const tabsRef=useRef(null);
+  useEffect(()=>{ const el=tabsRef.current&&tabsRef.current.querySelector('[aria-selected="true"]'); if(el&&el.scrollIntoView) el.scrollIntoView({block:"nearest",inline:"nearest"}); },[tab]);
+  const onTabKey=e=>{ if(e.key==="ArrowRight"||e.key==="ArrowLeft"){ e.preventDefault(); const n=((tab-1+(e.key==="ArrowRight"?1:-1)+7)%7)+1; setTab(n); setTimeout(()=>{const b=document.getElementById("tab-"+n); b&&b.focus();},0);} };
+
+  return html`<div class="app">
+    <header class="top">
+      <div class="brand">
+        <h1>Cognitive Vocabulary Trainer</h1>
+        <p class="sub">${TOTAL} слов и выражений из статьи <span lang="en">“${SET.title}”</span></p>
+      </div>
+      <div class="top-r">
+        ${tab!==7?html`<${Schema} state=${state}/>`:null}
+        <button class="icon-btn" aria-pressed=${prefs.sound} aria-label=${prefs.sound?"Выключить звук":"Включить звук"} onClick=${()=>setPrefs(p=>Object.assign({},p,{sound:!p.sound}))}>
+          ${prefs.sound?html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/></svg>`
+            :html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 5M22 9l-5 5"/></svg>`}
+        </button>
+        <div class="menu-w">
+          <button class="icon-btn" aria-haspopup="true" aria-expanded=${menu} aria-label="Настройки" onClick=${()=>setMenu(m=>!m)}><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button>
+          ${menu?html`<div class="menu" role="menu">
+            <p class="muted small">${sync==="cloud"?"Прогресс сохраняется в вашем аккаунте и в этом браузере.":"Прогресс сохраняется в этом браузере."}</p>
+            <button role="menuitem" onClick=${()=>{setMenu(false);setAsk("train");}}>Сбросить тренировочный прогресс</button>
+            <button role="menuitem" onClick=${()=>{setMenu(false);setAsk("hist");}}>Удалить историю итоговых тестов</button>
+          </div>`:null}
+        </div>
+      </div>
+    </header>
+    <nav class="tabs" ref=${tabsRef} role="tablist" aria-label="Уровни" onKeyDown=${onTabKey}>
+      ${LEVELS.map(l=>html`<button key=${l.n} id=${"tab-"+l.n} role="tab" aria-selected=${tab===l.n} aria-controls="panel" tabIndex=${tab===l.n?0:-1} class=${"tab"+(l.n===7?" tab-final":"")} onClick=${()=>setTab(l.n)}>
+        <span class="tn">${l.n}</span><span class="tt">${l.title}</span>
+        ${l.n<7?html`<span class="tp" aria-hidden="true"><i style=${{width:(state.levels[l.n].learned.length/TOTAL*100)+"%"}}></i></span>`:null}
+      </button>`)}
+    </nav>
+    <main id="panel" role="tabpanel" aria-labelledby=${"tab-"+tab} class=${tab===7?"final-mode":""}>
+      ${tab===1?html`<${Match} ...${props}/>`:null}
+      ${tab===2?html`<${Choice} ...${props}/>`:null}
+      ${tab===3?html`<${Cards} ...${props}/>`:null}
+      ${tab===4?html`<${TypeLevel} key="l4" lv=${4} mode="cloze" ...${props}/>`:null}
+      ${tab===5?html`<${TypeLevel} key="l5" lv=${5} mode="reverse" ...${props}/>`:null}
+      ${tab===6?html`<${TrueFalse} ...${props}/>`:null}
+      ${tab===7?html`<${Final} ...${props}/>`:null}
+    </main>
+    ${ask?html`<div class="modal" role="dialog" aria-modal="true" aria-labelledby="rs-h"><div class="modal-box">
+      <h2 id="rs-h">${ask==="train"?"Сбросить тренировочный прогресс?":"Удалить историю итоговых тестов?"}</h2>
+      <p>${ask==="train"?"Статистика по словам и прогресс всех шести уровней будут удалены. История итоговых тестов сохранится.":"Все результаты итоговых тестов будут удалены. Тренировочный прогресс сохранится."}</p>
+      <div class="row2"><button class="btn btn-bad" onClick=${()=>{ask==="train"?resetTraining():resetHistory();setAsk(null);}}>${ask==="train"?"Сбросить прогресс":"Удалить историю"}</button><button class="btn btn-ghost" onClick=${()=>setAsk(null)}>Отмена</button></div>
+    </div></div>`:null}
+  </div>`;
+}
+ReactDOM.createRoot(document.getElementById("root")).render(html`<${App}/>`);
+})();
+
+</script>
+</body>
+</html>
