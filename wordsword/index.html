@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Wordsword — English B2 → C1</title>
+<meta name="description" content="30-дневный интенсив B2 → C1: грамматика, словари, кейсы, контрольные и аналитика ошибок. Работает офлайн.">
+<meta name="theme-color" content="#F3F4F8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Wordsword">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/app.css">
+<script>
+// Startup diagnostics: never leave the user on an endless «Загрузка…».
+window.__wsFail = function (msg) {
+  if (window.__wsMounted || window.__wsFailed) return; window.__wsFailed = true;
+  var r = document.getElementById("root"); if (!r) return;
+  r.innerHTML = '<div style="padding:24px;font:16px/1.5 system-ui;max-width:520px;margin:0 auto"><h2 style="margin:0 0 8px">Не удалось запустить Wordsword</h2>'
+    + '<p>' + String(msg).replace(/</g, "&lt;") + '</p><p style="color:#6B7080;font-size:14px">Проверьте, что на сервер загружены все файлы и папки: <b>index.html, app.bundle.js, sw.js, .nojekyll, lib/, css/, icons/</b>. После загрузки обновите страницу.</p></div>';
+};
+window.addEventListener("error", function (e) {
+  var t = e.target && (e.target.src || e.target.href);
+  if (t) window.__wsFail("Не найден файл: " + t);
+  else if (e.message) window.__wsFail("Ошибка: " + e.message);
+}, true);
+setTimeout(function () { if (!window.__wsMounted) window.__wsFail("Приложение не запустилось за 15 секунд."); }, 15000);
+</script>
+</head>
+<body>
+<div id="root"><div class="boot">Загрузка…</div></div>
+<noscript>Для работы приложения нужен JavaScript.</noscript>
+<script src="lib/react.production.min.js"></script>
+<script src="lib/react-dom.production.min.js"></script>
+<script src="lib/htm.umd.js"></script>
+<script src="app.bundle.js"></script>
+</body>
+</html>
